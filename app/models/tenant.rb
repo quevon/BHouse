@@ -4,4 +4,7 @@ class Tenant < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable
+
+  after_create :send_admin_mail
+
 end
