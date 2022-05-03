@@ -2,6 +2,9 @@
 
 en:
   devise:
+    registrations:
+    owner:
+      signed_up_but_not_approved: 'You have signed up successfully but your account has not been approved by your administrator yet'
     confirmations:
       confirmed: "Your email address has been successfully confirmed."
       send_instructions: "You will receive an email with instructions for how to confirm your email address in a few minutes."
@@ -55,6 +58,7 @@ en:
       unlocked: "Your account has been unlocked successfully. Please sign in to continue."
   errors:
     messages:
+      not_approved: 'Your account has not been approved by your administrator yet.'
       already_confirmed: "was already confirmed, please try signing in"
       confirmation_period_expired: "needs to be confirmed within %{period}, please request a new one"
       expired: "has expired, please request a new one"
