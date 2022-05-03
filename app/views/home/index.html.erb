@@ -4,11 +4,18 @@
 
 
 <%if current_tenant %>
-    <%= link_to "Sign out", destroy_tenant_session_path,
-        'data-turbo-method': :delete %>
-    <% else %>
-        <p>You are not signed in.</p>
-    <%= link_to "Sign_up" , new_tenant_registration_path%>
+    <%= button_to "logout", destroy_tenant_session_path, method: :delete  %>
+    <h1>Hello Tenant</h1>
+<%elsif current_owner %>
+    <%= button_to "logout", destroy_owner_session_path, method: :delete  %>
+    <h1>Hello Owner</h1>
+<% else %>
+    <p>You are not signed in.</p>
+    <%= link_to "Sign_up Tenant" , new_tenant_registration_path%>
     <br/>
-    <%= link_to "Login", new_tenant_session_path%>
+    <%= link_to "Sign_up Owner" , new_owner_registration_path%>
+    <br/>
+    <%= link_to "Login Tenant", new_tenant_session_path%>
+    <br/>
+    <%= link_to "Login Owner", new_owner_session_path%>
 <% end %>
