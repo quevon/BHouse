@@ -1,11 +1,11 @@
 ActiveAdmin.register Owner do
-  permit_params :email, :password,:password_confirmation,:encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :approved, :confirmation_token,:confirmed_at,:confirmation_sent_at,:unconfirmed_email
+  permit_params :email,  :firstname, :middlename, :lastname,:password,:password_confirmation,:encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :approved, :confirmation_token,:confirmed_at,:confirmation_sent_at,:unconfirmed_email
 
   before_action :remove_password_params_if_blank, only: [:update]
   controller do
 
     def remove_password_params_if_blank
-      if params[:owner][:password].blank? && params[:user][:password_confirmation].blank?
+      if params[:owner][:password].blank? && params[:owner][:password_confirmation].blank?
         params[:owner].delete(:password)
         params[:owner].delete(:password_confirmation)
       end
@@ -18,6 +18,9 @@ ActiveAdmin.register Owner do
     f.inputs do
         if f.object.new_record?
             f.input :email
+            f.input :firstname
+            f.input :middlename
+            f.input :lastname
             f.input :password
             f.input :password_confirmation
         else
@@ -30,6 +33,10 @@ ActiveAdmin.register Owner do
         selectable_column
         id_column
         column :email
+        column :email
+        column :firstname
+        column :middlename
+        column :lastname
         column :created_at
         column :approved?
         column "Status" do |owner|
@@ -46,6 +53,9 @@ ActiveAdmin.register Owner do
   show do
     attributes_table do
       row :email
+      row :firstname
+      row :middlename
+      row :lastname
       row :approved?
     end
   end

@@ -5,6 +5,8 @@ class Owner < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable
 
+
+  validates_presence_of :email, :firstname, :middlename, :lastname
   after_create :send_admin_mail
 
   def send_admin_mail

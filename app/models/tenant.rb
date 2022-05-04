@@ -5,6 +5,6 @@ class Tenant < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable
 
-  after_create :send_admin_mail
+  validates_presence_of :email, :firstname, :middlename, :lastname
 
 end
