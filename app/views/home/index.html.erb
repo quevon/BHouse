@@ -1,11 +1,16 @@
 <%if current_tenant %>
     <h1>Tenant Page</h1>
-    <%= button_to "logout", destroy_tenant_session_path, method: :delete  %>
+    <%= image_tag(current_tenant.profile_picture) %>
+    <%= link_to "Edit Profile" , edit_tenant_registration_path(current_tenant)%>
     <h1>Hello <%= current_tenant.email%></h1>
+    <%= button_to "logout", destroy_tenant_session_path, method: :delete  %>
 <%elsif current_owner %>
     <h1>Owner Page</h1>
-    <%= button_to "logout", destroy_owner_session_path, method: :delete  %>
+    <%= image_tag(current_owner.profile_picture) %>
+    <%= link_to "Edit Profile" , edit_owner_registration_path(current_owner)%>
     <h1>Hello <%= current_owner.email%></h1>
+    <%= button_to "logout", destroy_owner_session_path, method: :delete  %>
+
 <% else %>
     <h1>Home Page</h1>
     <p>You are not signed in.</p>
