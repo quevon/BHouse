@@ -17,7 +17,6 @@ ActiveAdmin.register Owner do
   form do |f|
     f.inputs do
         if f.object.new_record?
-            f.input :profile_picture, as: :file
             f.input :email
             f.input :firstname
             f.input :middlename

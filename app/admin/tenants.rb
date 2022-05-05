@@ -1,5 +1,5 @@
 ActiveAdmin.register Tenant do
-  permit_params :email, :firstname, :middlename, :lastname, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at
+  permit_params :profile_picture,:email, :firstname, :middlename, :lastname,:password,:password_confirmation, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at
 
   before_action :remove_password_params_if_blank, only: [:update]
   controller do
@@ -24,6 +24,7 @@ ActiveAdmin.register Tenant do
             f.input :password
             f.input :password_confirmation
         else
+            f.input :profile_picture
             f.input :email
             f.input :firstname
             f.input :middlename
@@ -46,6 +47,9 @@ ActiveAdmin.register Tenant do
   show do
     attributes_table do
       row :email
+      row :profile_picture do |ad|
+        image_tag url_for(ad.profile_picture)
+      end
       row :firstname
       row :middlename
       row :lastname
