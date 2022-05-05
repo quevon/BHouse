@@ -42,7 +42,6 @@ ActiveAdmin.register Owner do
         column :lastname
         column :created_at
         column :approved?
-        column :user_signed_in?
         column "Status" do |owner|
           if owner.approved == false
             link_to 'Inactive', active_owner_path(owner), method: :patch, data: {confirm: "Do you want to activate #{owner.email}?"},:class => 'link', style: "color: red;"
