@@ -1,0 +1,82 @@
+<%= form_with(model: property) do |form| %>
+  <% if property.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(property.errors.count, "error") %> prohibited this property from being saved:</h2>
+
+      <ul>
+        <% property.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :property_type %>
+    <%= form.text_field :property_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :listing_type %>
+    <%= form.text_field :listing_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :accomodation_type %>
+    <%= form.text_field :accomodation_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :amenities %>
+    <%= form.text_field :amenities %>
+  </div>
+
+  <div class="field">
+    <%= form.label :monthly_price %>
+    <%= form.text_field :monthly_price %>
+  </div>
+
+  <div class="field">
+    <%= form.label :deposit_advance %>
+    <%= form.text_field :deposit_advance %>
+  </div>
+
+  <div class="field">
+    <%= form.label :deposit_security %>
+    <%= form.text_field :deposit_security %>
+  </div>
+
+  <div class="field">
+    <%= form.label :other_fees %>
+    <%= form.text_field :other_fees %>
+  </div>
+
+  <div class="field">
+    <%= form.label :house_rules %>
+    <%= form.text_field :house_rules %>
+  </div>
+
+  <div class="field">
+    <%= form.label :location_city %>
+    <%= form.text_field :location_city %>
+  </div>
+
+  <div class="field">
+    <%= form.label :location_lat %>
+    <%= form.text_field :location_lat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :location_lng %>
+    <%= form.text_field :location_lng %>
+  </div>
+
+  <div class="field">
+    <%= form.label :image %>
+    <%= form.file_field :image %>
+  </div>
+<%# , multiple: true %>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

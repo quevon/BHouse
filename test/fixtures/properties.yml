@@ -1,0 +1,31 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  property_type: MyString
+  listing_type_string: MyString
+  accomodation_type: MyString
+  amenities: MyString
+  monthly_price: 9.99
+  deposit_advance: 1
+  deposit_security: 1
+  other_fees: MyString
+  house_rules: MyString
+  location_city: MyString
+  location_lat: 1.5
+  location_lng: 1.5
+  images: MyString
+
+two:
+  property_type: MyString
+  listing_type_string: MyString
+  accomodation_type: MyString
+  amenities: MyString
+  monthly_price: 9.99
+  deposit_advance: 1
+  deposit_security: 1
+  other_fees: MyString
+  house_rules: MyString
+  location_city: MyString
+  location_lat: 1.5
+  location_lng: 1.5
+  images: MyString

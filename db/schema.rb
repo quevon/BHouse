@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_06_064817) do
+ActiveRecord::Schema.define(version: 2022_05_06_084047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,6 +90,24 @@ ActiveRecord::Schema.define(version: 2022_05_06_064817) do
     t.index ["confirmation_token"], name: "index_owners_on_confirmation_token", unique: true
     t.index ["email"], name: "index_owners_on_email", unique: true
     t.index ["reset_password_token"], name: "index_owners_on_reset_password_token", unique: true
+  end
+
+  create_table "properties", force: :cascade do |t|
+    t.string "property_type"
+    t.string "listing_type"
+    t.string "accomodation_type"
+    t.string "amenities"
+    t.decimal "monthly_price"
+    t.integer "deposit_advance"
+    t.integer "deposit_security"
+    t.string "other_fees"
+    t.string "house_rules"
+    t.string "location_city"
+    t.float "location_lat"
+    t.float "location_lng"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.text "image_data"
   end
 
   create_table "tenants", force: :cascade do |t|
