@@ -65,3 +65,7 @@ gem 'font-awesome-rails'
 gem 'image_processing', '~> 1.1'
 gem 'shrine', '~> 3.3'
 gem 'shrine-cloudinary', '~> 1.1'
+
+
+gem 'rack-cors' 
+gem 'jsonapi-rails'
