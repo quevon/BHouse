@@ -37,7 +37,7 @@
         <td><%= property.location_city %></td>
         <td><%= property.location_lat %></td>
         <td><%= property.location_lng %></td>
-        <%# <td><%= property.images %></td> %>
+        <td><%= property.image_url if property.image %></td>
         <td><%= link_to 'Show', property %></td>
         <td><%= link_to 'Edit', edit_property_path(property) %></td>
         <td><%= link_to 'Destroy', property, method: :delete, data: { confirm: 'Are you sure?' } %></td>
