@@ -6,7 +6,7 @@
     <%= button_to "logout", destroy_tenant_session_path, method: :delete  %>
 <%elsif current_owner %>
     <h1>Owner Page</h1>
-    <%= image_tag(current_owner.profile_picture) %>
+    <%= image_tag current_tenant.image_url if current_tenant.image %>
     <%= link_to "Edit Profile" , edit_owner_registration_path(current_owner)%>
     <h1>Hello <%= current_owner.email%></h1>
     <%= button_to "logout", destroy_owner_session_path, method: :delete  %>

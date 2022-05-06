@@ -1,5 +1,5 @@
 ActiveAdmin.register Tenant do
-  permit_params :profile_picture,:email, :firstname, :middlename, :lastname,:password,:password_confirmation, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at
+  permit_params :image,:email, :firstname, :middlename, :lastname,:password,:password_confirmation, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at
 
   before_action :remove_password_params_if_blank, only: [:update]
   controller do

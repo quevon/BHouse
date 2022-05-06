@@ -1,5 +1,5 @@
 ActiveAdmin.register Owner do
-  permit_params :profile_picture,:email,  :firstname, :middlename, :lastname,:password,:password_confirmation,:encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :approved, :confirmation_token,:confirmed_at,:confirmation_sent_at,:unconfirmed_email
+  permit_params :image,:email,  :firstname, :middlename, :lastname,:password,:password_confirmation,:encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :approved, :confirmation_token,:confirmed_at,:confirmation_sent_at,:unconfirmed_email
 
   before_action :remove_password_params_if_blank, only: [:update]
   controller do
@@ -24,7 +24,7 @@ ActiveAdmin.register Owner do
             f.input :password
             f.input :password_confirmation
         else
-            # f.input :profile_picture, as: :file
+            f.input :image, as: :file
             f.input :email
             f.input :firstname
             f.input :middlename
@@ -56,8 +56,8 @@ ActiveAdmin.register Owner do
   show do
     attributes_table do
       row :email
-      row :profile_picture do |ad|
-        image_tag url_for(ad.profile_picture)
+      row :image do |ad|
+        image_tag ad.image_url if ad.image
       end
       row :firstname
       row :middlename
