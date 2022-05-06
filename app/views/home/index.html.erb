@@ -1,6 +1,6 @@
 <%if current_tenant %>
     <h1>Tenant Page</h1>
-    <%= image_tag(current_tenant.profile_picture) %>
+    <%= image_tag current_tenant.image_url if current_tenant.image %>
     <%= link_to "Edit Profile" , edit_tenant_registration_path(current_tenant)%>
     <h1>Hello <%= current_tenant.email%></h1>
     <%= button_to "logout", destroy_tenant_session_path, method: :delete  %>

@@ -5,9 +5,9 @@ class Owner < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable
 
-  has_one_attached :profile_picture
+  # has_one_attached :profile_picture
 
-  after_commit :add_default_profile_picture, on: [:create, :update]
+  # after_commit :add_default_profile_picture, on: [:create, :update]
 
 
 
@@ -41,9 +41,9 @@ class Owner < ApplicationRecord
 
   private 
 
-  def add_default_profile_picture
-    unless profile_picture.attached?
-      self.profile_picture.attach(io: File.open(Rails.root.join("app", "assets", "images", "empty.png")), filename: 'empty.png' , content_type: "image/png")
-    end
-  end
+  # def add_default_profile_picture
+  #   unless profile_picture.attached?
+  #     self.profile_picture.attach(io: File.open(Rails.root.join("app", "assets", "images", "empty.png")), filename: 'empty.png' , content_type: "image/png")
+  #   end
+  # end
 end

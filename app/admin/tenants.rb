@@ -24,7 +24,7 @@ ActiveAdmin.register Tenant do
             f.input :password
             f.input :password_confirmation
         else
-            f.input :profile_picture
+            f.input :image, as: :file
             f.input :email
             f.input :firstname
             f.input :middlename
@@ -41,14 +41,15 @@ ActiveAdmin.register Tenant do
         column :middlename
         column :lastname
         column :created_at
+        column :image
         actions
   end
 
   show do
     attributes_table do
       row :email
-      row :profile_picture do |ad|
-        image_tag url_for(ad.profile_picture)
+      row :image do |ad|
+        image_tag ad.image_url if ad.image
       end
       row :firstname
       row :middlename

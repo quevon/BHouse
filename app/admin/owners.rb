@@ -24,7 +24,7 @@ ActiveAdmin.register Owner do
             f.input :password
             f.input :password_confirmation
         else
-            f.input :profile_picture, as: :file
+            # f.input :profile_picture, as: :file
             f.input :email
             f.input :firstname
             f.input :middlename
