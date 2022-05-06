@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Property type:</strong>
+  <%= @property.property_type %>
+</p>
+
+<p>
+  <strong>Listing type:</strong>
+  <%= @property.listing_type %>
+</p>
+
+<p>
+  <strong>Accomodation type:</strong>
+  <%= @property.accomodation_type %>
+</p>
+
+<p>
+  <strong>Amenities:</strong>
+  <%= @property.amenities %>
+</p>
+
+<p>
+  <strong>Monthly price:</strong>
+  <%= @property.monthly_price %>
+</p>
+
+<p>
+  <strong>Deposit advance:</strong>
+  <%= @property.deposit_advance %>
+</p>
+
+<p>
+  <strong>Deposit security:</strong>
+  <%= @property.deposit_security %>
+</p>
+
+<p>
+  <strong>Other fees:</strong>
+  <%= @property.other_fees %>
+</p>
+
+<p>
+  <strong>House rules:</strong>
+  <%= @property.house_rules %>
+</p>
+
+<p>
+  <strong>Location city:</strong>
+  <%= @property.location_city %>
+</p>
+
+<p>
+  <strong>Location lat:</strong>
+  <%= @property.location_lat %>
+</p>
+
+<p>
+  <strong>Location lng:</strong>
+  <%= @property.location_lng %>
+</p>
+
+
+<%= link_to 'Edit', edit_property_path(@property) %> |
+<%= link_to 'Back', properties_path %>

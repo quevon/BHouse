@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Properties</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Property type</th>
+      <th>Listing type</th>
+      <th>Accomodation type</th>
+      <th>Amenities</th>
+      <th>Monthly price</th>
+      <th>Deposit advance</th>
+      <th>Deposit security</th>
+      <th>Other fees</th>
+      <th>House rules</th>
+      <th>Location city</th>
+      <th>Location lat</th>
+      <th>Location lng</th>
+      <th>Images</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @properties.each do |property| %>
+      <tr>
+        <td><%= property.property_type %></td>
+        <td><%= property.listing_type %></td>
+        <td><%= property.accomodation_type %></td>
+        <td><%= property.amenities %></td>
+        <td><%= property.monthly_price %></td>
+        <td><%= property.deposit_advance %></td>
+        <td><%= property.deposit_security %></td>
+        <td><%= property.other_fees %></td>
+        <td><%= property.house_rules %></td>
+        <td><%= property.location_city %></td>
+        <td><%= property.location_lat %></td>
+        <td><%= property.location_lng %></td>
+        <%# <td><%= property.images %></td> %>
+        <td><%= link_to 'Show', property %></td>
+        <td><%= link_to 'Edit', edit_property_path(property) %></td>
+        <td><%= link_to 'Destroy', property, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Property', new_property_path %>
