@@ -58,8 +58,6 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'activeadmin'
-gem 'active_admin_theme'
-gem 'active_skin'
 gem 'devise'
 gem 'font-awesome-rails'
 gem 'image_processing', '~> 1.1'
