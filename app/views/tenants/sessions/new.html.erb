@@ -1,26 +1,31 @@
-<h2>Log in tenants</h2>
+<div class="login-form-container">
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+<h1>Log in tenants</h1>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", required: true %>
+      <%= f.label :email %>
+    </div>
+
+    <div class="field">
+      <%= f.password_field :password, autocomplete: "current-password", required: true %>
+      <%= f.label :password %>
+    </div>
+
+    <% if devise_mapping.rememberable? %>
+      <div class="r-field">
+        <%= f.check_box :remember_me %><span> Remember me</span>
+      </div>
+    <% end %>
+
+    <div class="actions">
+      <%= f.submit "Log in" %>
+    </div>
+
+    <div class="links">
+      <%= render "tenants/shared/links" %>
     </div>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "tenants/shared/links" %>
+<div>
