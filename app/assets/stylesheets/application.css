@@ -24,6 +24,10 @@
     text-decoration: none;
     font-family: 'Poppins', sans-serif;
 }
+body{
+    min-height: 100vh;
+    overflow-x: hidden;
+}
 
 /* sign up form styling  */
 
