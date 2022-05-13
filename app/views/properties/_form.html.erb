@@ -13,12 +13,12 @@
 
   <div class="field">
     <%= form.label :property_type %>
-    <%= form.text_field :property_type %>
+    <%= form.select :property_type, ["house", "apartment", "condominium", "dormitory"] %>
   </div>
 
   <div class="field">
     <%= form.label :listing_type %>
-    <%= form.text_field :listing_type %>
+    <%= form.select :listing_type, ["entire unit", "bedspace", "room"] %>
   </div>
 
   <div class="field">
@@ -56,21 +56,20 @@
     <%= form.text_field :house_rules %>
   </div>
 
-  <div class="field">
-    <%= form.label :location_city %>
-    <%= form.text_field :location_city %>
+  <div data-controller="places" data-action="google-maps-callback@window->places#initAutocomplete">
+    <label for="address">Address</label>
+    <input type="text" name="property[long_address]" id="address" autocomplete="off" 
+    data-action="keyup->places#initializeSearch" data-places-target="address" placeholder="Search a location">
+    <button data-action="click->places#findMyLocation">cuurent location</button>
+    <input type="hidden" name="property[location_city]" data-places-target="city">
+    <input type="hidden" name="property[location_lat]" data-places-target="lat">
+    <input type="hidden" name="property[location_lng]" data-places-target="lng">
+    <div data-places-target="map" class="map"></div>
   </div>
 
-  <div class="field">
-    <%= form.label :location_lat %>
-    <%= form.text_field :location_lat %>
-  </div>
+  
 
-  <div class="field">
-    <%= form.label :location_lng %>
-    <%= form.text_field :location_lng %>
-  </div>
-
+  
   <div class="field">
     <%= form.label :image %>
     <%= form.file_field :image %>

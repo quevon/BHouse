@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_06_084047) do
+ActiveRecord::Schema.define(version: 2022_05_12_102500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,12 @@ ActiveRecord::Schema.define(version: 2022_05_06_084047) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "jwt_denylist", force: :cascade do |t|
+    t.string "jti", null: false
+    t.datetime "exp", null: false
+    t.index ["jti"], name: "index_jwt_denylist_on_jti"
+  end
+
   create_table "owners", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -103,11 +109,12 @@ ActiveRecord::Schema.define(version: 2022_05_06_084047) do
     t.string "other_fees"
     t.string "house_rules"
     t.string "location_city"
-    t.float "location_lat"
-    t.float "location_lng"
+    t.decimal "location_lat"
+    t.decimal "location_lng"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "image_data"
+    t.text "long_address"
   end
 
   create_table "tenants", force: :cascade do |t|
