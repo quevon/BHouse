@@ -5,18 +5,5 @@
     <h1>Hello <%= current_tenant.email%></h1>
     <%= button_to "logout", destroy_tenant_session_path, method: :delete  %>
 <%elsif current_owner %>
-    <%# <%= link_to "Edit Profile" , edit_owner_registration_path(current_owner)%> 
     <%= render "owner" %>
-<% else %>
-    <h1>Home Page</h1>
-    <p>You are not signed in.</p>
-    <%= link_to "Sign_up as Tenant" , new_tenant_registration_path%>
-    <br/>
-    <%= link_to "Sign_up as Owner" , new_owner_registration_path%>
-    <br/>
-    <%= link_to "Login as Tenant", new_tenant_session_path%>
-    <br/>
-    <%= link_to "Login as Owner", new_owner_session_path%>
-    <br/>
-    <%= link_to "Login as Admin", new_admin_user_session_path%>
 <% end %>

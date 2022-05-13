@@ -1,0 +1,23 @@
+    <% if !tenant_signed_in? && !owner_signed_in? %>
+    <div class=dropdwn>
+        <nav>
+            <%# <h1 class="logo">BHOUSE<h1> %>
+            <ul>
+                <li><%= link_to 'Home', root_path %></li>
+                <li><a href="#">Login <ion-icon name="caret-down-outline"></ion-icon></a>
+                    <ul class="drop-login">
+                        <li><%= link_to "Owner", new_owner_session_path%></li>
+                        <li> <%= link_to "Tenant", new_tenant_session_path%></li>
+                        <li><%= link_to "Admin", new_admin_user_session_path%></li> 
+                    </ul>
+                </li>
+                <li><a href="#">Signup <ion-icon name="caret-down-outline"></ion-icon></a>
+                    <ul class="drop-signup">
+                        <li><%= link_to "Owner" , new_owner_registration_path%></li>
+                        <li><%= link_to "Tenant" , new_tenant_registration_path%></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>    
+    </div>
+    <%end%>
