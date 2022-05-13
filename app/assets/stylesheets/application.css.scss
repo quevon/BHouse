@@ -223,7 +223,7 @@ body{
     color: #666666;
 }
 .login-form-container form .links a{
-    color: --tomato;
+    color: var(--tomato);
     text-decoration: none;
 }
 .login-form-container form .links a:hover{
