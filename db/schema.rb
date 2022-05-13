@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_09_065333) do
+ActiveRecord::Schema.define(version: 2022_05_13_090733) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,10 @@ ActiveRecord::Schema.define(version: 2022_05_09_065333) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "jwt_denylist", force: :cascade do |t|
+    t.string "jti", null: false
+    t.datetime "exp", null: false
+    t.index ["jti"], name: "index_jwt_denylist_on_jti"
   create_table "mailboxer_conversation_opt_outs", id: :serial, force: :cascade do |t|
     t.string "unsubscriber_type"
     t.integer "unsubscriber_id"
@@ -157,11 +161,15 @@ ActiveRecord::Schema.define(version: 2022_05_09_065333) do
     t.string "other_fees"
     t.string "house_rules"
     t.string "location_city"
-    t.float "location_lat"
-    t.float "location_lng"
+    t.decimal "location_lat"
+    t.decimal "location_lng"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "image_data"
+    t.text "long_address"
+    t.bigint "owner_id"
+    t.boolean "approved"
+    t.index ["owner_id"], name: "index_properties_on_owner_id"
   end
 
   create_table "tenants", force: :cascade do |t|
@@ -187,6 +195,7 @@ ActiveRecord::Schema.define(version: 2022_05_09_065333) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "properties", "owners"
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
   add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id"
   add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "receipts_on_notification_id"

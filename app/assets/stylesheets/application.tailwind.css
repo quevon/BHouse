@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* .btn-primary {
+    @apply py-2 px-4 bg-blue-200;
+  } */
+  .block-label {
+    @apply block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300
+  }
+  .normal-label {
+    @apply mb-2 text-lg font-medium text-gray-900 dark:text-gray-300
+  }
+  .select-input {
+    @apply bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-tomato-300 focus:border-tomato-300 block w-full p-2.5
+  }
+  .form-container {
+    @apply grid grid-cols-2 gap-4 mx-auto w-2/3
+  }
+}
+
+

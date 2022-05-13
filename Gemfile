@@ -67,5 +67,8 @@ gem 'shrine-cloudinary', '~> 1.1'
 
 gem 'rack-cors' 
 gem 'jsonapi-rails'
+gem "tailwindcss-rails", "~> 2.0"
+
+gem 'ransack'
 
 gem 'mailboxer'
