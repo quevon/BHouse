@@ -21,14 +21,31 @@
     <%= form.select :listing_type, ["entire unit", "bedspace", "room"] %>
   </div>
 
-  <div class="field">
+  <div class="field"
     <%= form.label :accomodation_type %>
-    <%= form.text_field :accomodation_type %>
+    <% accomodations = ["male", "female", "student", "working", "couple", "family"]%>
+    <% accomodations.each do |accomodation| %>
+      <%= form.check_box :accomodation_type, { :multiple => true, :checked => true }, accomodation, nil %>
+      <%= form.label accomodation %>
+    <% end %>
   </div>
 
-  <div class="field">
+  <div class="field"
     <%= form.label :amenities %>
-    <%= form.text_field :amenities %>
+    <% amenities = ["aircon", "wifi", "parking", "cooking", "gym", "pool"]%>
+    <% amenities.each do |amenity| %>
+      <%= form.check_box :amenities, { :multiple => true, :checked => true }, amenity, nil %>
+      <%= form.label amenity %>
+    <% end %>
+  </div>
+
+  <div class="field"
+    <%= form.label :house_rules %>
+    <% house_rules = ["kids", "pets", "smoking", "visitors"]%>
+    <% house_rules.each do |rule| %>
+      <%= form.check_box :house_rules, { :multiple => true, :checked => true }, rule, nil %>
+      <%= form.label rule %>
+    <% end %>
   </div>
 
   <div class="field">
@@ -51,10 +68,6 @@
     <%= form.text_field :other_fees %>
   </div>
 
-  <div class="field">
-    <%= form.label :house_rules %>
-    <%= form.text_field :house_rules %>
-  </div>
 
   <div data-controller="places" data-action="google-maps-callback@window->places#initAutocomplete">
     <label for="address">Address</label>
@@ -67,14 +80,13 @@
     <div data-places-target="map" class="map"></div>
   </div>
 
-  
-
-  
   <div class="field">
     <%= form.label :image %>
     <%= form.file_field :image %>
   </div>
-<%# , multiple: true %>
+
+  <%= form.hidden_field :owner_id, value: current_owner.id %>
+  <%= form.hidden_field :approved, value: true %>
   <div class="actions">
     <%= form.submit %>
   </div>

@@ -97,6 +97,7 @@ export default class extends Controller {
             }
             this.latTarget.value = place.geometry.location.lat()
             this.lngTarget.value = place.geometry.location.lng()
+            this.addressTarget.value = place.formatted_address
           })
           this.map().fitBounds(place.geometry.viewport)
           this.map().setCenter(place.geometry.location)

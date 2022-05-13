@@ -3,7 +3,8 @@ class PropertiesController < ApplicationController
 
   # GET /properties or /properties.json
   def index
-    @properties = Property.all
+    @q = Property.ransack(params[:q])
+    @properties = @q.result(distinct: true)
   end
 
   # GET /properties/1 or /properties/1.json
@@ -19,6 +20,7 @@ class PropertiesController < ApplicationController
 
   # POST /properties or /properties.json
   def create
+    # byebug
     @property = Property.new(property_params)
 
     respond_to do |format|
@@ -64,7 +66,7 @@ class PropertiesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def property_params
-    params.require(:property).permit(:property_type, :listing_type, :accomodation_type, :amenities, :monthly_price,
-                                     :deposit_advance, :deposit_security, :other_fees, :house_rules, :location_city, :location_lat, :location_lng, :image, :long_address)
+    params.require(:property).permit(:owner_id, :approved, :property_type, :listing_type,  :monthly_price,
+                                     :deposit_advance, :deposit_security, :other_fees, :location_city, :location_lat, :location_lng, :long_address, :image,:accomodation_type=>[], :amenities=>[], :house_rules=>[])
   end
 end

@@ -353,6 +353,7 @@ DEPENDENCIES
   rack-cors
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.4, >= 6.1.4.6)
+  ransack
   sass-rails (>= 6)
   sassc-rails
   selenium-webdriver

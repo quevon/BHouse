@@ -1,0 +1,9 @@
+<h1>hello</h1>
+
+<div class='filters'>
+  <%= search_form_for @q do |form| %>
+    <%= form.label :location_city_cont %>
+    <%= form.search_field :location_city_cont %>
+    <%= form.submit %>
+  <% end %>
+</div>
