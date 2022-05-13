@@ -16,6 +16,11 @@ Rails.application.routes.draw do
   end
 
 
+  resources :conversations do
+    resources :messages
+  end
+
+
   root to: "home#index"
 end
   

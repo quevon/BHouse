@@ -10,7 +10,15 @@ class Owner < ApplicationRecord
 
   # after_commit :add_default_profile_picture, on: [:create, :update]
 
+  acts_as_messageable
 
+  def name
+    "#{firstname} #{lastname}"
+  end
+
+  def mailboxer_email(object)
+    nil 
+  end
 
   validates_presence_of :email, :firstname, :middlename, :lastname
   after_create :send_admin_mail
