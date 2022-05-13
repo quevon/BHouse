@@ -67,3 +67,5 @@ gem 'shrine-cloudinary', '~> 1.1'
 
 gem 'rack-cors' 
 gem 'jsonapi-rails'
+
+gem 'mailboxer'

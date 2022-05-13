@@ -6,6 +6,16 @@ class Tenant < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable
 
+  acts_as_messageable
+
+  def name
+    "#{firstname} #{lastname}"
+  end
+       
+  def mailboxer_email(object)
+    nil 
+  end
+  
   validates_presence_of :email, :firstname, :middlename, :lastname
 
 
