@@ -1,9 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 
-<section class="bg-white dark:bg-gray-900">
+<section class="bg-white dark:bg-gray-900 main">
   <div class="container px-6 py-10 mx-auto">
-    <h1 class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">explore our <br> awesome <span class="underline decoration-tomato-500">Properties</span></h1>
+    <h1 class="heading-page-title">
+      explore our <br> 
+      awesome <span class="underline font-heading decoration-tomato-500">Properties</span>
+    </h1>
     <p class="mt-4 text-gray-500 xl:mt-6 dark:text-gray-300">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum quam voluptatibus
     </p>
@@ -22,7 +25,7 @@
           <%end%>
         </div>
           <div class="flex items-center px-6 py-3 bg-tomato-500">
-            <h1 class="mx-3 text-lg font-semibold text-white"><%= "#{property.property_type} in #{property.location_city}"%></h1>
+            <h1 class="mx-3 text-lg font-semibold text-white"><%= "#{property.listing_type} in #{property.location_city}"%></h1>
           </div>
           <div class="px-6 py-4">
             <h1 class="text-xl font-semibold text-gray-800 dark:text-white"><%= property.listing_type %></h1>
