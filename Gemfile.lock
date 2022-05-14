@@ -208,6 +208,8 @@ GEM
     msgpack (1.5.1)
     netrc (0.11.0)
     nio4r (2.5.8)
+    nokogiri (1.13.6-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.13.6-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
@@ -305,6 +307,8 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     ssrf_filter (1.0.7)
+    tailwindcss-rails (2.0.8-arm64-darwin)
+      railties (>= 6.0.0)
     tailwindcss-rails (2.0.8-x86_64-linux)
       railties (>= 6.0.0)
     thor (1.2.1)
@@ -341,6 +345,7 @@ GEM
     zeitwerk (2.5.4)
 
 PLATFORMS
+  arm64-darwin-21
   x86_64-linux
 
 DEPENDENCIES
@@ -379,4 +384,4 @@ RUBY VERSION
    ruby 3.0.3p157
 
 BUNDLED WITH
-   2.3.13
+   2.3.12

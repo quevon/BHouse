@@ -1,4 +1,24 @@
 <p id="notice"><%= notice %></p>
+<div class="p-5 w-1/2 mx-auto my-5 border border-emerald-500">
+  <%= button_to "Message Owner", conversations_path, :method => "get" %>
+</div>
+
+<% if current_tenant%>
+  <% if current.property_tenants.where(:property_id => @property.id)%>
+    <p>current.property_tenants.where(:property_id => @property.id).status<p>
+    <%end%>
+  <%= button_to "Apply as Tenant", create_property_tenant_path(@property, :property_tenant => {:property_id => @property.id, :tenant_id => current_tenant.id, :status => "pending"}), :method => "post" %>
+<%end%>
+
+<div class="p-5 border border-emerald-100">
+  <p>owner: <%="#{@property.owner.firstname} #{@property.owner.lastname} "%></p>
+  <% if current_owner == @property.owner %>
+    <p>owner logged in</p>
+    <p>applications received: <%=@property.property_tenants.count%></p>
+  <%end%>
+</div>
+
+
 
 <p>
   <strong class="text-red-700">Property type:</strong>
