@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :properties
   devise_for :owners
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -15,6 +14,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :properties do
+    resources :property_tenants
+  end
+  post '/properties/:property_id/property_tenants', to: 'property_tenants#create', as: 'create_property_tenant'
 
   resources :conversations do
     resources :messages
