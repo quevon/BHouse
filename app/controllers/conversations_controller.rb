@@ -2,6 +2,7 @@ class ConversationsController < ApplicationController
     def index
         #@owner = Owner.last
         @conversations = current_user.mailbox.conversations
+     
     end
 
     def show

@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 2022_05_14_024549) do
 
   create_table "jwt_denylist", force: :cascade do |t|
     t.string "jti", null: false
-    t.datetime "exp", null: false
+    t.datetime "expired_at", null: false
     t.index ["jti"], name: "index_jwt_denylist_on_jti"
   end
 
