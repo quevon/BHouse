@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_14_024549) do
+ActiveRecord::Schema.define(version: 2022_05_15_113654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,12 +67,6 @@ ActiveRecord::Schema.define(version: 2022_05_14_024549) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
-  end
-
-  create_table "jwt_denylist", force: :cascade do |t|
-    t.string "jti", null: false
-    t.datetime "expired_at", null: false
-    t.index ["jti"], name: "index_jwt_denylist_on_jti"
   end
 
   create_table "mailboxer_conversation_opt_outs", id: :serial, force: :cascade do |t|
@@ -146,6 +140,7 @@ ActiveRecord::Schema.define(version: 2022_05_14_024549) do
     t.string "middlename"
     t.string "lastname"
     t.text "image_data"
+    t.decimal "balance", precision: 10, scale: 2, default: "5000.0"
     t.index ["approved"], name: "index_owners_on_approved"
     t.index ["confirmation_token"], name: "index_owners_on_confirmation_token", unique: true
     t.index ["email"], name: "index_owners_on_email", unique: true
@@ -201,6 +196,7 @@ ActiveRecord::Schema.define(version: 2022_05_14_024549) do
     t.string "middlename"
     t.string "lastname"
     t.text "image_data"
+    t.decimal "balance", precision: 10, scale: 2, default: "5000.0"
     t.index ["confirmation_token"], name: "index_tenants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_tenants_on_email", unique: true
     t.index ["reset_password_token"], name: "index_tenants_on_reset_password_token", unique: true
