@@ -9,23 +9,29 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Poppins'],
+        heading: ['Alegreya Sans'],
+      },
       colors: {
+        'misty-rose': '#fbe9df',
         tomato: {
           DEFAULT: '#FE6140',
           50: '#FFF8F7',
           100: '#FFE7E2',
           200: '#FFC6BA',
           300: '#FEA491',
-          400: '#FE8369',
+          400: '#FF8268',
           500: '#FE6140',
-          600: '#FE3308',
-          700: '#CD2401',
-          800: '#951B01',
-          900: '#5D1100',
+          600: '#E14525',
+          700: '#B1371D',
+          800: '#822713',
+          900: '#52180B',
         },
       },
-      fontFamily: {
-        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+      backgroundImage: {
+        'hero-image':
+          "url('https://res.cloudinary.com/dbegssigw/image/upload/v1651573596/bhouse/background_n5oq6b.jpg')",
       },
     },
   },

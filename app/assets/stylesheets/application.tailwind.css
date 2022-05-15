@@ -1,11 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Ubuntu:wght@400;500;700&family=Alegreya+Sans:wght@400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
-  /* .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
-  } */
+  .btn-primary {
+    @apply py-3 px-5  bg-tomato-500 hover:bg-tomato-400 cursor-pointer rounded-xl text-white w-full;
+  }
+  .btn-container {
+    @apply w-2/3 mx-auto mb-3
+  }
   .block-label {
     @apply block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300
   }
@@ -17,6 +22,39 @@
   }
   .form-container {
     @apply grid grid-cols-2 gap-4 mx-auto w-2/3
+  }
+  .heading-page-title {
+    @apply text-6xl font-heading font-bold text-gray-800 capitalize
+  }
+  .heading-property-title {
+    @apply text-4xl font-heading font-bold text-gray-800 
+  }
+  .property-image {
+    @apply mx-auto object-cover object-center rounded-xl w-full h-full
+  }
+  .property-image-container {
+    @apply mx-auto mt-5 w-full h-96
+  }
+  .description-text {
+    @apply text-gray-500 dark:text-gray-300
+  }
+  .description-text-group {
+    @apply text-gray-500 dark:text-gray-300 pr-2 mr-2 
+  }
+  .property-card {
+    @apply p-6 border rounded-xl border-gray-200
+  }
+  .card-header {
+    @apply text-2xl font-heading text-tomato-400 capitalize
+  }
+  .card-subtitle {
+    @apply text-gray-600 capitalize font-semibold
+  }
+  .status-card {
+    @apply py-3 px-5  bg-yellow-400 hover:bg-tomato-200 rounded-xl text-gray-700 w-full;
+  }
+  .profile-image {
+    @apply object-cover w-20 h-20 rounded-full ring-4 ring-orange-300
   }
 }
 
