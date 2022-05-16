@@ -1,5 +1,9 @@
 <p id="notice"><%= notice %></p>
-<section class="main">
+<% if current_owner or current_tenant%>
+  <section class="main">
+<% else %>
+  <section>
+<%end%>
   <div class=" px-6 py-5 mx-auto w-3/4">
     <h1 class="heading-property-title">
       <%=@property.listing_type.titleize%> in <span class="underline font-heading decoration-tomato-500"><%=@property.location_city%></span>
@@ -114,8 +118,8 @@
           <p class="description-text"><%= format_currency(@property.monthly_price) %></p>   
         </div>
         <div class="flex justify-between">
-          <p class="card-subtitle"><%="Advance Deposit (#{@property.deposit_security}x)"%></p>
-          <p class="description-text"><%= format_currency(@property.monthly_price * @property.deposit_advance) %></p>   
+          <p class="card-subtitle"><%="Advance Deposit (#{@property.deposit_advance}x)"%></p>
+          <p class="description-text"><%= format_currency(@property.calculated_security_deposit) %></p>   
         </div>
         <div class="flex justify-between">
           <p class="card-subtitle"><%="Security Deposit (#{@property.deposit_security}x)"%></p>
@@ -125,17 +129,38 @@
           <p class="card-subtitle">Total Move-in Fee</p>
           <p class="description-text"><%= format_currency(@property.total_first_bill) %></p>   
         </div>
+        <div class="flex flex-col">
+          <p class="card-subtitle">Other monthly fees:</p>
+          <p class="description-text"><%= return "N/A" unless @property.other_fees %></p>   
+        </div>
 
-        <p>
-          <strong>Other monthly fees:</strong>
-          <%= @property.other_fees %>
-        </p>
         <% if current_tenant%>
-          <% if current_tenant.property_tenants.where(:property_id => @property.id).count > 0%>
-            <% application = current_tenant.property_tenants.where(:property_id => @property.id) %>
-            <div class="btn-container">
-              <div class="status-card"><%= application[0].status %></div>
-            </div>
+          <% application = current_tenant.property_tenants.where(:property_id => @property.id) %>
+          <% if application.count > 0%>
+              <% application.each do |apply| %>
+                <% case apply.status %>
+                <% when "pending" %>
+                  <div class="status-card bg-orange-200"> 
+                <% when "approved" %>
+                  <div class="status-card bg-lime-200"> 
+                <% when "rejected" %>
+                  <div class="status-card bg-red-200"> 
+                <% when "cancelled" %>
+                  <div class="status-card bg-gray-300"> 
+                <% end %>
+                    <div class="flex flex-col ">
+                      <p class="card-subtitle">Application Status</p>
+                      <p class="description-text"><%= apply.status %></p>   
+                      <p class="description-text"><%= apply.updated_at %></p>   
+                    </div>
+                    <% if apply.status == "pending" %>
+                      <div class="btn-container mt-3">
+                        <%= button_to "Cancel Application", update_property_tenant_path(@property,:property_tenant => {:id => apply.id, :status => "cancelled"}), 
+                        :method => "patch", :class => "btn-primary" %>
+                      </div>
+                    <%end%>
+                  </div>
+              <% end %>
           <%else%>
             <div class="btn-container">
               <%= button_to "Apply as Tenant", create_property_tenant_path(@property, :property_tenant => {:property_id => @property.id, :tenant_id => current_tenant.id, :status => "pending"}), 
