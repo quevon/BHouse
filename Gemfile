@@ -72,3 +72,4 @@ gem "tailwindcss-rails", "~> 2.0"
 gem 'ransack'
 
 gem 'mailboxer'
+gem 'mini_magick'
