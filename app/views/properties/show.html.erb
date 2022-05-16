@@ -1,75 +1,171 @@
 <p id="notice"><%= notice %></p>
+<section class="main">
+  <div class=" px-6 py-5 mx-auto w-3/4">
+    <h1 class="heading-property-title">
+      <%=@property.listing_type.titleize%> in <span class="underline font-heading decoration-tomato-500"><%=@property.location_city%></span>
+    </h1>
+    <p class="description-text-group">
+        Owned by: <%="#{@property.owner.firstname} #{@property.owner.lastname} "%>
+    </p>
+    <div class="property-image-container">
+      <% imgsrc = @property.image ? @property.image_url : "https://res.cloudinary.com/dbegssigw/image/upload/v1652432165/bhouse_app/bhouselogo_xiistv.png" %>
+      <%= image_tag imgsrc, class:"property-image" %>
+    </div>
+    <p class="description-text my-3">
+          PropertyDescription here
+    </p>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="property-card grid grid-cols-2 gap-2">
+        <h2 class="card-header col-span-2">Property Details</h2>
+        <div>
+          <div class="flex">
+            <h3 class="card-header"><ion-icon name="home-outline"></ion-icon></h3>
+            <h3 class="card-subtitle ml-2"> Property Type</h3>
+          </div>
+          <p class="description-text pl-10">
+            <%= @property.property_type %>
+          </p>
+        </div>
+        <div>
+          <div class="flex">
+            <h3 class="card-header"><ion-icon name="bed-outline"></ion-icon></h3>
+            <h3 class="card-subtitle ml-2"> Listing Type</h3>
+          </div>
+          <p class="description-text pl-10">
+            <%= @property.listing_type %>
+          </p>
+        </div>
+        <div class="col-span-2">
+          <div class="flex">
+            <h3 class="card-header"><ion-icon name="people-outline"></ion-icon></h3>
+            <h3 class="card-subtitle ml-2"> Accomodation Type</h3>
+          </div>
+          <p class="description-text">
+            This property accepts:
+          </p>
+            <div class="grid grid-cols-3 grid-rows-2">
+              <% get_array(@property.accomodation_type).each do |type|  %>
+                <div class="flex">
+                  <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
+                  <p class="description-text"><%= type %></p>
+                </div>
+              <% end %> 
+            </div>
+        </div>
+        <div class="col-span-2">
+          <div class="flex">
+            <h3 class="card-header"><ion-icon name="wifi-outline"></ion-icon></h3>
+            <h3 class="card-subtitle ml-2"> Amenities</h3>
+          </div>
+          <p class="description-text">
+            This property has the following amenities:
+          </p>
+            <div class="grid grid-cols-3 grid-rows-2">
+              <% get_array(@property.amenities).each do |amenity|  %>
+                <div class="flex">
+                  <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
+                  <p class="description-text"><%= amenity %></p>
+                </div>
+              <% end %> 
+            </div>
+        </div>
+        <div class="col-span-2">
+          <div class="flex">
+            <h3 class="card-header"><ion-icon name="warning-outline"></ion-icon></h3>
+            <h3 class="card-subtitle ml-2"> House Rules</h3>
+          </div>
+          <p class="description-text">
+            This property allows the following:
+          </p>
+            <div class="grid grid-cols-3 grid-rows-2">
+              <% get_array(@property.house_rules).each do |rule|  %>
+                <div class="flex">
+                  <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
+                  <p class="description-text"><%= rule %></p>
+                </div>
+              <% end %> 
+            </div>
+        </div>
+        <div class="col-span-2">
+          <div class="flex">
+            <h3 class="card-header"><ion-icon name="location-outline"></ion-icon></h3>
+            <h3 class="card-subtitle ml-2"> Address</h3>
+          </div>
+          <p class="description-text">
+            <%= @property.long_address %>
+          </p>
+        </div>       
+      </div>
 
-<p>
-  <strong class="text-red-700">Property type:</strong>
-  <%= @property.property_type %>
-</p>
+      <div class="property-card">
+        <div class="grid grid-cols-3 gap-2 mb-5">
+          <div>
+            <% profile_pic = @property.owner.image ? @property.owner.image_url : "https://res.cloudinary.com/dbegssigw/image/upload/v1652432165/bhouse_app/bhouselogo_xiistv.png" %>
+            <%= image_tag profile_pic, class:"profile-image" %>
+          </div>
+          <div class="col-span-2">
+            <p class="card-subtitle"><%="#{@property.owner.firstname} #{@property.owner.lastname} "%></p>
+            <p class="description-text italic">Property Owner</p>
+            <p class="description-text"><%=@property.owner.email%></p>
+          </div>
+        </div>
+        <div class="flex justify-between">
+          <p class="card-subtitle">Monthly price</p>
+          <p class="description-text"><%= format_currency(@property.monthly_price) %></p>   
+        </div>
+        <div class="flex justify-between">
+          <p class="card-subtitle"><%="Advance Deposit (#{@property.deposit_security}x)"%></p>
+          <p class="description-text"><%= format_currency(@property.monthly_price * @property.deposit_advance) %></p>   
+        </div>
+        <div class="flex justify-between">
+          <p class="card-subtitle"><%="Security Deposit (#{@property.deposit_security}x)"%></p>
+          <p class="description-text"><%= format_currency(@property.calculated_security_deposit) %></p>   
+        </div>
+        <div class="flex justify-between border-t border-gray-400">
+          <p class="card-subtitle">Total Move-in Fee</p>
+          <p class="description-text"><%= format_currency(@property.total_first_bill) %></p>   
+        </div>
 
-<p>
-  <strong>Listing type:</strong>
-  <%= @property.listing_type %>
-</p>
-
-<p>
-  <strong>Accomodation type:</strong>
-  <%= @property.accomodation_type %>
-</p>
-
-<p>
-  <strong>Amenities:</strong>
-  <%= @property.amenities %>
-</p>
-
-<p>
-  <strong>Monthly price:</strong>
-  <%= @property.monthly_price %>
-</p>
-
-<p>
-  <strong>Deposit advance:</strong>
-  <%= @property.deposit_advance %>
-</p>
-
-<p>
-  <strong>Deposit security:</strong>
-  <%= @property.deposit_security %>
-</p>
-
-<p>
-  <strong>Other fees:</strong>
-  <%= @property.other_fees %>
-</p>
-
-<p>
-  <strong>House rules:</strong>
-  <%= @property.house_rules %>
-</p>
-
-<p>
-  <strong>Location city:</strong>
-  <%= @property.location_city %>
-</p>
-
-<p>
-  <strong>Location lat:</strong>
-  <%= @property.location_lat %>
-</p>
-
-<p>
-  <strong>Location lng:</strong>
-  <%= @property.location_lng %>
-</p>
-
-<p>
-  <strong>address:</strong>
-  <%= @property.long_address %>
-</p>
-
-<p>
-  <strong>Image</strong>
-  <%= image_tag @property.image_url if @property.image %>
-</p>
+        <p>
+          <strong>Other monthly fees:</strong>
+          <%= @property.other_fees %>
+        </p>
+        <% if current_tenant%>
+          <% if current_tenant.property_tenants.where(:property_id => @property.id).count > 0%>
+            <% application = current_tenant.property_tenants.where(:property_id => @property.id) %>
+            <div class="btn-container">
+              <div class="status-card"><%= application[0].status %></div>
+            </div>
+          <%else%>
+            <div class="btn-container">
+              <%= button_to "Apply as Tenant", create_property_tenant_path(@property, :property_tenant => {:property_id => @property.id, :tenant_id => current_tenant.id, :status => "pending"}), 
+              :method => "post", :class => "btn-primary" %>
+            </div>
+          <%end%>
+          <div class="btn-container">
+            <%= button_to "Message Owner", conversations_path, :method => "get", :class => "btn-primary" %>
+          </div>
+        <% elsif current_owner == @property.owner %>
+          <p>owner logged in</p>
+          <p>applications received: <%=@property.property_tenants.count%></p>
+            <%= link_to 'Edit', edit_property_path(@property) %> 
+        <%end%>
+      </div>
+  </div>
+</div>
 
 
-<%= link_to 'Edit', edit_property_path(@property) %> |
-<%= link_to 'Back', properties_path %>
+ 
+
+  <p>
+    <strong>Location lat:</strong>
+    <%= @property.location_lat %>
+  </p>
+
+  <p>
+    <strong>Location lng:</strong>
+    <%= @property.location_lng %>
+  </p>
+
+
+</section>

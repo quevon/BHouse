@@ -104,7 +104,14 @@
     box-shadow: 35px -35px 0 10px var(--white);
     pointer-events: none;
 }
-
+.topbar{
+    width: 100%;
+     height:60px;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     padding:0 10px;
+ }
 // main 
  .main{
       position: absolute;
@@ -118,14 +125,7 @@
     width: calc(100% - 80px);
     left: 80px;
  }
- .topbar{
-     width: 100%;
-     height:60px;
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     padding:0 10px;
- }
+
  .toggle{
      position: relative;
      width: 60px;
@@ -401,7 +401,7 @@
     .main.active .toggle{
         position: fixed;
         color: var(--white);
-        right: 0;
+        // right: 0;
         left: initial;
     }
 }

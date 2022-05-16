@@ -8,7 +8,9 @@ class PropertiesController < ApplicationController
   end
 
   # GET /properties/1 or /properties/1.json
-  def show; end
+  def show
+    @property.property_tenants.build
+  end
 
   # GET /properties/new
   def new
@@ -20,7 +22,6 @@ class PropertiesController < ApplicationController
 
   # POST /properties or /properties.json
   def create
-    # byebug
     @property = Property.new(property_params)
 
     respond_to do |format|
@@ -67,6 +68,9 @@ class PropertiesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def property_params
     params.require(:property).permit(:owner_id, :approved, :property_type, :listing_type,  :monthly_price,
-                                     :deposit_advance, :deposit_security, :other_fees, :location_city, :location_lat, :location_lng, :long_address, :image,:accomodation_type=>[], :amenities=>[], :house_rules=>[])
+                                     :deposit_advance, :deposit_security, :other_fees, 
+                                     :location_city, :location_lat, :location_lng, :long_address, :image,
+                                     :accomodation_type=>[], :amenities=>[], :house_rules=>[],
+                                     property_tenant_attributes:[:id, :property_id, :tenant_id, :status, :_destroy])
   end
 end

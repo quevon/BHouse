@@ -1,9 +1,33 @@
 <%if current_tenant %>
-    <h1>Tenant Page</h1>
-    <%= image_tag current_tenant.image_url if current_tenant.image %>
-    <%= link_to "Edit Profile" , edit_tenant_registration_path(current_tenant)%>
-    <h1>Hello <%= current_tenant.email%></h1>
-    <%= button_to "logout", destroy_tenant_session_path, method: :delete  %>
+    <%= render "tenant"%>
 <%elsif current_owner %>
     <%= render "owner" %>
+<%else %>
+    <div>
+      <div class="fixed top-0 left-0 -z-50 bg-hero-image bg-no-repeat bg-bottom bg-contain bg-blend-normal saturation-125 contrast-125 opacity-70 w-full h-full bg-misty-rose"></div>
+      <div class="max-w-xl container px-6 py-16 mx-auto text-center sm:bg-white sm:bg-opacity-90 sm:rounded-lg">
+        <div class="max-w-lg mx-auto">
+          <h1 class="text-6xl font-bold font-heading text-tomato-400">
+            Your home away from home
+          </h1>
+
+          <p class="mt-6 text-lg text-gray-400">
+            rent bedspaces, rooms, and houses at convenient locations
+          </p>
+
+          <div class="w-full max-w-sm mx-auto mt-6 bg-transparent border rounded-md focus-within:border-blue-400 focus-within:ring focus-within:ring-blue-300  focus-within:ring-opacity-40">
+            <div class="flex flex-col md:flex-row">
+                <input
+                type="text"
+                placeholder="Enter your preferred area or landmark"
+                class="flex-1 h-10 px-4 py-2 m-1 text-gray-700 placeholder-gray-400 bg-transparent border-none appearance-none focus:outline-none focus:placeholder-transparent focus:ring-0"
+                />
+                <button>
+                    <ion-icon name="navigate-circle-outline"></ion-icon>
+                </button>
+      </div>
+          </div>
+        </div>
+      </div>
+    </div>
 <% end %>
