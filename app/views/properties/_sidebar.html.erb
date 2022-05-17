@@ -1,4 +1,6 @@
 <div class='filters filter-container'>
+  <%res= Geokit::Geocoders::GoogleGeocoder.reverse_geocode "#{@origin_point[0].to_s},#{@origin_point[1].to_s}"if @origin_point%>
+  <%="Showing properties within #{@radius} km from #{res.full_address}" if res%>
   <%= search_form_for @q do |form| %>
     <h1>Property Type</h1>
     <% property_type_array = ["condo", "apartment", "house", "dormitory"]%>

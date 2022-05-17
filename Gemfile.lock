@@ -129,6 +129,10 @@ GEM
     formtastic (4.0.0)
       actionpack (>= 5.2.0)
     formtastic_i18n (0.7.0)
+    geokit (1.13.1)
+    geokit-rails (2.3.2)
+      geokit (~> 1.5)
+      rails (>= 3.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
     has_scope (0.8.0)
@@ -351,6 +355,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   font-awesome-rails
+  geokit-rails
   image_processing (~> 1.1)
   jbuilder (~> 2.7)
   jsonapi-rails
