@@ -3,6 +3,32 @@
     
 
     <div class="main" id=main>
+    <h1>List of properties</h1>
+    <%current_owner.properties.each do |property|%>
+        <div>
+            <%=property.location_city%>
+            <%=property.listing_type%>
+            <%=format_currency(property.monthly_price)%>
+            <%=property.property_tenants.count%>
+
+        </div>
+    <%end%>
+    <h1>Tenant Requests</h1>
+    <%current_owner.properties.each do |property|%>
+        <% if property.property_tenants.count > 0%>
+            <%property.property_tenants.each do |request|%>
+                <%=request.property.location_city%>
+                <%=request.property.listing_type%>
+                <%=request.updated_at%>
+                <%=request.status%>
+                <%=request.tenant.firstname%>
+                <%=request.tenant.lastname%>
+                <%= link_to "Accept", update_property_tenant_path(request.property,:property_tenant => {:id => request.id, :status => "approved"}), :method => "patch" %>
+                <%= link_to "Reject", update_property_tenant_path(request.property,:property_tenant => {:id => request.id, :status => "reject"}), :method => "patch" %>
+            <%end%>
+        <% end %>
+    <%end%>
+
             <div class="cardBox">
                 <div class="card">
                     <div>
@@ -166,3 +192,4 @@
                 </div>
             </div>     
         </div>
+

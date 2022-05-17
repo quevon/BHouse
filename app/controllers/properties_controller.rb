@@ -3,8 +3,15 @@ class PropertiesController < ApplicationController
 
   # GET /properties or /properties.json
   def index
-    @q = Property.ransack(params[:q])
-    @properties = @q.result(distinct: true)
+    if params[:property].nil?
+      @q = Property.ransack(params[:q])
+      @properties = @q.result(distinct: true)
+    else
+      @origin_point = [(params[:property][:location_lat]).to_f,(params[:property][:location_lng]).to_f]
+      @radius = 50
+      @q = Property.within(@radius, :origin => @origin_point).ransack(params[:q])
+      @properties = @q.result(distinct: true)
+    end
   end
 
   # GET /properties/1 or /properties/1.json
@@ -67,7 +74,7 @@ class PropertiesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def property_params
-    params.require(:property).permit(:owner_id, :approved, :property_type, :listing_type,  :monthly_price,
+    params.require(:property).permit(:search, :owner_id, :approved, :property_type, :listing_type,  :monthly_price,
                                      :deposit_advance, :deposit_security, :other_fees, 
                                      :location_city, :location_lat, :location_lng, :long_address, :image,
                                      :accomodation_type=>[], :amenities=>[], :house_rules=>[],

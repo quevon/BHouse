@@ -11,7 +11,8 @@ class ApplicationController < ActionController::Base
        else
           current_tenant
        end   
-     end
+   end
+
 
     protected
 

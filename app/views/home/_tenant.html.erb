@@ -3,11 +3,11 @@
     <div class="cardBox">
         <div class="card">
             <div>
-                <div class="numbers">20</div>
-                <div class="cardName">Tenants</div>
+                <div class="numbers"><%= current_tenant.property_tenants.count %></div>
+                <div class="cardName">Applications</div>
             </div>
             <div class="iconBox">
-                <ion-icon name="people-outline"></ion-icon>
+                <ion-icon name="map-outline"></ion-icon>
             </div>
         </div>
         <div class="card">
@@ -38,133 +38,34 @@
             </div>
         </div>
     </div>
-    <div class="details">
-        <div class="tenantRequest">
-            <div class="cardHeader">
-                <h2>Tenants Request<h2>
-                <a href="#" class="btn">View All</a>
-            </div>
-            <table>
+    <div class>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-5">
+            <table class="w-full text-sm text-left text-gray-500">
                 <thead>
                     <tr>
-                        <td>FirstName</td>
-                        <td>Lastname</td>
-                        <td>Status</td>
-                        <td>Actions</td>
+                        <th class="px-6 py-3">Property Type</th>
+                        <th class="px-6 py-3">Listing Type</th>
+                        <th class="px-6 py-3">Location</th>
+                        <th class="px-6 py-3">Monthly Rate</th>
+                        <th class="px-6 py-3">Status</th>
+                        <th class="px-6 py-3">Date Updated</th>
                     </tr>
-                    <tbody>
-                        <tr>
-                            <td>Quevon</td>
-                            <td>Galang</td>
-                            <td><span class="status pending">Pending<span></td>
-                            <td>Accept</td>
-                        </tr>
-                        <tr>
-                            <td>Quevon</td>
-                            <td>Galang</td>
-                            <td><span class="status pending">Pending<span></td>
-                            <td>Accept</td>
-                        </tr>
-                        <tr>
-                            <td>Quevon</td>
-                            <td>Galang</td>
-                            <td><span class="status pending">Pending<span></td>
-                            <td>Accept</td>
-                        </tr>
-                        <tr>
-                            <td>Quevon</td>
-                            <td>Galang</td>
-                            <td><span class="status pending">Pending<span></td>
-                            <td>Accept</td>
-                        </tr>
-                        <tr>
-                            <td>Quevon</td>
-                            <td>Galang</td>
-                            <td><span class="status pending">Pending<span></td>
-                            <td>Accept</td>
-                        </tr>
-                        <tr>
-                            <td>Quevon</td>
-                            <td>Galang</td>
-                            <td><span class="status pending">Pending<span></td>
-                            <td>Accept</td>
-                        </tr>
-                            <tr>
-                            <td>Quevon</td>
-                            <td>Galang</td>
-                            <td><span class="status pending">Pending<span></td>
-                            <td>Accept</td>
-                        </tr>
-                            <tr>
-                            <td>Quevon</td>
-                            <td>Galang</td>
-                            <td><span class="status pending">Pending<span></td>
-                            <td>Accept</td>
-                        </tr>
-                            <tr>
-                            <td>Quevon</td>
-                            <td>Galang</td>
-                            <td><span class="status pending">Pending<span></td>
-                            <td>Accept</td>
-                        </tr>
-                            <tr>
-                            <td>Quevon</td>
-                            <td>Galang</td>
-                            <td><span class="status pending">Pending<span></td>
-                            <td>Accept</td>
-                        </tr>
-                            <tr>
-                            <td>Quevon</td>
-                            <td>Galang</td>
-                            <td><span class="status pending">Pending<span></td>
-                            <td>Accept</td>
-                        </tr>
-                    </tbody>
+                </thead>
+                <tbody>
+                <% applications = current_tenant.property_tenants %>
+                <% applications.each do |application| %>
+                    <tr>
+                        <td class="px-6 py-4"><%=application.property.property_type%></td>
+                        <td class="px-6 py-4"><%=application.property.listing_type%></td>
+                        <td class="px-6 py-4"><%=application.property.location_city%></td>
+                        <td class="px-6 py-4"><%=application.property.monthly_price%></td>
+                        <td class="px-6 py-4"><%=application.status%></td>
+                        <td class="px-6 py-4"><%=application.updated_at%></td>
+                    </tr>
+                <%end%>
+                </tbody>
             </table>
         </div>
-        <div class="recentTenants">
-            <div class="cardHeader">
-                <h2>Recent Tenants</h2>
-            </div>
-            <table>
-                <tr>
-                    <td width="60px"><div class="imgBx"><%= image_tag("empty.png") %></div></td>
-                    <td><h4>Quevon<br><span>Galang</span></h4></td>
-                </tr>
-                <tr>
-                    <td width="60px"><div class="imgBx"><%= image_tag("empty.png") %></div></td>
-                    <td><h4>Quevon<br><span>Galang</span></h4></td>
-                </tr>
-                <tr>
-                    <td width="60px"><div class="imgBx"><%= image_tag("empty.png") %></div></td>
-                    <td><h4>Quevon<br><span>Galang</span></h4></td>
-                </tr>
-                <tr>
-                    <td width="60px"><div class="imgBx"><%= image_tag("empty.png") %></div></td>
-                    <td><h4>Quevon<br><span>Galang</span></h4></td>
-                </tr>
-                <tr>
-                    <td width="60px"><div class="imgBx"><%= image_tag("empty.png") %></div></td>
-                    <td><h4>Quevon<br><span>Galang</span></h4></td>
-                </tr>
-                <tr>
-                    <td width="60px"><div class="imgBx"><%= image_tag("empty.png") %></div></td>
-                    <td><h4>Quevon<br><span>Galang</span></h4></td>
-                </tr>
-                <tr>
-                    <td width="60px"><div class="imgBx"><%= image_tag("empty.png") %></div></td>
-                    <td><h4>Quevon<br><span>Galang</span></h4></td>
-                </tr>
-                <tr>
-                    <td width="60px"><div class="imgBx"><%= image_tag("empty.png") %></div></td>
-                    <td><h4>Quevon<br><span>Galang</span></h4></td>
-                </tr>
-            </table>
-        </div>
-    </div>     
-</div>
-<h1>Tenant Page</h1>
-<%= image_tag current_tenant.image_url if current_tenant.image %>
-<%= link_to "Edit Profile" , edit_tenant_registration_path(current_tenant)%>
-<h1>Hello <%= current_tenant.email%></h1>
-<%= button_to "logout", destroy_tenant_session_path, method: :delete  %>
+    </div>
+        
+
