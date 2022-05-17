@@ -69,12 +69,6 @@ ActiveRecord::Schema.define(version: 2022_05_14_024549) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-  create_table "jwt_denylist", force: :cascade do |t|
-    t.string "jti", null: false
-    t.datetime "expired_at", null: false
-    t.index ["jti"], name: "index_jwt_denylist_on_jti"
-  end
-
   create_table "mailboxer_conversation_opt_outs", id: :serial, force: :cascade do |t|
     t.string "unsubscriber_type"
     t.integer "unsubscriber_id"

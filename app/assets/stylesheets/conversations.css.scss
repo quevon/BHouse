@@ -1,0 +1,84 @@
+.flexBox {
+    display: flex;
+}
+
+.flexItem {
+    margin: 10px;
+    background: var(--white);
+    box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+    border-radius: 20px;
+}
+
+.flexItem2 {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.conversations{
+    width: 20vw;
+    height: 7vh;
+    line-height: 6vh;
+    text-align: center;
+    display: flex;
+}
+
+.conversations:hover {
+    background-color: bisque;
+    cursor: pointer;
+}
+
+.conversationItem {
+    margin: 3px;
+}
+
+.recipient {
+    border: 2px solid rgba(0,0,0,0.08);
+    border-radius: 20px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    margin-bottom: 10px;
+    padding: 10px;
+    text-align: center;
+    height: 8vh;
+    line-height: 5vh;
+}
+
+.recipient p {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.photo {
+    margin-top: 9px;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column;
+    margin-left: 3px;
+}
+
+.messages div {
+    font-weight: 600;
+}
+
+.convo {
+    margin: 10px;
+}
+
+.inputArea {
+    margin-top: auto;
+}
+
+.inputArea textarea {
+    width: 92%;
+    height: 40px;
+    border-radius: 10px;
+    margin-left: 20px;
+}
+
+.inputArea ion-icon {
+    font-size: 30px;
+    margin-bottom: 5px;
+}

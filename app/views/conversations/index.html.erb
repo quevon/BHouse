@@ -1,9 +1,39 @@
-<h1>All Conversations</h1>
+<div class="main flexBox">
+    <div class="flexItem">
+        <% @conversations.each do |conversation| %>
+            <div class="conversations">
+                <div class="userprofile conversationItem photo"><%= image_tag (conversation.participants.find { |p| p != current_user }).image_url if (conversation.participants.find { |p| p != current_user }).image %></div>
+                <div class="conversationItem"><%= link_to (conversation.participants.find { |p| p != current_user }).name, conversation_path(conversation) %></div>
+            </div>
+        <% end %>
 
-<% @conversations.each do |conversation| %>
-    <div>
-        <%= link_to conversation.subject, conversation_path(conversation) %>
+        <%= link_to "New Conversation", new_conversation_path %>
     </div>
-<% end %>
 
-<%= link_to "New Conversation", new_conversation_path %>
+    <div class="flexItem flexItem2">
+        <% if @conversation.present? %>
+            <div class="flexBox recipient">
+                <div class="userprofile conversationItem"><%= image_tag @recipient.image_url if @recipient.image %></div>
+                <p class="conversationItem"><%= @recipient.name %></p>
+            </div>
+            <% @conversation.receipts_for(current_user).each do |receipt| %>
+                <div class="flexBox convo">
+                    <div class="userprofile"><%= image_tag receipt.message.sender.image_url if receipt.message.sender.image %></div>
+                    <div class="messages">
+                        <div><%= receipt.message.sender.name %></div>
+                        <p><%= receipt.message.body %></p>
+                    </div>
+                </div>
+            <% end %>
+            
+            <div class="inputArea">
+                <%= form_tag conversation_messages_path(@conversation), method: :post do %>
+                    <%= text_area_tag :body %>
+                    <%= button_tag :submit do %>
+                        <ion-icon name="send-outline"></ion-icon>
+                    <% end %>
+                <% end %>
+            </div>
+        <% end %>
+    </div>
+</div>

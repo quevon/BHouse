@@ -361,6 +361,7 @@ DEPENDENCIES
   jsonapi-rails
   listen (~> 3.3)
   mailboxer
+  mini_magick
   pg (~> 1.1)
   puma (~> 5.0)
   rack-cors

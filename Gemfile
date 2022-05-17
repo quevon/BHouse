@@ -74,3 +74,4 @@ gem 'ransack'
 gem 'mailboxer'
 
 gem 'geokit-rails'
+
