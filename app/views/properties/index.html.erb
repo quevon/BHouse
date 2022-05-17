@@ -1,56 +1,116 @@
 <p id="notice"><%= notice %></p>
 
-
-<section class="bg-white dark:bg-gray-900 main">
+<% if current_owner or current_tenant%>
+  <section class="main">
+<% else %>
+  <section>
+<%end%>
   <div class="container px-6 py-10 mx-auto">
     <h1 class="heading-page-title">
       explore our <br> 
       awesome <span class="underline font-heading decoration-tomato-500">Properties</span>
     </h1>
     <p class="mt-4 text-gray-500 xl:mt-6 dark:text-gray-300">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum quam voluptatibus
+          Choose a space that suits your needs
     </p>
-      
-    <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 md:grid-cols-2 xl:grid-cols-3">
-    <div>
-      <%= render 'sidebar', properties: @properties %>
-    </div>
-      <% @properties.each do |property| %>
-        <div class="max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 m-3">
-        <div class="w-full h-56">
-          <%if property.image%>
-            <%= image_tag(property.image_url, class: "object-cover object-center h-56 w-96" ) %>
-          <%else%>
-            <%= image_tag("https://res.cloudinary.com/dbegssigw/image/upload/v1652432165/bhouse_app/bhouselogo_xiistv.png", class: "object-cover object-center w-full h-56" ) %>
-          <%end%>
-        </div>
-          <div class="flex items-center px-6 py-3 bg-tomato-500">
-            <h1 class="mx-3 text-lg font-semibold text-white"><%= "#{property.listing_type} in #{property.location_city}"%></h1>
-          </div>
-          <div class="px-6 py-4">
-            <h1 class="text-xl font-semibold text-gray-800 dark:text-white"><%= property.listing_type %></h1>
-            <p class="py-2 text-gray-700 dark:text-gray-400">Property desciption</p>      
-            <div class="flex flex-col mt-4 text-gray-700 dark:text-gray-200">
-              <h3 class="px-2 text-sm"><%= property.property_type %></h3>
-              <h3 class="px-2 text-sm"></h3>
-              <h3 class="px-2 text-sm"><%= property.accomodation_type %></h3>
-              <h3 class="px-2 text-sm"><%= property.amenities %></h3>
-              <h3 class="px-2 text-sm"><%= property.monthly_price %></h3>
-              <h3 class="px-2 text-sm"><%= property.deposit_advance %></h3>
-              <h3 class="px-2 text-sm"><%= property.deposit_security %></h3>
-              <h3 class="px-2 text-sm"><%= property.other_fees %></h3>
-              <h3 class="px-2 text-sm"><%= property.house_rules %></h3>
-              <h3 class="px-2 text-sm"><%= property.location_city %></h3>
-              <h3 class="px-2 text-sm"><%= property.location_lat %></h3>
-              <h3 class="px-2 text-sm"><%= property.location_lng %></h3>
-              <h3 class="px-2 text-sm"><%= property.owner_id %></h3>
-              <h3 class="px-2 text-sm"><%= link_to 'Show', property %></h3>
-              <h3 class="px-2 text-sm"><%= link_to 'Edit', edit_property_path(property) %></h3>
-              <h3 class="px-2 text-sm"><%= link_to 'Destroy', property, method: :delete, data: { confirm: 'Are you sure?' } %></h3>
+    <div class="grid grid-cols-3">
+      <div class="col-span-1">
+          <%= render 'sidebar', properties: @properties %>
+      </div>
+      <div class="col-span-2 grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 md:grid-cols-2 xl:grid-cols-2">
+        <% @properties.each do |property| %>
+          <%=link_to property do %>
+            <div class="max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 m-3">
+              <div class="w-full h-56">
+                <%if property.image%>
+                  <%= image_tag(property.image_url, class: "object-cover object-center h-56 w-96" ) %>
+                <%else%>
+                  <%= image_tag("https://res.cloudinary.com/dbegssigw/image/upload/v1652432165/bhouse_app/bhouselogo_xiistv.png", class: "object-cover object-center w-full h-56" ) %>
+                <%end%>
+              </div>
+              <div class="flex items-center px-6 py-3 bg-tomato-500">
+                <h1 class="mx-3 text-lg font-semibold text-white"><%= "#{property.listing_type} in #{property.location_city}"%></h1>
+              </div>
+              <div class="px-6 py-4">
+                <h1 class="text-xl font-semibold text-gray-800"><%= format_currency(property.monthly_price) %></h1>
+                <p class="py-2 text-gray-700">Property desciption</p>      
+                <p class="py-2 text-gray-700"><%= property.distance_to(@origin_point).round(2) if @origin_point %> km</p>      
+                <div class="flex flex-col mt-4 text-gray-700">
+                  <div class="flex justify-between">
+                    <div class="flex">
+                      <h3 class="card-header"><ion-icon name="home-outline"></ion-icon></h3>
+                      <h3 class="card-subtitle ml-2"> Property Type</h3>
+                    </div>
+                    <p class="description-text pl-10">
+                      <%= property.property_type %>
+                    </p>
+                  </div>
+                  <div class="flex justify-between">
+                    <div class="flex">
+                      <h3 class="card-header"><ion-icon name="bed-outline"></ion-icon></h3>
+                      <h3 class="card-subtitle ml-2"> Listing Type</h3>
+                    </div>
+                    <p class="description-text pl-10">
+                      <%= property.listing_type %>
+                    </p>
+                  </div>
+                  <div class="col-span-2">
+                    <div class="flex">
+                      <h3 class="card-header"><ion-icon name="people-outline"></ion-icon></h3>
+                      <h3 class="card-subtitle ml-2"> Accomodation Type</h3>
+                    </div>
+                    <p class="description-text -mt-3">
+                      This property accepts:
+                    </p>
+                      <div class="grid grid-cols-3 grid-rows-2">
+                        <% get_array(property.accomodation_type).each do |type|  %>
+                          <div class="flex">
+                            <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
+                            <p class="description-text"><%= type %></p>
+                          </div>
+                        <% end %> 
+                      </div>
+                  </div>
+                  <div class="col-span-2">
+                    <div class="flex">
+                      <h3 class="card-header"><ion-icon name="wifi-outline"></ion-icon></h3>
+                      <h3 class="card-subtitle ml-2"> Amenities</h3>
+                    </div>
+                    <p class="description-text -mt-3">
+                      This property has the following amenities:
+                    </p>
+                      <div class="grid grid-cols-3 grid-rows-2">
+                        <% get_array(property.amenities).each do |amenity|  %>
+                          <div class="flex">
+                            <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
+                            <p class="description-text"><%= amenity %></p>
+                          </div>
+                        <% end %> 
+                      </div>
+                  </div>
+                  <div class="col-span-2">
+                    <div class="flex">
+                      <h3 class="card-header"><ion-icon name="warning-outline"></ion-icon></h3>
+                      <h3 class="card-subtitle ml-2"> House Rules</h3>
+                    </div>
+                    <p class="description-text -mt-3">
+                      This property allows the following:
+                    </p>
+                      <div class="grid grid-cols-3 grid-rows-2">
+                        <% get_array(property.house_rules).each do |rule|  %>
+                          <div class="flex">
+                            <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
+                            <p class="description-text"><%= rule %></p>
+                          </div>
+                        <% end %> 
+                      </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      <% end %>
+          <% end %>  
+        <% end %>
+      </div>
     </div>
   </div>
 </section>

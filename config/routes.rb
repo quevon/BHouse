@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :property_tenants
   end
   post '/properties/:property_id/property_tenants', to: 'property_tenants#create', as: 'create_property_tenant'
+  patch '/properties/:property_id/property_tenants', to: 'property_tenants#update', as: 'update_property_tenant'
 
   resources :conversations do
     resources :messages

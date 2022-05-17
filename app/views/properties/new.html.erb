@@ -1,6 +1,11 @@
+<section class="main">
+<div class="w-2/3 mx-auto mt-6">
+    <h1 class = "heading-page-title text-4xl">Create New Property Listing</h1>
+</div>
+    <%= render 'form', property: @property %>
 
-<h1 class = "text-3xl font-bold underline">New Property</h1>
+    <%= link_to 'Back', properties_path %>
 
-<%= render 'form', property: @property %>
+</section>
 
-<%= link_to 'Back', properties_path %>
+
