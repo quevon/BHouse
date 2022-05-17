@@ -13,7 +13,11 @@ class PropertyTenantsController < ApplicationController
     def update
       @property_tenant = PropertyTenant.find(params[:property_tenant][:id])
       @property_tenant.status = params[:property_tenant][:status]
-      byebug
+      if @property_tenant.status = "approved"
+        @property_tenant.property.update(:availability => false)
+      else
+        @property_tenant.property.update(:availability => true)
+      end
       respond_to do |format|
           if @property_tenant.update(property_tenant_params)
             format.html { redirect_to property_url(@property_tenant.property), notice: 'Application Status Updated' }

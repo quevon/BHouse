@@ -11,6 +11,9 @@
     <p class="description-text-group">
         Owned by: <%="#{@property.owner.firstname} #{@property.owner.lastname} "%>
     </p>
+    <p class="description-text-group">
+        Availability: <%=@property.availability%>
+    </p>
     <div class="property-image-container">
       <% imgsrc = @property.image ? @property.image_url : "https://res.cloudinary.com/dbegssigw/image/upload/v1652432165/bhouse_app/bhouselogo_xiistv.png" %>
       <%= image_tag imgsrc, class:"property-image" %>
@@ -171,9 +174,18 @@
             <%= button_to "Message Owner", conversations_path, :method => "get", :class => "btn-primary" %>
           </div>
         <% elsif current_owner == @property.owner %>
-          <p>owner logged in</p>
-          <p>applications received: <%=@property.property_tenants.count%></p>
-            <%= link_to 'Edit', edit_property_path(@property) %> 
+          <p>pending applications: <%=@property.property_tenants.where(:status => "pending").count%></p>
+          <% if @property.property_tenants.where(:status => "approved").count > 0 %>
+            <p>Current Tenants</p>
+            <%@property.property_tenants.where(:status => "approved").each do |property_tenant|%>
+              <div>
+                <%=property_tenant.tenant.firstname%>
+                <%=property_tenant.tenant.lastname%>
+                <%=property_tenant.updated_at%>
+              </div>
+            <%end%>
+          <%end%>
+          <%= link_to 'Edit Listing', edit_property_path(@property) %> 
         <%end%>
       </div>
   </div>
