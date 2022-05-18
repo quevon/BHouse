@@ -1,7 +1,19 @@
 <div class='filters filter-container'>
-  <%res= Geokit::Geocoders::GoogleGeocoder.reverse_geocode "#{@origin_point[0].to_s},#{@origin_point[1].to_s}"if @origin_point%>
+  <%res= Geokit::Geocoders::GoogleGeocoder.reverse_geocode "#{session[:origin_point][0].to_s},#{session[:origin_point][1].to_s}"if session[:origin_point]%>
   <%="Showing properties within #{@radius} km from #{res.full_address}" if res%>
+
+  <%= form_tag(properties_path, method: :get) do%>
+  <div>
+     <input type="text" name="new_radius" list="tickmarks">
+     <%= submit_tag ("set new radius")%>
+  </div>
+  <%end%>
+  <%= link_to 'Clear origin', clear_origin_point_path() %>
+
   <%= search_form_for @q do |form| %>
+    
+    <h1>Budget</h1>
+      <%= form.text_field :monthly_price_lteq%>
     <h1>Property Type</h1>
     <% property_type_array = ["condo", "apartment", "house", "dormitory"]%>
     <% property_type_array.each do |property_type| %>

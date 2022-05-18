@@ -137,6 +137,11 @@
           <p class="description-text"><%= return "N/A" unless @property.other_fees %></p>   
         </div>
 
+        <div class="flex justify-between">
+          <p class="card-subtitle">Available Slots:</p>
+          <p class="description-text"><%= @property.slots %></p>   
+        </div>
+
         <% if current_tenant%>
           <% application = current_tenant.property_tenants.where(:property_id => @property.id) %>
           <% if application.count > 0%>
@@ -162,6 +167,7 @@
                         :method => "patch", :class => "btn-primary" %>
                       </div>
                     <%end%>
+        
                   </div>
               <% end %>
           <%else%>
@@ -174,19 +180,31 @@
             <%= button_to "Message Owner", conversations_path, :method => "get", :class => "btn-primary" %>
           </div>
         <% elsif current_owner == @property.owner %>
-          <p>pending applications: <%=@property.property_tenants.where(:status => "pending").count%></p>
-          <% if @property.property_tenants.where(:status => "approved").count > 0 %>
+          <p>pending applications: <%=@property.pending_tenants.count%></p>
+          <% if @property.present_tenants.count > 0 %>
             <p>Current Tenants</p>
-            <%@property.property_tenants.where(:status => "approved").each do |property_tenant|%>
+            <%@property.present_tenants.each do |property_tenant|%>
               <div>
                 <%=property_tenant.tenant.firstname%>
                 <%=property_tenant.tenant.lastname%>
                 <%=property_tenant.updated_at%>
+                <%= link_to "Remove Tenant", update_property_tenant_path(property_tenant.property,:property_tenant => {:id => property_tenant.id, :status => "removed"}), :method => "patch", :data => {:confirm => "Evict #{property_tenant.tenant.firstname} from your property?"}  %>
               </div>
             <%end%>
           <%end%>
           <%= link_to 'Edit Listing', edit_property_path(@property) %> 
         <%end%>
+        <div>
+          <% if current_tenant%>
+            <% if @property.liked?(current_tenant)%>
+              <%= button_to "Like", add_like_path(@property), method: "patch", disabled: true%>
+            <%else %>
+              <%= button_to "Like", add_like_path(@property), method: "patch"%>
+            <%end%>
+            <%= @property.number_of_likes%>
+          <%end%>
+
+        </div>
       </div>
   </div>
 </div>

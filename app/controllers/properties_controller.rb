@@ -1,15 +1,18 @@
 class PropertiesController < ApplicationController
-  before_action :set_property, only: %i[show edit update destroy]
+  before_action :set_property, only: %i[show edit update destroy add_like]
 
   # GET /properties or /properties.json
   def index
-    if params[:property].nil?
-      @q = Property.ransack(params[:q])
+    @radius = params[:new_radius] ? params[:new_radius] : 50
+    if !params[:property].nil? 
+      session[:origin_point] = [(params[:property][:location_lat]).to_f,(params[:property][:location_lng]).to_f]
+      @q = Property.within(@radius, :origin => session[:origin_point]).ransack(params[:q])
+      @properties = @q.result(distinct: true)
+    elsif params[:property].nil? && !session[:origin_point].nil?
+      @q = Property.within(@radius, :origin => session[:origin_point]).ransack(params[:q])
       @properties = @q.result(distinct: true)
     else
-      @origin_point = [(params[:property][:location_lat]).to_f,(params[:property][:location_lng]).to_f]
-      @radius = 50
-      @q = Property.within(@radius, :origin => @origin_point).ransack(params[:q])
+      @q = Property.ransack(params[:q])
       @properties = @q.result(distinct: true)
     end
   end
@@ -65,6 +68,16 @@ class PropertiesController < ApplicationController
     end
   end
 
+  def clear_origin_point
+    @clear = session[:origin_point] = nil
+    redirect_to properties_url
+  end
+
+  def add_like
+    Like.create(:tenant_id => current_tenant.id, :property_id => @property.id)
+    redirect_to property_path(@property)
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -74,7 +87,7 @@ class PropertiesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def property_params
-    params.require(:property).permit(:search, :owner_id, :approved, :property_type, :listing_type,  :monthly_price,
+    params.require(:property).permit(:search, :availability, :slots, :owner_id, :approved, :property_type, :listing_type,  :monthly_price,
                                      :deposit_advance, :deposit_security, :other_fees, 
                                      :location_city, :location_lat, :location_lng, :long_address, :image,
                                      :accomodation_type=>[], :amenities=>[], :house_rules=>[],
