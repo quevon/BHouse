@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   resources :conversations do
     resources :messages
   end
+  get 'properties/:property_id/conversations/', to: 'conversations#new', as:'property_conversation'
 
 
   root to: "home#index"

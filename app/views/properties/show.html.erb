@@ -177,7 +177,7 @@
             </div>
           <%end%>
           <div class="btn-container">
-            <%= button_to "Message Owner", conversations_path, :method => "get", :class => "btn-primary" %>
+            <%= button_to "Message Owner", property_conversation_path(@property), :method => "get", :class => "btn-primary" %>
           </div>
         <% elsif current_owner == @property.owner %>
           <p>pending applications: <%=@property.pending_tenants.count%></p>
