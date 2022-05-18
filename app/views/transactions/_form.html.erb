@@ -1,7 +1,6 @@
     
 
   <%= form_with(model: transaction, class: "contents") do |form| %>
-  <%= current_tenant.balance %>
     <% if transaction.errors.any? %>
       <div id="error_explanation" >
         <ul>

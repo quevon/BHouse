@@ -1,15 +1,14 @@
 <div id="<%= dom_id transaction %>">
-  <%= current_tenant.firstname %>
   <%= current_tenant.balance %>
 
   <p class="my-5">
     <strong class="block font-medium mb-1">Tenant:</strong>
-    <%= transaction.tenant_id %>
+    <%= current_tenant.firstname %>
   </p>
 
   <p class="my-5">
     <strong class="block font-medium mb-1">Owner:</strong>
-    <%= transaction.owner_id %>
+    <%= "#{transaction.owner.firstname} #{transaction.owner.balance}" %>
   </p>
 
   <p class="my-5">
