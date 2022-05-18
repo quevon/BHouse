@@ -1,0 +1,37 @@
+    
+
+  <%= form_with(model: transaction, class: "contents") do |form| %>
+  <%= current_tenant.balance %>
+      
+    <% if transaction.errors.any? %>
+      <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+        <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+
+        <ul>
+          <% transaction.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :tenant_id%>
+      <%= form.hidden_field :tenant_id, value: current_tenant.id %>
+    </div>
+
+    <div class="field">
+      <%= form.label :owner_id %>
+      <%= form.select :owner_id,Owner.all.pluck(:id,:id),{prompt:'Select Owners'},{class: "txt_fld"}%>
+    </div>
+
+    <div class="field">
+      <%= form.label :amount %>
+      <%= form.text_field :amount, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+
+
+    <div class="inline">
+      <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+    </div>
+  <% end %>
