@@ -1,6 +1,7 @@
 class Tenant < ApplicationRecord
   include ImageUploader::Attachment(:image)
   has_many :property_tenants
+  has_many :likes
   has_many :transactions
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
