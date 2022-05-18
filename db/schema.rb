@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_14_024549) do
+ActiveRecord::Schema.define(version: 2022_05_16_071604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 2022_05_14_024549) do
     t.string "middlename"
     t.string "lastname"
     t.text "image_data"
+    t.decimal "balance", precision: 10, scale: 2, default: "5000.0"
     t.index ["approved"], name: "index_owners_on_approved"
     t.index ["confirmation_token"], name: "index_owners_on_confirmation_token", unique: true
     t.index ["email"], name: "index_owners_on_email", unique: true
@@ -195,9 +196,20 @@ ActiveRecord::Schema.define(version: 2022_05_14_024549) do
     t.string "middlename"
     t.string "lastname"
     t.text "image_data"
+    t.decimal "balance", precision: 10, scale: 2, default: "5000.0"
     t.index ["confirmation_token"], name: "index_tenants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_tenants_on_email", unique: true
     t.index ["reset_password_token"], name: "index_tenants_on_reset_password_token", unique: true
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.bigint "tenant_id", null: false
+    t.bigint "owner_id", null: false
+    t.decimal "amount"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["owner_id"], name: "index_transactions_on_owner_id"
+    t.index ["tenant_id"], name: "index_transactions_on_tenant_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -208,4 +220,6 @@ ActiveRecord::Schema.define(version: 2022_05_14_024549) do
   add_foreign_key "properties", "owners"
   add_foreign_key "property_tenants", "properties"
   add_foreign_key "property_tenants", "tenants"
+  add_foreign_key "transactions", "owners"
+  add_foreign_key "transactions", "tenants"
 end
