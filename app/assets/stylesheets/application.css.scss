@@ -126,16 +126,31 @@ body{
     position: relative;
 }
 // transactions 
-.center-transactions-container{
-    position: absolute;
-    top: 70%;
-    left: 60%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    border-radius: 10px;
-    border: 1px solid black;
-    box-shadow: var(--boxshadow);
-}
+
+.table_containers {
+    display: flex;
+    justify-content: center;
+  }
+.table_containers  table {
+    border: 1px solid;
+    border-collapse: collapse;
+    width: 70%;
+  }
+.table_containers th,
+.table_containers td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+.table_containers  th {
+    background-color: #1E90FF;
+    color: white;
+  }
+.table_containers  tr:hover {
+    background-color: #85B3D1FF;
+  }
+
+
 /* sign up form styling  */
 
 .center-form-container{

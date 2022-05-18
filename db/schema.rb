@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_18_075757) do
+ActiveRecord::Schema.define(version: 2022_05_18_112959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -224,6 +224,7 @@ ActiveRecord::Schema.define(version: 2022_05_18_075757) do
     t.decimal "amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "status", default: "Waiting for Payment"
     t.index ["owner_id"], name: "index_transactions_on_owner_id"
     t.index ["tenant_id"], name: "index_transactions_on_tenant_id"
   end
