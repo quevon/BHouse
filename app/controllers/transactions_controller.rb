@@ -28,10 +28,10 @@ class TransactionsController < InheritedResources::Base
     update_balance_tenant()
   end
   def update_balance_owner
-    current_owner.update!(balance: current_owner.balance + @transaction.amount)
+    current_owner.update(balance: current_owner.balance + @transaction.amount)
   end
   def update_balance_tenant
-    @transaction.tenant.update!(balance:  @transaction.tenant.balance - @transaction.amount)
+    @transaction.tenant.update(balance:  @transaction.tenant.balance - @transaction.amount)
   end
   def create
     @transaction = Transaction.new(transaction_params)
@@ -39,8 +39,8 @@ class TransactionsController < InheritedResources::Base
     respond_to do |format|
       if @transaction.save
         format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }
-        format.json { render json: @product, status: :created, location: @transaction }
-  
+        format.json { render json: @transaction, status: :created, location: @transaction }
+     
       else
         format.html { render action: "new" }
         format.json { render json: @transaction.errors, status: :unprocessable_entity }
