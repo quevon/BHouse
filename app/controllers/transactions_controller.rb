@@ -1,8 +1,22 @@
 class TransactionsController < InheritedResources::Base
-  before_action :authenticate_tenant!
-  
+  before_action :authenticate_owner!
+
   def index
-    @transactions = Transaction.where( :tenant_id => current_tenant.id)
+    @transactions = Transaction.where( :owner_id => current_owner.id)
+  end
+
+  # def authenticate!
+  #   if owner_signed_in?
+  #     :authenticate_owner!, :except => 
+  #   elsif tenant_signed_in?
+  #     :authenticate_tenant!
+  #   end
+  # end
+  def tenant_signed_in?
+    tenant_signed_in?
+  end
+  def tenant
+    # @transactions = Transaction.where( :tenant_id => current_tenant.id)
   end
 
   def update_balance_owner
@@ -33,4 +47,6 @@ class TransactionsController < InheritedResources::Base
     def transaction_params
       params.require(:transaction).permit(:tenant_id, :owner_id, :amount)
     end
+
+ 
 end

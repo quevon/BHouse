@@ -9,9 +9,11 @@
       <thead> 
         <tr>
           <th>Owner Name</th>
-          <th>Tenant Balance</th>
           <th>Owner Balance</th>
+          <th>Tenant Name</th>
+          <th>Tenant Balance</th>
           <th>Amount</th>
+          <th>Status</th>
           <th colspan="2">Actions</th>
         </tr>
       </thead>
@@ -20,15 +22,19 @@
         <% @transactions.each do |transaction| %>
           <tr>
             <td><%= transaction.owner.firstname %></td>
-            <td><%= current_tenant.balance %></td>
-            <td><%= transaction.owner.balance %></td>
+            <td><%= current_owner.balance %></td>
+            <td><%= transaction.tenant.firstname %></td>
+            <td><%= transaction.tenant.balance %></td>
             <td><%= transaction.amount %></td>
+            <td><%= transaction.status %></td>
             <td>
               <%= link_to "Show ", transaction, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
             </td>
-            <%# <td>
-              <%= link_to 'Edit', edit_transaction_path(transaction), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-            <%# </td> %> 
+            <% if transaction.status == "Waiting for Payment"%>
+              <td>
+                <%= link_to 'Edit', edit_transaction_path(transaction), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+              </td> 
+            <% end %>
           </tr>
         <% end %>
       </tbody>
