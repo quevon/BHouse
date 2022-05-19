@@ -69,12 +69,6 @@ ActiveRecord::Schema.define(version: 2022_05_18_112959) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-  create_table "jwt_denylist", force: :cascade do |t|
-    t.string "jti", null: false
-    t.datetime "exp", null: false
-    t.index ["jti"], name: "index_jwt_denylist_on_jti"
-  end
-
   create_table "likes", force: :cascade do |t|
     t.bigint "tenant_id", null: false
     t.bigint "property_id", null: false
