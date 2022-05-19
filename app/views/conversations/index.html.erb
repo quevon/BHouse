@@ -6,8 +6,6 @@
                 <div class="conversationItem"><%= link_to (conversation.participants.find { |p| p != current_user }).name, conversation_path(conversation) %></div>
             </div>
         <% end %>
-
-        <%= link_to "New Conversation", new_conversation_path %>
     </div>
 
     <div class="flexItem flexItem2">

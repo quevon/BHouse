@@ -19,6 +19,8 @@ class ConversationsController < ApplicationController
             @recipient = owner
         end 
         
+        @receiver = Owner.find(owner)
+
         @ongoing_conversation = current_user.mailbox.conversations.find_by(subject: Owner.find(owner).name)
         respond_to do |format|
             if @ongoing_conversation.present?
