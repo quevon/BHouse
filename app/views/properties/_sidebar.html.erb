@@ -1,54 +1,77 @@
 <div class='filters filter-container'>
-  <%res= Geokit::Geocoders::GoogleGeocoder.reverse_geocode "#{session[:origin_point][0].to_s},#{session[:origin_point][1].to_s}"if session[:origin_point]%>
-  <%="Showing properties within #{@radius} km from #{res.full_address}" if res%>
 
-  <%= form_tag(properties_path, method: :get) do%>
-  <div>
-     <input type="text" name="new_radius" list="tickmarks">
-     <%= submit_tag ("set new radius")%>
+  <div class="filter-group">
+    <h1 class="card-subtitle">Location</h1>
+    <%res= Geokit::Geocoders::GoogleGeocoder.reverse_geocode "#{session[:origin_point][0].to_s},#{session[:origin_point][1].to_s}"if session[:origin_point]%>
+    <%="Showing properties within #{@radius} km from #{res.full_address}" if res%>
+    <%= form_tag(properties_path, method: :get) do%>
+      <div class="grid grid-cols-2 items-center gap-3">
+        <input type="text" name="new_radius" class="col-span-1 styled-input", placeholder="<%=@radius%> km">
+        <%= submit_tag("set radius")%>
+      </div>
+    <%end%>
+    <%= button_to 'Clear origin', clear_origin_point_path(), :class => "btn-primary mt-5" %>
   </div>
-  <%end%>
-  <%= link_to 'Clear origin', clear_origin_point_path() %>
+
 
   <%= search_form_for @q do |form| %>
-    
-    <h1>Budget</h1>
+    <div class="filter-group">
+      <h1 class="card-subtitle">Budget</h1>
       <%= form.text_field :monthly_price_lteq%>
-    <h1>Property Type</h1>
-    <% property_type_array = ["condo", "apartment", "house", "dormitory"]%>
-    <% property_type_array.each do |property_type| %>
+    </div>
+    
+    <div class="filter-group grid grid-cols-2">
       <div>
-        <%= check_box_tag('q[property_type_eq_any][]', property_type, (true if @q.property_type_eq_any.try(:include?, property_type))) %>
-        <%= property_type %>
+        <h1 class="card-subtitle">Property Type</h1>
+        <% property_type_array = ["condo", "apartment", "house", "dormitory"]%>
+        <% property_type_array.each do |property_type| %>
+          <div>
+            <%= check_box_tag('q[property_type_eq_any][]', property_type, (true if @q.property_type_eq_any.try(:include?, property_type))) %>
+            <%= property_type %>
+          </div>
+      <%end%>
       </div>
-    <%end%>
+      <div>
+        <h1>Listing Type</h1>
+        <% listing_type_array = ["entire unit", "room", "bedspace"]%>
+        <% listing_type_array.each do |listing_type| %>
+          <div>
+            <%= check_box_tag('q[listing_type_eq_any][]', listing_type, (true if @q.listing_type_eq_any.try(:include?, listing_type))) %>
+            <%= listing_type %>
+          </div>
+        <%end%>
+      </div>
 
-    <h1>Listing Type</h1>
-    <% listing_type_array = ["entire unit", "room", "bedspace"]%>
-    <% listing_type_array.each do |listing_type| %>
       <div>
-        <%= check_box_tag('q[listing_type_eq_any][]', listing_type, (true if @q.listing_type_eq_any.try(:include?, listing_type))) %>
-        <%= listing_type %>
+        <h1>Accomodation Type</h1>
+        <% accomodation_array = ["male", "female", "student", "working", "couple", "family"]%>
+        <% accomodation_array.each do |accomodation| %>
+          <div>
+            <%= check_box_tag('q[accomodation_type_cont_all][]', accomodation, (true if @q.accomodation_type_cont_all.try(:include?, accomodation))) %>
+            <%= accomodation %>
+          </div>
+        <%end%>
       </div>
-    <%end%>
+      <div>
+        <h1>Amenities</h1>
+          <% amenities_array = ["aircon", "wifi", "parking", "cooking", "gym", "pool"]%>
+          <% amenities_array.each do |amenity| %>
+            <div>
+              <%= check_box_tag('q[amenities_cont_all][]', amenity, (true if @q.amenities_cont_all.try(:include?, amenity))) %>
+              <%= amenity %>
+            </div>
+          <%end%>
+        
+      </div>
+      
+    </div>
+    
 
-    <h1>Accomodation Type</h1>
-    <% accomodation_array = ["male", "female", "student", "working", "couple", "family"]%>
-    <% accomodation_array.each do |accomodation| %>
-      <div>
-        <%= check_box_tag('q[accomodation_type_cont_all][]', accomodation, (true if @q.accomodation_type_cont_all.try(:include?, accomodation))) %>
-        <%= accomodation %>
-      </div>
-    <%end%>
+    
 
-    <h1>Amenities</h1>
-    <% amenities_array = ["aircon", "wifi", "parking", "cooking", "gym", "pool"]%>
-    <% amenities_array.each do |amenity| %>
-      <div>
-        <%= check_box_tag('q[amenities_cont_all][]', amenity, (true if @q.amenities_cont_all.try(:include?, amenity))) %>
-        <%= amenity %>
-      </div>
-    <%end%>
+    
+
+    
 
     <h1>House Rules</h1>
     <% house_rules_array = ["kids", "pets", "smoking", "visitors"]%>

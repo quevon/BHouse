@@ -3,32 +3,6 @@
     
 
     <div class="main" id=main>
-    <h1>List of properties</h1>
-    <%current_owner.properties.each do |property|%>
-        <div>
-            <%=property.location_city%>
-            <%=property.listing_type%>
-            <%=format_currency(property.monthly_price)%>
-            <%=property.property_tenants.count%>
-
-        </div>
-    <%end%>
-    <h1>Tenant Requests</h1>
-    <%current_owner.properties.each do |property|%>
-        <% if property.property_tenants.count > 0%>
-            <%property.property_tenants.each do |request|%>
-                <%=request.property.location_city%>
-                <%=request.property.listing_type%>
-                <%=request.updated_at%>
-                <%=request.status%>
-                <%=request.tenant.firstname%>
-                <%=request.tenant.lastname%>
-                <%= link_to "Accept", update_property_tenant_path(request.property,:property_tenant => {:id => request.id, :status => "approved"}), :method => "patch" %>
-                <%= link_to "Reject", update_property_tenant_path(request.property,:property_tenant => {:id => request.id, :status => "reject"}), :method => "patch" %>
-            <%end%>
-        <% end %>
-    <%end%>
-
             <div class="cardBox">
                 <div class="card">
                     <div>
@@ -41,7 +15,11 @@
                 </div>
                 <div class="card">
                     <div>
-                        <div class="numbers">11</div>
+                        <%total_pending_tenants = 0%>
+                        <%current_owner.properties.each do |property|%>
+                            <%total_pending_tenants = total_pending_tenants + property.property_tenants.count%>
+                        <% end %>
+                        <div class="numbers"><%= total_pending_tenants %></div>
                         <div class="cardName">Pending Tenants</div>
                     </div>
                     <div class="iconBox">
@@ -50,8 +28,8 @@
                 </div>
                 <div class="card">
                     <div>
-                        <div class="numbers">23</div>
-                        <div class="cardName">Posts</div>
+                        <div class="numbers"><%=current_owner.properties.count%></div>
+                        <div class="cardName">Properties</div>
                     </div>
                     <div class="iconBox">
                         <ion-icon name="images-outline"></ion-icon>
@@ -67,6 +45,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="details">
                 <div class="tenantRequest">
                     <div class="cardHeader">
@@ -76,119 +55,47 @@
                     <table>
                         <thead>
                             <tr>
-                                <td>FirstName</td>
-                                <td>Lastname</td>
-                                <td>Status</td>
-                                <td>Actions</td>
+                                <th>Tenant Firstname</th>
+                                <th>Tenant Lastname</th>
+                                <th>Type</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th colspan="2">Actions</th>
                             </tr>
+                        </thead>
                             <tbody>
-                                <tr>
-                                    <td>Quevon</td>
-                                    <td>Galang</td>
-                                    <td><span class="status pending">Pending<span></td>
-                                    <td>Accept</td>
-                                </tr>
-                                <tr>
-                                    <td>Quevon</td>
-                                    <td>Galang</td>
-                                    <td><span class="status pending">Pending<span></td>
-                                    <td>Accept</td>
-                                </tr>
-                                <tr>
-                                    <td>Quevon</td>
-                                    <td>Galang</td>
-                                    <td><span class="status pending">Pending<span></td>
-                                    <td>Accept</td>
-                                </tr>
-                                <tr>
-                                    <td>Quevon</td>
-                                    <td>Galang</td>
-                                    <td><span class="status pending">Pending<span></td>
-                                    <td>Accept</td>
-                                </tr>
-                                <tr>
-                                    <td>Quevon</td>
-                                    <td>Galang</td>
-                                    <td><span class="status pending">Pending<span></td>
-                                    <td>Accept</td>
-                                </tr>
-                                <tr>
-                                    <td>Quevon</td>
-                                    <td>Galang</td>
-                                    <td><span class="status pending">Pending<span></td>
-                                    <td>Accept</td>
-                                </tr>
-                                   <tr>
-                                    <td>Quevon</td>
-                                    <td>Galang</td>
-                                    <td><span class="status pending">Pending<span></td>
-                                    <td>Accept</td>
-                                </tr>
-                                   <tr>
-                                    <td>Quevon</td>
-                                    <td>Galang</td>
-                                    <td><span class="status pending">Pending<span></td>
-                                    <td>Accept</td>
-                                </tr>
-                                   <tr>
-                                    <td>Quevon</td>
-                                    <td>Galang</td>
-                                    <td><span class="status pending">Pending<span></td>
-                                    <td>Accept</td>
-                                </tr>
-                                   <tr>
-                                    <td>Quevon</td>
-                                    <td>Galang</td>
-                                    <td><span class="status pending">Pending<span></td>
-                                    <td>Accept</td>
-                                </tr>
-                                   <tr>
-                                    <td>Quevon</td>
-                                    <td>Galang</td>
-                                    <td><span class="status pending">Pending<span></td>
-                                    <td>Accept</td>
-                                </tr>
+                                <%current_owner.properties.each do |property|%>
+                                    <% if property.property_tenants.count > 0%>
+                                        <%property.property_tenants.each do |request|%>
+                                        <tr>
+                                            <td><%=request.tenant.firstname%></td>
+                                            <td><%=request.tenant.lastname%></td>
+                                            <td><%=request.property.listing_type%></td>
+                                            <td><%=request.updated_at%></td>
+                                            <td><%=request.status%></td>
+                                            <td><%= link_to "Create Transaction", new_transaction_path %></td>
+                                            <td><%= link_to "Accept", update_property_tenant_path(request.property,:property_tenant => {:id => request.id, :status => "approved"}), :method => "patch" %></td>
+                                            <td><%= link_to "Reject", update_property_tenant_path(request.property,:property_tenant => {:id => request.id, :status => "reject"}), :method => "patch" %></td>
+                                        </tr>
+                                        <%end%>
+                                    <% end %>
+                                <%end%>      
                             </tbody>
                     </table>
-                </div>
+                    </div>
                 <div class="recentTenants">
                     <div class="cardHeader">
-                        <h2>Recent Tenants</h2>
+                        <h2>List of Properties</h2>
                     </div>
                     <table>
-                        <tr>
-                            <td width="60px"><div class="imgBx"><%= image_tag("empty.png") %></div></td>
-                            <td><h4>Quevon<br><span>Galang</span></h4></td>
-                        </tr>
-                        <tr>
-                            <td width="60px"><div class="imgBx"><%= image_tag("empty.png") %></div></td>
-                            <td><h4>Quevon<br><span>Galang</span></h4></td>
-                        </tr>
-                        <tr>
-                            <td width="60px"><div class="imgBx"><%= image_tag("empty.png") %></div></td>
-                            <td><h4>Quevon<br><span>Galang</span></h4></td>
-                        </tr>
-                        <tr>
-                            <td width="60px"><div class="imgBx"><%= image_tag("empty.png") %></div></td>
-                            <td><h4>Quevon<br><span>Galang</span></h4></td>
-                        </tr>
-                        <tr>
-                            <td width="60px"><div class="imgBx"><%= image_tag("empty.png") %></div></td>
-                            <td><h4>Quevon<br><span>Galang</span></h4></td>
-                        </tr>
-                        <tr>
-                            <td width="60px"><div class="imgBx"><%= image_tag("empty.png") %></div></td>
-                            <td><h4>Quevon<br><span>Galang</span></h4></td>
-                        </tr>
-                        <tr>
-                            <td width="60px"><div class="imgBx"><%= image_tag("empty.png") %></div></td>
-                            <td><h4>Quevon<br><span>Galang</span></h4></td>
-                        </tr>
-                        <tr>
-                            <td width="60px"><div class="imgBx"><%= image_tag("empty.png") %></div></td>
-                            <td><h4>Quevon<br><span>Galang</span></h4></td>
-                        </tr>
+                        <%current_owner.properties.each do |property|%>
+                            <tr>
+                                <td width="60px"><div class="imgBx"><%= image_tag property.image_url if property.image  %></div></td>
+                                <td><h4><%=property.listing_type%><br><span><%=format_currency(property.monthly_price)%></span></h4></td>
+                            </tr>                     
+                        <%end%>      
                     </table>
+                    
                 </div>
             </div>     
         </div>

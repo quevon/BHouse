@@ -1,5 +1,5 @@
 class PropertiesController < ApplicationController
-  before_action :set_property, only: %i[show edit update destroy add_like]
+  before_action :set_property, only: %i[show edit update destroy add_like remove_like]
 
   # GET /properties or /properties.json
   def index
@@ -77,6 +77,12 @@ class PropertiesController < ApplicationController
     Like.create(:tenant_id => current_tenant.id, :property_id => @property.id)
     redirect_to property_path(@property)
   end
+
+  def remove_like
+    @property.likes.first.destroy
+    redirect_to property_path(@property)
+  end
+  
 
   private
 

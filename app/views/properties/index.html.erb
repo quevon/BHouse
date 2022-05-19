@@ -10,12 +10,13 @@
       explore our <br> 
       awesome <span class="underline font-heading decoration-tomato-500">Properties</span>
     </h1>
-    <p class="mt-4 text-gray-500 xl:mt-6 dark:text-gray-300">
-          Choose a space that suits your needs
-    </p>
     <div class="grid grid-cols-3">
       <div class="col-span-1">
+        <% if current_owner %>
+          <%= link_to 'New Property', new_property_path %>
+        <%else%>
           <%= render 'sidebar', properties: @properties %>
+        <%end%>
       </div>
       <div class="col-span-2 grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 md:grid-cols-2 xl:grid-cols-2">
         <% @properties.each do |property| %>
@@ -113,6 +114,20 @@
       </div>
     </div>
   </div>
+  <% center = session[:origin_point] ? session[:origin_point] : [14.5995,120.9842] %>
+  <%locations_array = []%>
+  <% @properties.each do |property| %>
+    <%locations_array.push([property.location_lat, property.location_lng]) if property.location_lat%>
+  <%end%>
+    <div 
+      data-controller="multiplemap" 
+      data-action="google-maps-callback@window->multiplemap#initAutocomplete" 
+      data-multiplemap-lat-value="<%= center[0] %>" 
+      data-multiplemap-lng-value="<%= center[1] %>"
+      data-multiplemap-locations-value="<%=locations_array%>" class="p-5">
+      <div data-multiplemap-target="map" class="map">
+    </div>
+  
 </section>
 
 
@@ -124,4 +139,4 @@
 
 <br>
 
-<%= link_to 'New Property', new_property_path %>
+

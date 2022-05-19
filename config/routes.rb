@@ -20,16 +20,24 @@ Rails.application.routes.draw do
   # reset origin point foor searching properties
   get '/clear-origin_point', to: 'properties#clear_origin_point', via: [:destroy], as: 'clear_origin_point'
   # apply as tenant methods
+  get '/payment', to: 'transactions#payment', as:'payment_transaction'
+  patch '/paid', to: 'transactions#updatebalance', as: 'update_balance'
+
+
+
   post '/properties/:property_id/property_tenants', to: 'property_tenants#create', as: 'create_property_tenant'
   patch '/properties/:property_id/property_tenants', to: 'property_tenants#update', as: 'update_property_tenant'
   # likes
-  patch '/properties/:id/like', to: 'properties#like', as: 'add_like'
+  patch '/properties/:id/like', to: 'properties#add_like', as: 'add_like'
+  delete '/properties/:id/like', to: 'properties#remove_like', as: 'remove_like'
 
 
   resources :conversations do
     resources :messages
   end
   get 'properties/:property_id/conversations/', to: 'conversations#new', as:'property_conversation'
+  # get 'properties/:property_id/conversations/', to: 'transactions#new', as:'property_conversation'
+
 
 
   root to: "home#index"
