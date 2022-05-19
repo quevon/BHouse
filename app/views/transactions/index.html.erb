@@ -1,43 +1,90 @@
-<div class="w-full">
-      <div class="flex justify-between items-center">
-        <h1 class="font-bold text-4xl">Transactions</h1>
-        <%= link_to 'New transaction', new_transaction_path, class: "" %>
-      </div>
 
-<div class=table_containers>
-    <table>
-      <thead> 
-        <tr>
-          <th>Owner Name</th>
-          <th>Owner Balance</th>
-          <th>Tenant Name</th>
-          <th>Tenant Balance</th>
-          <th>Amount</th>
-          <th>Status</th>
-          <th colspan="2">Actions</th>
-        </tr>
-      </thead>
+<%if current_owner %>
+  <div class="w-full">
+        <div class="flex justify-between items-center">
+          <h1 class="font-bold text-4xl">Transactions</h1>
+          <%= link_to 'New transaction', new_transaction_path, class: "" %>
+        </div>
 
-      <tbody>
-        <% @transactions.each do |transaction| %>
+  <div class=table_containers>
+      <table>
+        <thead> 
           <tr>
-            <td><%= transaction.owner.firstname %></td>
-            <td><%= current_owner.balance %></td>
-            <td><%= transaction.tenant.firstname %></td>
-            <td><%= transaction.tenant.balance %></td>
-            <td><%= transaction.amount %></td>
-            <td><%= transaction.status %></td>
-            <td>
-              <%= link_to "Show ", transaction, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-            </td>
-            <% if transaction.status == "Waiting for Payment"%>
-              <td>
-                <%= link_to 'Edit', edit_transaction_path(transaction), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-              </td> 
-            <% end %>
+            <th>Owner Name</th>
+            <th>Owner Balance</th>
+            <th>Tenant Name</th>
+            <th>Tenant Balance</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th colspan="2">Actions</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          <% @transactions.each do |transaction| %>
+            <tr>
+              <td><%= current_owner.firstname %></td>
+              <td><%= current_owner.balance %></td>
+              <td><%= transaction.tenant.firstname %></td>
+              <td><%= transaction.tenant.balance %></td>
+              <td><%= transaction.amount %></td>
+              <td><%= transaction.status %></td>
+         
+              <%if current_owner%>
+                <td>
+                  <%= link_to "Show ", transaction, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+                </td>
+                <% if transaction.status == "Waiting for Payment"%>
+                  <td>
+                    <%= link_to 'Edit', edit_transaction_path(transaction), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+                  </td> 
+                <% end %>
+              <%end%>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
+<% elsif current_tenant %>
+    <div class="w-full">
+        <div class="flex justify-between items-center">
+          <h1 class="font-bold text-4xl">Transactions</h1>
+          <%= link_to 'New transaction', new_transaction_path, class: "" %>
+        </div>
+
+  <div class=table_containers>
+      <table>
+        <thead> 
+          <tr>
+            <th>Tenant Name</th>
+            <th>Tenant Balance</th>
+            <th>Owner Name</th>
+            <th>Owner Balance</th>
+            <th>Amount</th>
+            <th>Status</th>
+            
+            <th colspan="2">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @transactions.each do |transaction| %>
+            <tr>
+              <td><%= current_tenant.firstname %></td>
+              <td><%= current_tenant.balance %></td>
+              <td><%= transaction.owner.firstname %></td>
+              <td><%= transaction.owner.balance %></td>
+              <td><%= transaction.amount %></td>
+              <td><%= transaction.status %></td>
+              <%# <td> %>
+                  <%# <%= link_to 'Pay', update_balance_path(transaction), method: :patch, data: {confirm: "Do you want to pay?"},:class => 'link', style: "color: green;"%> %>
+              <%# </td> %>
+
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
+<%end%>
