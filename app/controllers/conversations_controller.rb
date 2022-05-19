@@ -14,30 +14,21 @@ class ConversationsController < ApplicationController
     def new
         owner = Property.find(params[:property_id]).owner.id
         if current_owner
-            @recipients = Tenant.all
+            @recipient = Tenant.all
         else
-            @recipients = owner
+            @recipient = owner
         end 
-
-        # @conversation = current_user.mailbox.conversations.find(Property.first.owner_id)
-        # @ongoing_conversation = current_user.mailbox.conversations.find(params[:id])
-
-        # if current_owner
-        #     @recipient = Tenant.find(params[:recipient])
-        # else
-        #     @recipient = Owner.find(params[:recipient])
-        # end 
-        # @recipient = @property.owner_id
-        # @ongoing_conversation = Conversation.participant(current_user).participant(@recipient)
-
-        # respond_to do |format|
-        #     format.html { redirect_to root_path }
-        #     if @ongoing_conversation.present?
-        #         format.js { redirect_to mailbox.conversations.find(@ongoing_conversation) }
-        #     else
-        #         format.js
-        #     end
-        # end
+        
+        @ongoing_conversation = current_user.mailbox.conversations.find_by(subject: Owner.find(owner).name)
+        respond_to do |format|
+            if @ongoing_conversation.present?
+            format.html { redirect_to conversation_url(@ongoing_conversation.id) }
+            format.js { redirect_to current_user.mailbox.conversations.find(@ongoing_conversation.id) }
+            else
+            format.html
+            format.js
+            end
+        end
     end
 
     def create
@@ -46,7 +37,7 @@ class ConversationsController < ApplicationController
         else
             recipient = Owner.find(params[:owner_id])
         end 
-        receipt = current_user.send_message(recipient, params[:body], "subject")
+        receipt = current_user.send_message(recipient, params[:body], recipient.name)
         redirect_to conversation_path(receipt.conversation)
     end
 end

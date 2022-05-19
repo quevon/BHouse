@@ -13,13 +13,13 @@
     box-shadow: 0 7px 25px rgba(0,0,0,0.08);
     border-radius: 20px;
     height: 90vh;
+    overflow: scroll;
 }
 
 .flexItem2 {
     flex-grow: 2;
     display: flex;
     flex-direction: column;
-    overflow: scroll;
 }
 
 .conversations{
@@ -31,7 +31,8 @@
 }
 
 .conversations:hover {
-    background-color: bisque;
+    background-color: var(--tomato);
+    color: var(--white);
     cursor: pointer;
     border-radius: 20px;
 }
