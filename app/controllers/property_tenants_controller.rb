@@ -12,11 +12,16 @@ class PropertyTenantsController < ApplicationController
 
     def update
       @property_tenant = PropertyTenant.find(params[:property_tenant][:id])
-      @property_tenant.status = params[:property_tenant][:status]
-      if @property_tenant.status = "approved"
-        @property_tenant.property.update(:availability => false)
+      case params[:property_tenant][:status] 
+      when "approved"
+        if @property_tenant.property.slots > 0 
+          @property_tenant.property.update(:slots => @property_tenant.property.slots - 1)
+          PropertyTenant.where(:tenant_id => @property_tenant.tenant.id).each  {|item| item.update(:status => "cancelled")}
+          @property_tenant.status = "approved"
+          @property_tenant.property.update(:availability => @property_tenant.property.slots == 0 ? false : true)
+        end
       else
-        @property_tenant.property.update(:availability => true)
+        @property_tenant.status = params[:property_tenant][:status] 
       end
       respond_to do |format|
           if @property_tenant.update(property_tenant_params)

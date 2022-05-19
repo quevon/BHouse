@@ -10,11 +10,13 @@ class ConversationsController < ApplicationController
         render 'index'
     end
 
+
     def new
+        owner = Property.find(params[:property_id]).owner.id
         if current_owner
             @recipients = Tenant.all
         else
-            @recipients = Owner.all
+            @recipients = owner
         end 
 
         # @conversation = current_user.mailbox.conversations.find(Property.first.owner_id)

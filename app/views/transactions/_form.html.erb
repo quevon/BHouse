@@ -1,0 +1,28 @@
+    
+
+  <%= form_with(model: transaction, class: "contents") do |form| %>
+    <% if transaction.errors.any? %>
+      <div id="error_explanation" >
+        <ul>
+          <% transaction.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form.hidden_field :tenant_id, value: current_tenant.id %>
+ 
+    <div class="field">
+      <%= form.select :owner_id,Owner.all.pluck(:id,:id),{prompt:'Select Owners'},{class: "txt_fld"}%>
+    </div>
+
+    <div class="field">
+      <%= form.label :amount %>
+      <%= form.text_field :amount, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+
+    <div class="inline">
+      <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+    </div>
+  <% end %>

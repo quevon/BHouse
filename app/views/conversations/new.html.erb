@@ -1,17 +1,21 @@
-<h1>New Conversation</h1>
+<section class="main">
+    <h1>New Conversation</h1>
 
-<%= form_tag conversations_path, method: :post do %>
-    <div>
-        <%= select_tag :owner_id, options_from_collection_for_select(@recipients, :id, :name) %>
-    </div>
+    <%= form_tag conversations_path, method: :post do %>
 
-    <div>
-        <%= text_field_tag :subject, placeholder: "Subject" %>
-    </div>
+        <%= hidden_field_tag :owner_id, @recipients %>
+      
 
-    <div>
-        <%= text_area_tag :body, placeholder: "Leave a comment" %>
-    </div>
+        <div>
+            <%= text_field_tag :subject, placeholder: "Subject" %>
+        </div>
 
-    <%= submit_tag %>
-<% end %>
+        <div>
+            <%= text_area_tag :body, placeholder: "Leave a comment" %>
+        </div>
+
+        <%= submit_tag %>
+    <% end %>
+
+
+</section>

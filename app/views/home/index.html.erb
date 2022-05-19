@@ -15,15 +15,15 @@
             rent bedspaces, rooms, and houses at convenient locations
           </p>
 
-          <div class="w-full max-w-sm mx-auto mt-6 bg-transparent border rounded-md focus-within:border-blue-400 focus-within:ring focus-within:ring-blue-300  focus-within:ring-opacity-40">
-              <div class="flex flex-col md:flex-row">
+          <div class="flex flex-col">
+              <div class="flex flex-col">
               <%= form_tag(properties_path, method: :get) do%>
                  <div data-controller="searchplace" data-action="google-maps-callback@window->searchplace#initAutocomplete">
                   <input
                     type="text" id="address" autocomplete="off" 
                     data-action="keyup->searchplace#initializeSearch" data-searchplace-target="address"
                     placeholder="Enter your preferred area or landmark"
-                    class="flex-1 h-10 px-4 py-2 m-1 text-gray-700 placeholder-gray-400 bg-transparent border-none appearance-none focus:outline-none focus:placeholder-transparent focus:ring-0"
+                    class="home-search"
                   />
                   <input type="hidden" name="property[location_lat]" data-searchplace-target="lat">
                   <input type="hidden" name="property[location_lng]" data-searchplace-target="lng">

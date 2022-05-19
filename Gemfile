@@ -75,3 +75,5 @@ gem 'mailboxer'
 
 gem 'geokit-rails'
 
+gem 'rexml'
+

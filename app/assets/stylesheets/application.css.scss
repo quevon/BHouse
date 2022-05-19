@@ -125,6 +125,32 @@ body{
     display:list-item;
     position: relative;
 }
+// transactions 
+
+.table_containers {
+    display: flex;
+    justify-content: center;
+  }
+.table_containers  table {
+    border: 1px solid;
+    border-collapse: collapse;
+    width: 70%;
+  }
+.table_containers th,
+.table_containers td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+.table_containers  th {
+    background-color: #1E90FF;
+    color: white;
+  }
+.table_containers  tr:hover {
+    background-color: #85B3D1FF;
+  }
+
+
 /* sign up form styling  */
 
 .center-form-container{

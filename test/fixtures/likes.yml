@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tenant_id: one
+  property_id: one
+
+two:
+  tenant_id: two
+  property_id: two
