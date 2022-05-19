@@ -12,12 +12,12 @@
 
     <div class="flexItem flexItem2">
         <% if @conversation.present? %>
-            <div class="flexBox recipient">
+            <div class="flexBox2 recipient">
                 <div class="userprofile conversationItem"><%= image_tag @recipient.image_url if @recipient.image %></div>
                 <p class="conversationItem"><%= @recipient.name %></p>
             </div>
             <% @conversation.receipts_for(current_user).each do |receipt| %>
-                <div class="flexBox convo">
+                <div class="flexBox2 convo">
                     <div class="userprofile"><%= image_tag receipt.message.sender.image_url if receipt.message.sender.image %></div>
                     <div class="messages">
                         <div><%= receipt.message.sender.name %></div>
