@@ -37,11 +37,11 @@
                 </div>
                   <div class="card">
                     <div>
-                        <div class="numbers">80</div>
-                        <div class="cardName">Comments</div>
+                        <div class="numbers"><%="₱ #{current_owner.balance}"%></div>
+                        <div class="cardName">Balance</div>
                     </div>
                     <div class="iconBox">
-                        <ion-icon name="chatbubbles-outline"></ion-icon>
+                        <ion-icon name="cash-outline"></ion-icon>
                     </div>
                 </div>
             </div>
@@ -50,39 +50,39 @@
                 <div class="tenantRequest">
                     <div class="cardHeader">
                         <h2>Tenants Request<h2>
-                        <a href="#" class="btn">View All</a>
                     </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Tenant Firstname</th>
-                                <th>Tenant Lastname</th>
-                                <th>Type</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th colspan="2">Actions</th>
-                            </tr>
-                        </thead>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tenant Firstname</th>
+                                    <th>Tenant Lastname</th>
+                                    <th>Type</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th colspan="2">Actions</th>
+                                </tr>
+                            </thead>
                             <tbody>
                                 <%current_owner.properties.each do |property|%>
                                     <% if property.property_tenants.count > 0%>
                                         <%property.property_tenants.each do |request|%>
-                                        <tr>
-                                            <td><%=request.tenant.firstname%></td>
-                                            <td><%=request.tenant.lastname%></td>
-                                            <td><%=request.property.listing_type%></td>
-                                            <td><%=request.updated_at%></td>
-                                            <td><%=request.status%></td>
-                                            <td><%= link_to "Create Transaction", new_transaction_path %></td>
-                                            <td><%= link_to "Accept", update_property_tenant_path(request.property,:property_tenant => {:id => request.id, :status => "approved"}), :method => "patch" %></td>
-                                            <td><%= link_to "Reject", update_property_tenant_path(request.property,:property_tenant => {:id => request.id, :status => "reject"}), :method => "patch" %></td>
-                                        </tr>
+                                            <tr>
+                                                <td><%=request.tenant.firstname%></td>
+                                                <td><%=request.tenant.lastname%></td>
+                                                <td><%=request.property.listing_type%></td>
+                                                <td><%=request.updated_at%></td>
+                                                <td><%=request.status%></td>
+                                                <td><%= link_to "Create Transaction", new_transaction_path %></td>
+                                                <td><%= link_to "Accept", update_property_tenant_path(request.property,:property_tenant => {:id => request.id, :status => "approved"}), :method => "patch" %></td>
+                                                <td><%= link_to "Reject", update_property_tenant_path(request.property,:property_tenant => {:id => request.id, :status => "reject"}), :method => "patch" %></td>
+                                            </tr>
                                         <%end%>
                                     <% end %>
                                 <%end%>      
                             </tbody>
-                    </table>
+                        </table>
                     </div>
+            
                 <div class="recentTenants">
                     <div class="cardHeader">
                         <h2>List of Properties</h2>
@@ -94,8 +94,7 @@
                                 <td><h4><%=property.listing_type%><br><span><%=format_currency(property.monthly_price)%></span></h4></td>
                             </tr>                     
                         <%end%>      
-                    </table>
-                    
+                    </table> 
                 </div>
             </div>     
         </div>
