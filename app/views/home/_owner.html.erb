@@ -37,8 +37,8 @@
                 </div>
                   <div class="card">
                     <div>
-                        <div class="numbers">80</div>
-                        <div class="cardName">Comments</div>
+                        <div class="numbers"><%=format_currency(current_owner.balance)%></div>
+                        <div class="cardName">Balance</div>
                     </div>
                     <div class="iconBox">
                         <ion-icon name="chatbubbles-outline"></ion-icon>
@@ -73,7 +73,7 @@
                                             <td><%=request.property.listing_type%></td>
                                             <td><%=request.updated_at%></td>
                                             <td><%=request.status%></td>
-                                            <td><%= link_to "Create Transaction", new_transaction_path %></td>
+                                            <td><%= link_to "Request Payment", request_payment_path(:property_tenant_id => request.id)%></td> 
                                             <td><%= link_to "Accept", update_property_tenant_path(request.property,:property_tenant => {:id => request.id, :status => "approved"}), :method => "patch" %></td>
                                             <td><%= link_to "Reject", update_property_tenant_path(request.property,:property_tenant => {:id => request.id, :status => "reject"}), :method => "patch" %></td>
                                         </tr>

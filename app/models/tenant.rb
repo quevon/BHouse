@@ -10,18 +10,24 @@ class Tenant < ApplicationRecord
          :confirmable
 
   acts_as_messageable
+  validates_presence_of :email, :firstname, :middlename, :lastname
+  validates :balance, :numericality => { :greater_than_or_equal_to => 0 }
 
   def name
-    "#{firstname} #{lastname}"
+    "#{firstname.titleize} #{lastname.titleize}"
   end
        
   def mailboxer_email(object)
     nil 
   end
   
-  validates_presence_of :email, :firstname, :middlename, :lastname
+  def my_property
+    self.property_tenants.where(:status => "approved")[0].property
+  end
 
-
+  def my_pending_transactions
+    self.transactions.where(:status => "Waiting for Payment")
+  end
 
   # has_one_attached :profile_picture
 

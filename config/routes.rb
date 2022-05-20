@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :transactions
   devise_for :owners
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -36,7 +35,12 @@ Rails.application.routes.draw do
     resources :messages
   end
   get 'properties/:property_id/conversations/', to: 'conversations#new', as:'property_conversation'
-  # get 'properties/:property_id/conversations/', to: 'transactions#new', as:'property_conversation'
+
+  resources :transactions
+  get '/:property_tenant_id/transactions/new', to: 'transactions#new', as:'request_payment'
+  patch '/transactions/:id/payment', to: 'transactions#payment', as:'approve_payment'
+
+  
 
 
 

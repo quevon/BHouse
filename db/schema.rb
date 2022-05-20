@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_18_112959) do
+ActiveRecord::Schema.define(version: 2022_05_19_133720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,12 @@ ActiveRecord::Schema.define(version: 2022_05_18_112959) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "jwt_denylist", force: :cascade do |t|
+    t.string "jti", null: false
+    t.datetime "exp", null: false
+    t.index ["jti"], name: "index_jwt_denylist_on_jti"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -218,8 +224,9 @@ ActiveRecord::Schema.define(version: 2022_05_18_112959) do
     t.decimal "amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "status", default: "Waiting for Payment"
+    t.bigint "property_tenant_id", null: false
     t.index ["owner_id"], name: "index_transactions_on_owner_id"
+    t.index ["property_tenant_id"], name: "index_transactions_on_property_tenant_id"
     t.index ["tenant_id"], name: "index_transactions_on_tenant_id"
   end
 
@@ -234,5 +241,6 @@ ActiveRecord::Schema.define(version: 2022_05_18_112959) do
   add_foreign_key "property_tenants", "properties"
   add_foreign_key "property_tenants", "tenants"
   add_foreign_key "transactions", "owners"
+  add_foreign_key "transactions", "property_tenants"
   add_foreign_key "transactions", "tenants"
 end

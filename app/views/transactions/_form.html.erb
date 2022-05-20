@@ -10,12 +10,11 @@
         </ul>
       </div>
     <% end %>
-
+    
     <%= form.hidden_field :owner_id, value: current_owner.id %>
- 
-    <div class="field">
-      <%= form.select :tenant_id,Tenant.all.pluck(:firstname,:id),{prompt:'Select Tenants'},{class: "txt_fld"}%>
-    </div>
+    <%= form.hidden_field :property_tenant_id, value: @property_tenant.id %>
+    <%= form.hidden_field :tenant_id, value: @property_tenant.tenant.id %>
+    <%= form.hidden_field :tenant_id, value: @property_tenant.tenant.id %>
 
     <div class="field">
       <%= form.label :amount %>
