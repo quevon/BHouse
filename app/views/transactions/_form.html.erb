@@ -17,11 +17,12 @@
     <%= form.hidden_field :tenant_id, value: @property_tenant.tenant.id %>
 
     <div class="field">
+      <%= form.text_field :amount %>
+      <span></span>
       <%= form.label :amount %>
-      <%= form.text_field :amount, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
     </div>
 
-    <div class="inline">
+    <div class="actions">
       <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
     </div>
   <% end %>
