@@ -1,0 +1,34 @@
+<div>
+      <div class="fixed top-0 left-0 -z-50 bg-hero-image bg-no-repeat bg-bottom bg-contain bg-blend-normal saturation-125 contrast-125 opacity-70 w-full h-full bg-misty-rose"></div>
+      <div class="max-w-xl container px-6 py-16 mx-auto text-center sm:bg-white sm:bg-opacity-90 sm:rounded-lg">
+        <div class="max-w-lg mx-auto">
+          <h1 class="text-6xl font-bold font-heading text-tomato-400">
+            Your home away from home
+          </h1>
+
+          <p class="mt-6 text-lg text-gray-400">
+            rent bedspaces, rooms, and houses at convenient locations
+          </p>
+
+          <div class="flex flex-col">
+              <div class="flex flex-col">
+              <%= form_tag(properties_path, method: :get) do%>
+                 <div data-controller="searchplace" data-action="google-maps-callback@window->searchplace#initAutocomplete">
+                  <input
+                    type="text" id="address" autocomplete="off" 
+                    data-action="keyup->searchplace#initializeSearch" data-searchplace-target="address"
+                    placeholder="Enter your preferred area or landmark"
+                    class="home-search"
+                  />
+                  <input type="hidden" name="property[location_lat]" data-searchplace-target="lat">
+                  <input type="hidden" name="property[location_lng]" data-searchplace-target="lng">
+                  <button data-action="click->searchplace#findMyLocation"><ion-icon name="navigate-circle-outline"></ion-icon>Use my current location</button>
+                </div>
+                <%= submit_tag ("search")%>
+              <%end%>
+              <%= link_to "view all properties", properties_path%>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

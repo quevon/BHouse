@@ -197,9 +197,13 @@
         <div>
           <% if current_tenant%>
             <% if @property.liked?(current_tenant)%>
-              <%= button_to "Like", add_like_path(@property), method: "patch", disabled: true%>
+              <%= link_to remove_like_path(@property), method: "delete" do%>
+                <button>Unlike</button>
+              <%end%>
             <%else %>
-              <%= button_to "Like", add_like_path(@property), method: "patch"%>
+              <%= link_to add_like_path(@property), method: "patch" do%>
+                <button>Like</button>
+              <%end%>
             <%end%>
             <%= @property.number_of_likes%>
           <%end%>
@@ -209,18 +213,12 @@
   </div>
 </div>
 
-
- 
-
-  <p>
-    <strong>Location lat:</strong>
-    <%= @property.location_lat %>
-  </p>
-
-  <p>
-    <strong>Location lng:</strong>
-    <%= @property.location_lng %>
-  </p>
-
-
+  <div 
+  data-controller="map" 
+  data-action="google-maps-callback@window->map#initAutocomplete" 
+  data-map-lat-value="<%= @property.location_lat %>" 
+  data-map-lng-value="<%= @property.location_lng %>" class="p-5">
+    <div data-map-target="map" class="map">
+    </div>
+  </div>
 </section>

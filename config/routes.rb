@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :transactions
   devise_for :owners
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -28,14 +27,20 @@ Rails.application.routes.draw do
   post '/properties/:property_id/property_tenants', to: 'property_tenants#create', as: 'create_property_tenant'
   patch '/properties/:property_id/property_tenants', to: 'property_tenants#update', as: 'update_property_tenant'
   # likes
-  patch '/properties/:id/like', to: 'properties#like', as: 'add_like'
+  patch '/properties/:id/like', to: 'properties#add_like', as: 'add_like'
+  delete '/properties/:id/like', to: 'properties#remove_like', as: 'remove_like'
 
 
   resources :conversations do
     resources :messages
   end
   get 'properties/:property_id/conversations/', to: 'conversations#new', as:'property_conversation'
-  # get 'properties/:property_id/conversations/', to: 'transactions#new', as:'property_conversation'
+
+  resources :transactions
+  get '/:property_tenant_id/transactions/new', to: 'transactions#new', as:'request_payment'
+  patch '/transactions/:id/payment', to: 'transactions#payment', as:'approve_payment'
+
+  
 
 
 

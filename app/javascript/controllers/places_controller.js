@@ -11,7 +11,7 @@ export default class extends Controller {
 
   initAutocomplete() {
     //   setup autocomplete
-    console.log('autocomplete loaded')
+    console.log('Maps API loaded')
     this.autocomplete = new google.maps.places.Autocomplete(
       this.addressTarget,
       {
@@ -30,7 +30,6 @@ export default class extends Controller {
   placeSelected() {
     //   setup autocomplete
     const place = this.autocomplete.getPlace()
-    console.log(place)
     place.address_components.forEach((component) => {
       if (component.types.includes('locality')) {
         this.cityTarget.value = component.long_name
