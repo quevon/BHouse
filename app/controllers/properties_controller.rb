@@ -3,17 +3,21 @@ class PropertiesController < ApplicationController
 
   # GET /properties or /properties.json
   def index
-    @radius = params[:new_radius] ? params[:new_radius] : 50
-    if !params[:property].nil? 
-      session[:origin_point] = [(params[:property][:location_lat]).to_f,(params[:property][:location_lng]).to_f]
-      @q = Property.within(@radius, :origin => session[:origin_point]).ransack(params[:q])
-      @properties = @q.result(distinct: true)
-    elsif params[:property].nil? && !session[:origin_point].nil?
-      @q = Property.within(@radius, :origin => session[:origin_point]).ransack(params[:q])
-      @properties = @q.result(distinct: true)
+    if current_owner
+      @properties = current_owner.properties
     else
-      @q = Property.ransack(params[:q])
-      @properties = @q.result(distinct: true)
+      @radius = params[:new_radius] ? params[:new_radius] : 50
+      if !params[:property].nil? 
+        session[:origin_point] = [(params[:property][:location_lat]).to_f,(params[:property][:location_lng]).to_f]
+        @q = Property.within(@radius, :origin => session[:origin_point]).where(:availability => true).ransack(params[:q])
+        @properties = @q.result(distinct: true)
+      elsif params[:property].nil? && !session[:origin_point].nil?
+        @q = Property.within(@radius, :origin => session[:origin_point]).where(:availability => true).ransack(params[:q])
+        @properties = @q.result(distinct: true)
+      else
+        @q = Property.ransack(params[:q])
+        @properties = @q.result(distinct: true)
+      end
     end
   end
 

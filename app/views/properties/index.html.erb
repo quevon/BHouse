@@ -6,112 +6,141 @@
   <section>
 <%end%>
   <div class="container px-6 py-10 mx-auto">
+    <% if current_owner %>
+      <h1 class="heading-page-title">
+        <span class="underline font-heading decoration-tomato-500">Properties</span>
+      </h1>
+      <%= link_to 'Create New Property Listing', new_property_path %>
+    <%else%>
     <h1 class="heading-page-title">
-      explore our <br> 
+      explore <br> 
       awesome <span class="underline font-heading decoration-tomato-500">Properties</span>
     </h1>
+    <%end%>
     <div class="grid grid-cols-3">
-      <div class="col-span-1">
-        <% if current_owner %>
-          <%= link_to 'New Property', new_property_path %>
-        <%else%>
+      <% if !current_owner %>
+        <div class="col-span-1">
           <%= render 'sidebar', properties: @properties %>
-        <%end%>
-      </div>
-      <div class="col-span-2 grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 md:grid-cols-2 xl:grid-cols-2">
-        <% @properties.each do |property| %>
-          <%=link_to property do %>
-            <div class="max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 m-3">
-              <div class="w-full h-56">
-                <%if property.image%>
-                  <%= image_tag(property.image_url, class: "object-cover object-center h-56 w-96" ) %>
-                <%else%>
-                  <%= image_tag("https://res.cloudinary.com/dbegssigw/image/upload/v1652432165/bhouse_app/bhouselogo_xiistv.png", class: "object-cover object-center w-full h-56" ) %>
-                <%end%>
-              </div>
-              <div class="flex items-center px-6 py-3 bg-tomato-500">
-                <h1 class="mx-3 text-lg font-semibold text-white"><%= "#{property.listing_type} in #{property.location_city}"%></h1>
-              </div>
-              <div class="px-6 py-4">
-                <h1 class="text-xl font-semibold text-gray-800"><%= format_currency(property.monthly_price) %></h1>
-                <p class="py-2 text-gray-700">Property desciption</p>      
-                <p class="py-2 text-gray-700"><%= property.distance_to(session[:origin_point]).round(2) if session[:origin_point] %> km</p>      
-                <div class="flex flex-col mt-4 text-gray-700">
+        </div>
+        <div class="col-span-2 grid grid-cols-2 gap-8 mt-8 xl:mt-12 xl:gap-12">
+      <%else%>
+        <div class="col-span-3 grid grid-cols-3 gap-8 mt-8 xl:mt-12 xl:gap-12">
+      <%end%>
+          <% @properties.each do |property| %>
+            <%=link_to property do %>
+              <div class="max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 m-3">
+                <div class="w-full h-56">
+                  <%if property.image%>
+                    <%= image_tag(property.image_url, class: "object-cover object-center h-56 w-96" ) %>
+                  <%else%>
+                    <%= image_tag("https://res.cloudinary.com/dbegssigw/image/upload/v1652432165/bhouse_app/bhouselogo_xiistv.png", class: "object-cover object-center w-full h-56" ) %>
+                  <%end%>
+                </div>
+                <div class="flex items-center px-6 py-3 bg-tomato-500">
+                  <h1 class="mx-3 text-lg font-semibold text-white"><%= "#{property.listing_type} in #{property.location_city}"%></h1>
+                </div>
+                <div class="px-6 py-4">
                   <div class="flex justify-between">
+                    <h1 class="text-xl font-semibold text-gray-800"><%= format_currency(property.monthly_price) %></h1>
                     <div class="flex">
-                      <h3 class="card-header"><ion-icon name="home-outline"></ion-icon></h3>
-                      <h3 class="card-subtitle ml-2"> Property Type</h3>
+                        <% if current_tenant && property.liked?(current_tenant)%>
+                            <ion-icon name="heart"  class="w-6 h-6 text-red-400"></ion-icon>
+                        <%else %>
+                            <ion-icon name="heart-outline" class="w-6 h-6 text-gray-500"></ion-icon>
+                        <%end%>
+                        <p class="description-text"><%= property.number_of_likes%></p>
                     </div>
-                    <p class="description-text pl-10">
-                      <%= property.property_type %>
-                    </p>
                   </div>
-                  <div class="flex justify-between">
-                    <div class="flex">
-                      <h3 class="card-header"><ion-icon name="bed-outline"></ion-icon></h3>
-                      <h3 class="card-subtitle ml-2"> Listing Type</h3>
-                    </div>
-                    <p class="description-text pl-10">
-                      <%= property.listing_type %>
-                    </p>
-                  </div>
-                  <div class="col-span-2">
-                    <div class="flex">
-                      <h3 class="card-header"><ion-icon name="people-outline"></ion-icon></h3>
-                      <h3 class="card-subtitle ml-2"> Accomodation Type</h3>
-                    </div>
-                    <p class="description-text -mt-3">
-                      This property accepts:
-                    </p>
-                      <div class="grid grid-cols-3 grid-rows-2">
-                        <% get_array(property.accomodation_type).each do |type|  %>
-                          <div class="flex">
-                            <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
-                            <p class="description-text"><%= type %></p>
-                          </div>
-                        <% end %> 
+                  <p class="py-2 text-gray-700">Property desciption</p>      
+                  <% if session[:origin_point]%>
+                    <p class="py-2 text-gray-700"><%= property.distance_to(session[:origin_point]).round(2) %> km</p> 
+                  <%end%>     
+                  <div class="flex flex-col mt-4 text-gray-700">
+                    <div class="flex justify-between">
+                      <div class="flex">
+                        <h3 class="card-header"><ion-icon name="home-outline"></ion-icon></h3>
+                        <h3 class="card-subtitle ml-2"> Property Type</h3>
                       </div>
-                  </div>
-                  <div class="col-span-2">
-                    <div class="flex">
-                      <h3 class="card-header"><ion-icon name="wifi-outline"></ion-icon></h3>
-                      <h3 class="card-subtitle ml-2"> Amenities</h3>
+                      <p class="description-text pl-10">
+                        <%= property.property_type %>
+                      </p>
                     </div>
-                    <p class="description-text -mt-3">
-                      This property has the following amenities:
-                    </p>
-                      <div class="grid grid-cols-3 grid-rows-2">
-                        <% get_array(property.amenities).each do |amenity|  %>
-                          <div class="flex">
-                            <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
-                            <p class="description-text"><%= amenity %></p>
-                          </div>
-                        <% end %> 
+                    <div class="flex justify-between">
+                      <div class="flex">
+                        <h3 class="card-header"><ion-icon name="bed-outline"></ion-icon></h3>
+                        <h3 class="card-subtitle ml-2"> Listing Type</h3>
                       </div>
-                  </div>
-                  <div class="col-span-2">
-                    <div class="flex">
-                      <h3 class="card-header"><ion-icon name="warning-outline"></ion-icon></h3>
-                      <h3 class="card-subtitle ml-2"> House Rules</h3>
+                      <p class="description-text pl-10">
+                        <%= property.listing_type %>
+                      </p>
                     </div>
-                    <p class="description-text -mt-3">
-                      This property allows the following:
-                    </p>
-                      <div class="grid grid-cols-3 grid-rows-2">
-                        <% get_array(property.house_rules).each do |rule|  %>
-                          <div class="flex">
-                            <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
-                            <p class="description-text"><%= rule %></p>
-                          </div>
-                        <% end %> 
+                    <div class="flex justify-between">
+                      <div class="flex">
+                        <h3 class="card-header"><ion-icon name="people-outline"></ion-icon></h3>
+                        <h3 class="card-subtitle ml-2"> Slots Available</h3>
                       </div>
+                      <p class="description-text pl-10">
+                        <%= property.slots %>
+                      </p>
+                    </div>
+                    <div class="col-span-2">
+                      <div class="flex">
+                        <h3 class="card-header"><ion-icon name="male-female-outline"></ion-icon></h3>
+                        <h3 class="card-subtitle ml-2"> Accomodation Type</h3>
+                      </div>
+                      <p class="description-text -mt-3">
+                        This property accepts:
+                      </p>
+                        <div class="grid grid-cols-3 grid-rows-2">
+                          <% get_array(property.accomodation_type).each do |type|  %>
+                            <div class="flex">
+                              <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
+                              <p class="description-text"><%= type %></p>
+                            </div>
+                          <% end %> 
+                        </div>
+                    </div>
+                    <div class="col-span-2">
+                      <div class="flex">
+                        <h3 class="card-header"><ion-icon name="wifi-outline"></ion-icon></h3>
+                        <h3 class="card-subtitle ml-2"> Amenities</h3>
+                      </div>
+                      <p class="description-text -mt-3">
+                        This property has the following amenities:
+                      </p>
+                        <div class="grid grid-cols-3 grid-rows-2">
+                          <% get_array(property.amenities).each do |amenity|  %>
+                            <div class="flex">
+                              <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
+                              <p class="description-text"><%= amenity %></p>
+                            </div>
+                          <% end %> 
+                        </div>
+                    </div>
+                    <div class="col-span-2">
+                      <div class="flex">
+                        <h3 class="card-header"><ion-icon name="warning-outline"></ion-icon></h3>
+                        <h3 class="card-subtitle ml-2"> House Rules</h3>
+                      </div>
+                      <p class="description-text -mt-3">
+                        This property allows the following:
+                      </p>
+                        <div class="grid grid-cols-3 grid-rows-2">
+                          <% get_array(property.house_rules).each do |rule|  %>
+                            <div class="flex">
+                              <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
+                              <p class="description-text"><%= rule %></p>
+                            </div>
+                          <% end %> 
+                        </div>
+                    </div>
+                    
                   </div>
                 </div>
               </div>
-            </div>
-          <% end %>  
-        <% end %>
-      </div>
+            <% end %>  
+          <% end %>
+        </div>
     </div>
   </div>
   <% center = session[:origin_point] ? session[:origin_point] : [14.5995,120.9842] %>

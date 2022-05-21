@@ -180,34 +180,40 @@
             <%= button_to "Message Owner", property_conversation_path(@property), :method => "get", :class => "btn-primary" %>
           </div>
         <% elsif current_owner == @property.owner %>
-          <p>pending applications: <%=@property.pending_tenants.count%></p>
-          <% if @property.present_tenants.count > 0 %>
-            <p>Current Tenants</p>
-            <%@property.present_tenants.each do |property_tenant|%>
-              <div>
-                <%=property_tenant.tenant.firstname%>
-                <%=property_tenant.tenant.lastname%>
-                <%=property_tenant.updated_at%>
-                <%= link_to "Remove Tenant", update_property_tenant_path(property_tenant.property,:property_tenant => {:id => property_tenant.id, :status => "removed"}), :method => "patch", :data => {:confirm => "Evict #{property_tenant.tenant.firstname} from your property?"}  %>
+          <div class="my-5">
+            <div class="flex justify-between">
+              <p class="card-subtitle">Pending Applications</p>
+              <p class="description-text"><%=@property.pending_tenants.count%></p>   
+            </div>
+            <% if @property.present_tenants.count > 0 %>
+              <div class="flex justify-between">
+                <p class="card-subtitle">Current Tenants</p>
+                <p class="description-text"><%=@property.present_tenants.count%></p>   
               </div>
-            <%end%>
-          <%end%>
-          <%= link_to 'Edit Listing', edit_property_path(@property) %> 
-        <%end%>
-        <div>
-          <% if current_tenant%>
-            <% if @property.liked?(current_tenant)%>
-              <%= link_to remove_like_path(@property), method: "delete" do%>
-                <button>Unlike</button>
-              <%end%>
-            <%else %>
-              <%= link_to add_like_path(@property), method: "patch" do%>
-                <button>Like</button>
+              <%@property.present_tenants.each do |property_tenant|%>
+                <div class="py-2 border-y border-gray-300 flex flex-col">
+                  <p class="card-subtitle"><%=property_tenant.tenant.name%></p>
+                  <p class="description-text"><%= format_date(property_tenant.updated_at)%></p>
+                  <%= link_to "Remove Tenant", update_property_tenant_path(property_tenant.property,:property_tenant => {:id => property_tenant.id, :status => "removed"}), :method => "patch", :data => {:confirm => "Evict #{property_tenant.tenant.name} from your property?"}  %>
+                </div>
               <%end%>
             <%end%>
-            <%= @property.number_of_likes%>
+            <%= link_to 'Edit Listing', edit_property_path(@property) %> 
           <%end%>
-
+          <div class="flex">
+            <% if current_tenant%>
+              <% if @property.liked?(current_tenant)%>
+                <%= link_to remove_like_path(@property), method: "delete" do%>
+                  <ion-icon name="heart"  class="w-6 h-6 text-red-400"></ion-icon>
+                <%end%>
+              <%else %>
+                <%= link_to add_like_path(@property), method: "patch" do%>
+                  <ion-icon name="heart-outline" class="w-6 h-6 text-gray-500"></ion-icon>
+                <%end%>
+              <%end%>
+              <p class="description-text mx-2"><%= @property.number_of_likes%></p>
+            <%end%>
+        </div>
         </div>
       </div>
   </div>
