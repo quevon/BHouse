@@ -104,8 +104,9 @@
     box-shadow: 35px -35px 0 10px var(--white);
     pointer-events: none;
 }
-#menu{
+.menu-bar{
     position: fixed;
+    color: var(--white);
 }
 .topbar{
     width: 100%;
@@ -345,6 +346,44 @@
     color:var(--white);
 }
 
+// edit page styling 
+.edit-container{
+    display:flex;
+    justify-content: center;
+    width: 100%;
+    padding:20px;
+    margin:0 auto;
+}
+.edit-container .edit-information{
+    position: relative;
+    min-height: 500px;
+    background: var(--white);
+    padding: 20px;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+    border-radius: 20px;
+}
+.edit-container img{
+    height: 200px;
+    width: 200px;
+}
+.edit-container .header{
+    font-size: 1.5rem;
+}
+.edit-container .header i{
+    font-size: 1rem;
+}
+.edit-container .field{
+    display: flex;
+    padding: 10px;
+}
+
+.edit-container .field label{
+    width: 30%;
+}
+.edit-container .field input{
+    width: 65%;
+    
+}
 // responsive design 
 
 @media (max-width:991px){
