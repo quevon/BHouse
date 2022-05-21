@@ -1,3 +1,4 @@
+
 function activeLink() {
   const list = document.querySelectorAll('.navigation li')
   list.forEach((item) => item.classList.remove('hovered'))
@@ -8,6 +9,8 @@ document.addEventListener('turbolinks:load', () => {
   const list = document.querySelectorAll('.navigation li')
   list.forEach((item) => item.addEventListener('mouseover', activeLink))
 })
+
+
 
 function hideShowNav() {
   const main = document.querySelector('.main')

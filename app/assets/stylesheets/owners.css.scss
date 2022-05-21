@@ -104,6 +104,9 @@
     box-shadow: 35px -35px 0 10px var(--white);
     pointer-events: none;
 }
+#menu{
+    position: fixed;
+}
 .topbar{
     width: 100%;
      height:60px;
@@ -240,24 +243,20 @@
     width: 100%;
     padding:20px;
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 2.5fr .5fr;
     grid-gap: 30px;
-    // margin-top:10px;
 }
 .details .tenantRequest{
     position: relative;
-    display: grid;
     min-height: 500px;
     background: var(--white);
     padding: 20px;
     box-shadow: 0 7px 25px rgba(0,0,0,0.08);
     border-radius: 20px;
 }
-.cardHeader{
+.details .tenantRequest .cardHeader{
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
-
 }
 .cardHeader h2{
     font-weight: 600;
@@ -274,10 +273,12 @@
 .details table{
     width:100%;
     border-collapse: collapse;
-    margin-top: 10px;
+    margin-top: 5%;
 }
-.details table thead th{
+.details table th{
     font-weight: 600;
+    text-align: left;
+
 }
 .details .tenantRequest table tr{
     color:var(--black1);
@@ -289,6 +290,7 @@
 }
 .details .tenantRequest table tr td{
     padding:10px;
+    text-align: left;
 }
 .status.pending{
     padding:2px 4px;
@@ -301,7 +303,6 @@
 
 .recentTenants{
     position: relative;
-    display: grid;
     min-height: 500px;
     padding: 20px;
     background:var(--white);
