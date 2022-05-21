@@ -62,7 +62,6 @@ export default class extends Controller {
   }
 
   marker() {
-    console.log('called marker')
     if (this._marker == undefined) {
       this._marker = new google.maps.Marker({
         map: this.map(),

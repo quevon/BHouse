@@ -65,17 +65,17 @@
 
     <div class="form-group col-span-2 grid grid-cols-3 gap-4">
       <div class="mb-6">
-        <%= form.label :monthly_price, :class => "block-label col-span-2" %>
+        <%= form.label :monthly_price, :class => "block-label col-span-2 text-sm" %>
         <%= form.text_field :monthly_price, :class => "styled-input", :placeholder => "rate in PHP" %>
       </div>
 
       <div class="mb-6">
-        <%= form.label "Advance Deposit", :class => "block-label col-span-2" %>
+        <%= form.label "Months of Advance Deposit", :class => "block-label col-span-2 text-sm" %>
         <%= form.text_field :deposit_advance, :class => "styled-input", :placeholder => "Number of months" %>
       </div>
 
       <div class="mb-6">
-        <%= form.label "Security Deposit", :class => "block-label col-span-2" %>
+        <%= form.label "Months of Security Deposit", :class => "block-label col-span-2 text-sm" %>
         <%= form.text_field :deposit_security, :class => "styled-input", :placeholder => "Number of months" %>
       </div>
 

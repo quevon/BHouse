@@ -80,7 +80,7 @@
                         <h3 class="card-subtitle ml-2"> Slots Available</h3>
                       </div>
                       <p class="description-text pl-10">
-                        <%= property.slots %>
+                        <%=property.availability ? "#{property.slots}" : "full"%>
                       </p>
                     </div>
                     <div class="col-span-2">
@@ -125,14 +125,18 @@
                       <p class="description-text -mt-3">
                         This property allows the following:
                       </p>
-                        <div class="grid grid-cols-3 grid-rows-2">
-                          <% get_array(property.house_rules).each do |rule|  %>
-                            <div class="flex">
-                              <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
-                              <p class="description-text"><%= rule %></p>
-                            </div>
-                          <% end %> 
-                        </div>
+                        <%if property.house_rules %>
+                          <div class="grid grid-cols-3 grid-rows-2">
+                            <% get_array(property.house_rules).each do |rule|  %>
+                              <div class="flex">
+                                <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
+                                <p class="description-text"><%= rule %></p>
+                              </div>
+                            <% end %> 
+                          </div>
+                        <%else%>
+                          <p class="description-text">N/A</p>
+                        <%end%>
                     </div>
                     
                   </div>

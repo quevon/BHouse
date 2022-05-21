@@ -12,7 +12,7 @@
         Owned by: <%="#{@property.owner.firstname} #{@property.owner.lastname} "%>
     </p>
     <p class="description-text-group">
-        Availability: <%=@property.availability%>
+       <%=@property.availability ? "#{@property.slots} slots available" : "Property is fully occupied"%>
     </p>
     <div class="property-image-container">
       <% imgsrc = @property.image ? @property.image_url : "https://res.cloudinary.com/dbegssigw/image/upload/v1652432165/bhouse_app/bhouselogo_xiistv.png" %>
@@ -84,14 +84,18 @@
           <p class="description-text">
             This property allows the following:
           </p>
-            <div class="grid grid-cols-3 grid-rows-2">
-              <% get_array(@property.house_rules).each do |rule|  %>
-                <div class="flex">
-                  <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
-                  <p class="description-text"><%= rule %></p>
-                </div>
-              <% end %> 
-            </div>
+            <% if @property.house_rules %>
+              <div class="grid grid-cols-3 grid-rows-2">
+                <% get_array(@property.house_rules).each do |rule|  %>
+                  <div class="flex">
+                    <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
+                    <p class="description-text"><%= rule %></p>
+                  </div>
+                <% end %> 
+              </div>
+            <%else%>
+              <p>N/A</p>
+            <%end%>
         </div>
         <div class="col-span-2">
           <div class="flex">

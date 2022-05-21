@@ -1,6 +1,7 @@
 module ApplicationHelper
 
     def get_array(string)
+        return unless !string.nil?
         str = string[1..-2]
         str.gsub('"', '').split(",")
     end

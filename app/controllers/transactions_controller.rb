@@ -33,11 +33,11 @@ class TransactionsController < InheritedResources::Base
   def payment
     @transaction = Transaction.find(params[:id])
     respond_to do |format|
-      if @transaction.update_balance
+      if @transaction.save
         format.html { redirect_to @transaction, notice: 'Transaction was successfully paid.' }
         format.json { render json: @transaction, status: :created, location: @transaction }
       else
-        format.html { redirect_to @transaction }
+        format.html { render 'transactions/show' }
         format.json { render json: @transaction.errors, status: :unprocessable_entity }
       end
     end

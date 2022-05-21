@@ -55,15 +55,13 @@
         </div>
     </div>
     <div class>
-        <%if !current_tenant.my_property.nil? %>
+        <%if current_tenant.property_tenants && !current_tenant.my_property.nil? %>
             <div class="w-full text-gray-500 flex flex-col">
                 <%=current_tenant.my_property.id%>
                 <%=current_tenant.my_property.property_type%>
                 <%=current_tenant.my_property.listing_type%>
-                
                 <%= current_tenant.my_pending_transactions[0].amount%>
                 <%= link_to "Fulfill Payment", approve_payment_path(:id => current_tenant.my_pending_transactions[0].id), :method => "patch", :data => {:confirm => "Pay #{format_currency(current_tenant.my_pending_transactions[0].amount)}?"}%>
-
             </div>
         <% end %>
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-5">
