@@ -6,7 +6,7 @@
 
 @layer components {
   .btn-primary {
-    @apply py-3 px-5  bg-tomato-500 hover:bg-tomato-400 cursor-pointer rounded-xl text-white w-full;
+    @apply py-3 px-5  bg-tomato-400 hover:bg-tomato-400 cursor-pointer rounded-xl text-white w-full;
   }
   .btn-container {
     @apply w-2/3 mx-auto mb-3

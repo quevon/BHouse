@@ -24,7 +24,7 @@
       </div>
        <div class="w-1/3">
         <%= form.label :slots, :class => "block-label" %>
-        <%= form.number_field :slots, :class => "styled-input" %>
+        <%= form.number_field :slots, :class => "styled-input", :placeholder => "# of occupants" %>
       </div>
     </div>
 
@@ -65,17 +65,17 @@
 
     <div class="form-group col-span-2 grid grid-cols-3 gap-4">
       <div class="mb-6">
-        <%= form.label :monthly_price, :class => "block-label col-span-2" %>
+        <%= form.label :monthly_price, :class => "block-label col-span-2 text-sm" %>
         <%= form.text_field :monthly_price, :class => "styled-input", :placeholder => "rate in PHP" %>
       </div>
 
       <div class="mb-6">
-        <%= form.label "Advance Deposit", :class => "block-label col-span-2" %>
+        <%= form.label "Months of Advance Deposit", :class => "block-label col-span-2 text-sm" %>
         <%= form.text_field :deposit_advance, :class => "styled-input", :placeholder => "Number of months" %>
       </div>
 
       <div class="mb-6">
-        <%= form.label "Security Deposit", :class => "block-label col-span-2" %>
+        <%= form.label "Months of Security Deposit", :class => "block-label col-span-2 text-sm" %>
         <%= form.text_field :deposit_security, :class => "styled-input", :placeholder => "Number of months" %>
       </div>
 
@@ -83,6 +83,14 @@
         <%= form.label :other_fees, :class => "block-label" %>
         <%= form.text_field :other_fees, :class => "styled-input w-full", :placeholder => "Other fees on top of monthly rent" %>
       </div>
+    </div>
+    <div class="form-group col-span-2">
+      <div class="mb-6">
+        <%= form.label :description, :class => "block-label col-span-2 mb-0" %>
+        <p class="description-text italic text-sm">Discuss the highlights of your property here</p>
+        <%= form.text_area :description, :class => "styled-input w-full" %>
+      </div>
+
     </div>
 
     <div class="form-group col-span-2 grid grid-cols-3 gap-4">
@@ -97,13 +105,14 @@
       <%= form.label 'Complete Address', :class => "block-label col-span-2" %>
       <%= form.text_field :long_address, :class => "styled-input w-full", :placeholder => "Complete address" %>
       <label for="address" class="block-label">Location</label>
+      <p class="description-text italic text-sm">Search for a nearby landmark or use your current location using the button below</p>
       <input type="text" id="address" autocomplete="off" 
       data-action="keyup->places#initializeSearch" data-places-target="address" class="styled-input w-full" placeholder="Search a location">
       <input type="hidden" name="property[location_city]" data-places-target="city">
       <input type="hidden" name="property[location_lat]" data-places-target="lat">
       <input type="hidden" name="property[location_lng]" data-places-target="lng">
-      <div data-places-target="map" class="map"></div>
-      <button data-action="click->places#findMyLocation" class="btn-primary">Use Current Location</button>
+      <button data-action="click->places#findMyLocation" class="btn-primary mt-2">Use Current Location</button>
+      <div data-places-target="map" class="map my-5"></div>
     </div>
 
     <%= form.hidden_field :owner_id, value: current_owner.id %>

@@ -9,8 +9,21 @@ class Property < ApplicationRecord
                    :distance_field_name => :distance,
                    :lat_column_name => :location_lat,
                    :lng_column_name => :location_lng
-
   
+  validates :availability, presence: true
+  validates :slots, presence: true
+  validates :owner_id, presence: true
+  validates :approved,  presence: true
+  validates :property_type, presence: true, inclusion: { in: ["house", "apartment", "condominium", "dormitory"], message: "not valid"} 
+  validates :listing_type,  presence: true, inclusion: { in: ["entire unit", "bedspace", "room"], message: "not valid"} 
+  validates :monthly_price, presence: true, numericality: {:greater_than => 0}
+  validates :deposit_advance, presence: true
+  validates :deposit_security, presence: true
+  validates :location_city, presence: true
+  validates :location_lat, presence: true
+  validates :location_lng, presence: true
+  validates :long_address, presence: true
+  validates :accomodation_type, presence: true 
 
   def calculated_advance_deposit
     self.deposit_advance * self.monthly_price
