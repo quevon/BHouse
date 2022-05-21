@@ -65,6 +65,8 @@
                             <tbody>
                                 <%current_owner.properties.each do |property|%>
                                     <% if property.property_tenants.count > 0%>
+                                        <%property.property_tenants.each do |request|%>
+
                                         <tr>
                                             <td><%=request.tenant.firstname%></td>
                                             <td><%=request.tenant.lastname%></td>
@@ -76,7 +78,7 @@
                                             <td><%= link_to "Reject", update_property_tenant_path(request.property,:property_tenant => {:id => request.id, :status => "reject"}), :method => "patch" %></td>
                                         </tr>
                                         <%end%>
-                                    <% end %>
+                                    <%end%>
                                 <%end%>      
                             </tbody>
                         </table>
