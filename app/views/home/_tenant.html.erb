@@ -1,5 +1,21 @@
 
 <div class="main" id=main>
+    <div class="grid place-items-center w-full">
+        <%= form_tag(properties_path, method: :get, class: "w-2/3 flex items-middle justify-center") do%>
+            <div data-controller="searchplace" data-action="google-maps-callback@window->searchplace#initAutocomplete" class="home-search-container m-0 flex">
+                <input
+                    type="text" id="address" autocomplete="off" 
+                    data-action="keyup->searchplace#initializeSearch" data-searchplace-target="address"
+                    placeholder="Enter your preferred area or landmark"
+                    class="home-search w-full m-0"
+                />
+                <input type="hidden" name="property[location_lat]" data-searchplace-target="lat">
+                <input type="hidden" name="property[location_lng]" data-searchplace-target="lng">
+                <button data-action="click->searchplace#findMyLocation"><ion-icon name="location-outline" class="w-8 h-8 mr-3 text-gray-400"></ion-icon></button>
+            </div>
+            <%= submit_tag "search", class: "flex items-middle justify-start mx-3 btn-primary w-fit cursor-pointer" %>
+        <%end%>
+    </div>
     <div class="cardBox">
         <div class="card">
             <div>
