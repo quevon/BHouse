@@ -4,6 +4,9 @@
             <div class="conversations">
                 <div class="userprofile conversationItem photo"><%= image_tag (conversation.participants.find { |p| p != current_user }).image_url if (conversation.participants.find { |p| p != current_user }).image %></div>
                 <div class="conversationItem"><%= link_to (conversation.participants.find { |p| p != current_user }).name, conversation_path(conversation) %></div>
+                <% if conversation.is_unread?(current_user) %>
+                    <ion-icon name="ellipse" ></ion-icon>
+                <% end %>
             </div>
         <% end %>
     </div>

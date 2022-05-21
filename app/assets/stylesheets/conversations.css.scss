@@ -30,11 +30,22 @@
     display: flex;
 }
 
+.conversations ion-icon {
+    text-align: center;
+    height: 7vh;
+    line-height: 6vh; 
+    color: var(--tomato);
+}
+
 .conversations:hover {
     background-color: var(--tomato);
     color: var(--white);
     cursor: pointer;
     border-radius: 20px;
+}
+
+.conversations:hover ion-icon {
+    color: var(--white);
 }
 
 .conversationItem {
