@@ -8,13 +8,13 @@
   <div class="container px-6 py-10 mx-auto">
     <% if current_owner %>
       <h1 class="heading-page-title">
-        <span class="underline font-heading decoration-tomato-500">Properties</span>
+        <span class="underline font-heading decoration-tomato-400">Properties</span>
       </h1>
       <%= link_to 'Create New Property Listing', new_property_path %>
     <%else%>
     <h1 class="heading-page-title">
       explore <br> 
-      awesome <span class="underline font-heading decoration-tomato-500">Properties</span>
+      awesome <span class="underline font-heading decoration-tomato-400">Properties</span>
     </h1>
     <%end%>
     <div class="grid grid-cols-3">
@@ -36,7 +36,7 @@
                     <%= image_tag("https://res.cloudinary.com/dbegssigw/image/upload/v1652432165/bhouse_app/bhouselogo_xiistv.png", class: "object-cover object-center w-full h-56" ) %>
                   <%end%>
                 </div>
-                <div class="flex items-center px-6 py-3 bg-tomato-500">
+                <div class="flex items-center px-6 py-3 bg-tomato-400">
                   <h1 class="mx-3 text-lg font-semibold text-white"><%= "#{property.listing_type} in #{property.location_city}"%></h1>
                 </div>
                 <div class="px-6 py-4">
@@ -51,7 +51,7 @@
                         <p class="description-text"><%= property.number_of_likes%></p>
                     </div>
                   </div>
-                  <p class="py-2 text-gray-700">Property desciption</p>      
+                        
                   <% if session[:origin_point]%>
                     <p class="py-2 text-gray-700"><%= property.distance_to(session[:origin_point]).round(2) %> km</p> 
                   <%end%>     
@@ -109,12 +109,16 @@
                         This property has the following amenities:
                       </p>
                         <div class="grid grid-cols-3 grid-rows-2">
-                          <% get_array(property.amenities).each do |amenity|  %>
-                            <div class="flex">
-                              <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
-                              <p class="description-text"><%= amenity %></p>
-                            </div>
-                          <% end %> 
+                          <% if property.amenities %>
+                            <% get_array(property.amenities).each do |amenity|  %>
+                              <div class="flex">
+                                <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
+                                <p class="description-text"><%= amenity %></p>
+                              </div>
+                            <% end %> 
+                          <%else%>
+                            <p class="description-text"> N/A </p>
+                          <% end %>
                         </div>
                     </div>
                     <div class="col-span-2">
@@ -122,10 +126,10 @@
                         <h3 class="card-header"><ion-icon name="warning-outline"></ion-icon></h3>
                         <h3 class="card-subtitle ml-2"> House Rules</h3>
                       </div>
-                      <p class="description-text -mt-3">
-                        This property allows the following:
-                      </p>
-                        <%if property.house_rules %>
+                        <% if property.house_rules %>
+                          <p class="description-text">
+                            This property allows the following:
+                          </p>
                           <div class="grid grid-cols-3 grid-rows-2">
                             <% get_array(property.house_rules).each do |rule|  %>
                               <div class="flex">
@@ -135,7 +139,7 @@
                             <% end %> 
                           </div>
                         <%else%>
-                          <p class="description-text">N/A</p>
+                            <p class="description-text">This property does not allow kids, visitors, pets, and smoking.</p>
                         <%end%>
                     </div>
                     

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_19_133720) do
+ActiveRecord::Schema.define(version: 2022_05_21_142540) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -183,6 +183,7 @@ ActiveRecord::Schema.define(version: 2022_05_19_133720) do
     t.boolean "approved"
     t.boolean "availability"
     t.integer "slots"
+    t.text "description"
     t.index ["owner_id"], name: "index_properties_on_owner_id"
   end
 
@@ -225,6 +226,7 @@ ActiveRecord::Schema.define(version: 2022_05_19_133720) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "property_tenant_id", null: false
+    t.string "status", default: "Waiting for Payment"
     t.index ["owner_id"], name: "index_transactions_on_owner_id"
     t.index ["property_tenant_id"], name: "index_transactions_on_property_tenant_id"
     t.index ["tenant_id"], name: "index_transactions_on_tenant_id"

@@ -6,11 +6,8 @@
 <%end%>
   <div class=" px-6 py-5 mx-auto w-3/4">
     <h1 class="heading-property-title">
-      <%=@property.listing_type.titleize%> in <span class="underline font-heading decoration-tomato-500"><%=@property.location_city%></span>
+      <%=@property.listing_type.titleize%> in <span class="underline font-heading decoration-tomato-400"><%=@property.location_city%></span>
     </h1>
-    <p class="description-text-group">
-        Owned by: <%="#{@property.owner.firstname} #{@property.owner.lastname} "%>
-    </p>
     <p class="description-text-group">
        <%=@property.availability ? "#{@property.slots} slots available" : "Property is fully occupied"%>
     </p>
@@ -19,7 +16,7 @@
       <%= image_tag imgsrc, class:"property-image" %>
     </div>
     <p class="description-text my-3">
-          PropertyDescription here
+      <%=@property.description%>
     </p>
     <div class="grid grid-cols-2 gap-4">
       <div class="property-card grid grid-cols-2 gap-2">
@@ -68,12 +65,16 @@
             This property has the following amenities:
           </p>
             <div class="grid grid-cols-3 grid-rows-2">
-              <% get_array(@property.amenities).each do |amenity|  %>
-                <div class="flex">
-                  <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
-                  <p class="description-text"><%= amenity %></p>
-                </div>
-              <% end %> 
+              <% if @property.amenities %>
+                <% get_array(@property.amenities).each do |amenity|  %>
+                  <div class="flex">
+                    <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
+                    <p class="description-text"><%= amenity %></p>
+                  </div>
+                <% end %> 
+              <%else%>
+                <p class="description-text"> N/A </p>
+              <% end %>
             </div>
         </div>
         <div class="col-span-2">
@@ -81,21 +82,21 @@
             <h3 class="card-header"><ion-icon name="warning-outline"></ion-icon></h3>
             <h3 class="card-subtitle ml-2"> House Rules</h3>
           </div>
-          <p class="description-text">
-            This property allows the following:
-          </p>
-            <% if @property.house_rules %>
-              <div class="grid grid-cols-3 grid-rows-2">
-                <% get_array(@property.house_rules).each do |rule|  %>
-                  <div class="flex">
-                    <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
-                    <p class="description-text"><%= rule %></p>
-                  </div>
-                <% end %> 
-              </div>
-            <%else%>
-              <p>N/A</p>
-            <%end%>
+          <% if @property.house_rules %>
+            <p class="description-text">
+              This property allows the following:
+            </p>
+            <div class="grid grid-cols-3 grid-rows-2">
+              <% get_array(@property.house_rules).each do |rule|  %>
+                <div class="flex">
+                  <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
+                  <p class="description-text"><%= rule %></p>
+                </div>
+              <% end %> 
+            </div>
+          <%else%>
+              <p class="description-text">This property does not allow kids, visitors, pets, and smoking.</p>
+          <%end%>
         </div>
         <div class="col-span-2">
           <div class="flex">
