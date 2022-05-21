@@ -13,6 +13,8 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
+
+
 window.initAutocomplete = function () {
   const event = new Event('google-maps-callback', {
     bubbles: true,

@@ -1,21 +1,22 @@
 <section class="main">
-    <h1>New Conversation</h1>
+    <div class="flexBoxContainer">
+        <div class="flexBoxItem">
+            <div class="flexBox2 recipient">
+                <div class="userprofile conversationItem"><%= image_tag @receiver.image_url if @receiver.image %></div>
+                <p class="conversationItem"><%= @receiver.name %></p>
+            </div>
+            <div class="inputArea">
+                <%= form_tag conversations_path, method: :post do %>
 
-    <%= form_tag conversations_path, method: :post do %>
-
-        <%= hidden_field_tag :owner_id, @recipients %>
-      
-
-        <div>
-            <%= text_field_tag :subject, placeholder: "Subject" %>
+                    <%= hidden_field_tag :owner_id, @recipient %>
+                    
+                    <%= text_area_tag :body %>
+                    <%= button_tag :submit do %>
+                        <ion-icon name="send-outline"></ion-icon>
+                    <% end %>
+                    
+                <% end %>
+            </div>
         </div>
-
-        <div>
-            <%= text_area_tag :body, placeholder: "Leave a comment" %>
-        </div>
-
-        <%= submit_tag %>
-    <% end %>
-
-
+    </div>
 </section>

@@ -14,10 +14,23 @@ class ConversationsController < ApplicationController
     def new
         owner = Property.find(params[:property_id]).owner.id
         if current_owner
-            @recipients = Tenant.all
+            @recipient = Tenant.all
         else
-            @recipients = owner
+            @recipient = owner
         end 
+        
+        @receiver = Owner.find(owner)
+
+        @ongoing_conversation = current_user.mailbox.conversations.find_by(subject: Owner.find(owner).name)
+        respond_to do |format|
+            if @ongoing_conversation.present?
+            format.html { redirect_to conversation_url(@ongoing_conversation.id) }
+            format.js { redirect_to current_user.mailbox.conversations.find(@ongoing_conversation.id) }
+            else
+            format.html
+            format.js
+            end
+        end
     end
 
     def create
@@ -26,7 +39,7 @@ class ConversationsController < ApplicationController
         else
             recipient = Owner.find(params[:owner_id])
         end 
-        receipt = current_user.send_message(recipient, params[:body], params[:subject])
+        receipt = current_user.send_message(recipient, params[:body], recipient.name)
         redirect_to conversation_path(receipt.conversation)
     end
 end
