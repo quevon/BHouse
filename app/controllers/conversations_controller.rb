@@ -7,6 +7,10 @@ class ConversationsController < ApplicationController
         @conversation = current_user.mailbox.conversations.find(params[:id])
         @conversations = current_user.mailbox.conversations
         @recipient = @conversation.participants.find { |p| p != current_user }
+
+        @receipts = current_user.mailbox.receipts_for(@conversation)
+        @receipts.mark_as_read
+        
         render 'index'
     end
 
