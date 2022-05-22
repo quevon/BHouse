@@ -221,7 +221,6 @@ ActiveRecord::Schema.define(version: 2022_05_21_142540) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "status", default: "Waiting for Payment"
     t.bigint "property_tenant_id", null: false
-    t.string "status", default: "Waiting for Payment"
     t.index ["owner_id"], name: "index_transactions_on_owner_id"
     t.index ["property_tenant_id"], name: "index_transactions_on_property_tenant_id"
     t.index ["tenant_id"], name: "index_transactions_on_tenant_id"
