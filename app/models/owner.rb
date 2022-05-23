@@ -34,6 +34,7 @@ class Owner < ApplicationRecord
   # property methods
   def total_pending_tenants
     total = 0
+    return unless self.properties
     self.properties.each do |property|
       total += property.pending_tenants.count
     end
@@ -42,6 +43,7 @@ class Owner < ApplicationRecord
 
   def total_present_tenants
     total = 0
+    return unless self.properties
     self.properties.each do |property|
       total += property.present_tenants.count
     end
@@ -50,6 +52,7 @@ class Owner < ApplicationRecord
 
   def present_monthly_income
     total = 0 
+    return unless self.properties
     self.properties.each do |property|
       revenue = property.present_tenants.count * property.monthly_price
       total += revenue
@@ -59,6 +62,7 @@ class Owner < ApplicationRecord
 
   def projected_monthly_income
     total = 0 
+    return unless self.properties
     self.properties.each do |property|
       revenue = property.slots * property.monthly_price
       total += revenue
@@ -67,12 +71,14 @@ class Owner < ApplicationRecord
   end
 
   def total_slots_available
+    return unless self.properties
     self.properties.sum(:slots)
   end
 
   # transaction methods
   def waiting_for_payment
     total = 0
+    return unless self.transactions
     self.transactions.where(:status => "Waiting for Payment").each do |transaction|
       total += transaction.amount
     end
