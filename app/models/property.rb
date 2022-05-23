@@ -37,6 +37,10 @@ class Property < ApplicationRecord
     monthly_price + calculated_advance_deposit + calculated_security_deposit
   end
 
+  def identifier
+    "#{self.listing_type.titleize} in #{self.location_city.titleize}"
+  end
+
   def liked?(tenant)
     !!self.likes.find{|like| like.tenant_id == tenant.id}
 

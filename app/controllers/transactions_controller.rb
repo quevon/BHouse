@@ -1,6 +1,4 @@
 class TransactionsController < InheritedResources::Base
-    # before_action :authenticate_tenant!,only: [:payment]
-  # before_action :authenticate!
   def index
     if current_owner
      @transactions = Transaction.where( :owner_id => current_owner.id)
@@ -15,9 +13,13 @@ class TransactionsController < InheritedResources::Base
     @property_tenant = PropertyTenant.find(params[:property_tenant_id])
   end
 
+  def edit
+    @transaction = Transaction.find(params[:id])
+    @property_tenant = @transaction.property_tenant
+  end
+
   def create
     @transaction = Transaction.new(transaction_params)
-
     respond_to do |format|
       if @transaction.save
         format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }
@@ -32,6 +34,7 @@ class TransactionsController < InheritedResources::Base
 
   def payment
     @transaction = Transaction.find(params[:id])
+    approve_payment
     respond_to do |format|
       if @transaction.save
         format.html { redirect_to @transaction, notice: 'Transaction was successfully paid.' }

@@ -14,10 +14,21 @@
     <%= form.hidden_field :owner_id, value: current_owner.id %>
     <%= form.hidden_field :property_tenant_id, value: @property_tenant.id %>
     <%= form.hidden_field :tenant_id, value: @property_tenant.tenant.id %>
-    <%= form.hidden_field :tenant_id, value: @property_tenant.tenant.id %>
 
+    <div class=" flex justify-between mb-3">
+      <span class="text-tomato-400">Tenant name</span>
+      <span class="text-gray-500"><%= @property_tenant.tenant.name%></span>
+    </div>
+    <div class=" flex justify-between">
+      <span class="text-tomato-400">Property</span>
+      <span class="text-gray-500"><%= @property_tenant.property.property_type.titleize%> in <%= @property_tenant.property.location_city.titleize%></span>
+    </div>
+    <div class=" flex justify-between">
+      <span class="text-tomato-400">Monthly Price</span>
+      <span class="text-gray-500"><%= format_currency(@property_tenant.property.monthly_price)%> </span>
+    </div>
     <div class="field">
-      <%= form.text_field :amount %>
+      <%= form.text_field :amount, :placeholder => "input total amount in PHP" %>
       <span></span>
       <%= form.label :amount %>
     </div>

@@ -1,9 +1,10 @@
-<p id="notice"><%= notice %></p>
+
 <% if current_owner or current_tenant%>
   <section class="main">
 <% else %>
   <section>
 <%end%>
+  <p id="notice"><%= notice %></p>
   <div class=" px-6 py-5 mx-auto w-3/4">
     <h1 class="heading-property-title">
       <%=@property.listing_type.titleize%> in <span class="underline font-heading decoration-tomato-400"><%=@property.location_city%></span>
@@ -172,7 +173,12 @@
                         :method => "patch", :class => "btn-primary" %>
                       </div>
                     <%end%>
-        
+                    <% if apply.status == "cancelled" && current_tenant.my_property.nil? %>
+                      <div class="btn-container mt-3">
+                        <%= button_to "Apply again", update_property_tenant_path(@property,:property_tenant => {:id => apply.id, :status => "pending"}), 
+                        :method => "patch", :class => "btn-primary" %>
+                      </div>
+                    <%end%>
                   </div>
               <% end %>
           <%else%>

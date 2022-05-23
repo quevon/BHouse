@@ -35,62 +35,73 @@
                 <ion-icon name="people-circle-outline"></ion-icon>
             </div>
         </div>
-        <div class="card">
-            <div>
-                <div class="numbers">23</div>
-                <div class="cardName">Posts</div>
-            </div>
-            <div class="iconBox">
-                <ion-icon name="images-outline"></ion-icon>
-            </div>
-        </div>
+        <%= link_to liked_properties_path do %>
             <div class="card">
-            <div>
-                <div class="numbers"><%=format_currency(current_tenant.balance)%></div>
-                <div class="cardName">Balance</div>
-            <div class="iconBox">
-                <ion-icon name="cash-outline"></ion-icon>
-
-            </div>
-        </div>
-    </div>
-    <div class>
-        <%if current_tenant.property_tenants && !current_tenant.my_property.nil? %>
-            <div class="w-full text-gray-500 flex flex-col">
-                <%=current_tenant.my_property.id%>
-                <%=current_tenant.my_property.property_type%>
-                <%=current_tenant.my_property.listing_type%>
-                <%= current_tenant.my_pending_transactions[0].amount%>
-                <%= link_to "Fulfill Payment", approve_payment_path(:id => current_tenant.my_pending_transactions[0].id), :method => "patch", :data => {:confirm => "Pay #{format_currency(current_tenant.my_pending_transactions[0].amount)}?"}%>
+                <div>
+                    <div class="numbers"><%=current_tenant.likes ? current_tenant.likes.count : 0%></div>
+                    <div class="cardName">Liked Posts</div>
+                </div>
+                <div class="iconBox">
+                    <ion-icon name="images-outline"></ion-icon>
+                </div>
             </div>
         <% end %>
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-5">
-            <table class="w-full text-sm text-left text-gray-500">
-                <thead>
-                    <tr>
-                        <th class="px-6 py-3">Property Type</th>
-                        <th class="px-6 py-3">Listing Type</th>
-                        <th class="px-6 py-3">Location</th>
-                        <th class="px-6 py-3">Monthly Rate</th>
-                        <th class="px-6 py-3">Status</th>
-                        <th class="px-6 py-3">Date Updated</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <% applications = current_tenant.property_tenants %>
-                <% applications.each do |application| %>
-                    <tr>
-                        <td class="px-6 py-4"><%=application.property.property_type%></td>
-                        <td class="px-6 py-4"><%=application.property.listing_type%></td>
-                        <td class="px-6 py-4"><%=application.property.location_city%></td>
-                        <td class="px-6 py-4"><%=application.property.monthly_price%></td>
-                        <td class="px-6 py-4"><%=application.status%></td>
-                        <td class="px-6 py-4"><%=application.updated_at%></td>
-                    </tr>
-                <%end%>
-                </tbody>
-            </table>
+        <div class="card">
+            <div>
+                <div class=" text-2xl font-medium text-tomato-400"><%=format_currency(current_tenant.balance)%></div>
+                <div class="cardName">Balance</div>
+            </div>
+            <div class="iconBox">
+                <ion-icon name="cash-outline"></ion-icon>
+            </div>
         </div>
     </div>
+    <% applications = current_tenant.property_tenants %>
+    <% if applications.count > 0 %>
+        <div class="w-full col-span-4">
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-5">
+                <% if !current_tenant.my_property.nil? %>
+                    <div class="w-full text-gray-500 flex flex-col">
+                        <%=current_tenant.my_property.id%>
+                        <%=current_tenant.my_property.property_type%>
+                        <%=current_tenant.my_property.listing_type%>
+                        <%= current_tenant.my_pending_transactions[0].amount%>
+                        <%= link_to "Fulfill Payment", approve_payment_path(:id => current_tenant.my_pending_transactions[0].id), :method => "patch", :data => {:confirm => "Pay #{format_currency(current_tenant.my_pending_transactions[0].amount)}?"}%>
+                    </div>
+                <% end %>
+                <table class=" text-sm text-left text-gray-500">
+                    <thead>
+                        <tr>
+                            <th class="px-6 py-3">Property Type</th>
+                            <th class="px-6 py-3">Listing Type</th>
+                            <th class="px-6 py-3">Location</th>
+                            <th class="px-6 py-3">Monthly Rate</th>
+                            <th class="px-6 py-3">Status</th>
+                            <th class="px-6 py-3">Date Updated</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    
+                        <% applications.each do |application| %>
+                            <tr>
+                                <td class="px-6 py-4"><%=application.property.property_type%></td>
+                                <td class="px-6 py-4"><%=application.property.listing_type%></td>
+                                <td class="px-6 py-4"><%=application.property.location_city%></td>
+                                <td class="px-6 py-4"><%=application.property.monthly_price%></td>
+                                <td class="px-6 py-4"><%=application.status%></td>
+                                <td class="px-6 py-4"><%=application.updated_at%></td>
+                            </tr>
+                        <%end%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <% else %>
+        <div class="w-full grid place-items-center">
+            <img class="object-center object-contain h-80 w-90" src="https://res.cloudinary.com/dbegssigw/image/upload/v1653235552/bhouse_app/undraw_right_direction_tge8_snsxuk.png" alt="">
+            <p class="description-text"><%=link_to "Start searching for properties", properties_path %></p>
+        </div>
+    <% end %>
+</div>
         
 

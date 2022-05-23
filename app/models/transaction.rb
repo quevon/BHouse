@@ -1,6 +1,7 @@
 class Transaction < ApplicationRecord
   belongs_to :tenant
   belongs_to :owner
+  belongs_to :property_tenant
 
   validates :tenant_id, presence: true
   validates :owner_id, presence: true
@@ -8,13 +9,19 @@ class Transaction < ApplicationRecord
   validates :property_tenant_id, presence: true
   validates :status, presence: true, inclusion: { in: ['Waiting for Payment', 'Paid'], message: "not valid"} 
 
-  validate :check_tenant_balance
-  before_save :update_balance
-  after_save :update_status
+  # validate :check_tenant_balance
+  # before_save :update_balance
+  # after_save :update_status
 
 
 def name
     "#{firstname} #{lastname}"
+end
+
+def approve_payment
+  check_tenant_balance
+  update_balance
+  update_status
 end
 
 def check_tenant_balance
@@ -34,5 +41,7 @@ end
 def update_status
   self.update(:status => "Paid")
 end
+
+
 
 end

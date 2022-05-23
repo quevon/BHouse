@@ -7,3 +7,4 @@ class PropertyTenant < ApplicationRecord
   validates :tenant_id, uniqueness: {scope: :property_id}
 
 end
+ 

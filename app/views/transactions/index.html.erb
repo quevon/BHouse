@@ -1,21 +1,18 @@
-<section class="main">
+<section class="main p-5">
   <%if current_owner %>
     <div class="w-full">
           <div class="flex justify-between items-center">
-            <h1 class="font-bold text-4xl">Transactions</h1>
-            <%= link_to 'New transaction', new_transaction_path, class: "" %>
+            <h1 class="heading-page-title">Transactions</h1>
           </div>
-
-    <div class=table_containers>
+    <div class="table_containers w-full">
         <table>
-          <thead> 
+          <thead class="text-center"> 
             <tr>
-              <th>Owner Name</th>
-              <th>Owner Balance</th>
               <th>Tenant Name</th>
-              <th>Tenant Balance</th>
+              <th>Property</th>
               <th>Amount</th>
               <th>Status</th>
+              <th>Last Update</th>
               <th colspan="2">Actions</th>
             </tr>
           </thead>
@@ -23,23 +20,21 @@
           <tbody>
             <% @transactions.each do |transaction| %>
               <tr>
-                <td><%= current_owner.firstname %></td>
-                <td><%= current_owner.balance %></td>
-                <td><%= transaction.tenant.firstname %></td>
-                <td><%= transaction.tenant.balance %></td>
-                <td><%= transaction.amount %></td>
-                <td><%= transaction.status %></td>
-          
-                <%if current_owner%>
-                  <td>
-                    <%= link_to "Show ", transaction, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-                  </td>
+                <td><%= transaction.tenant.name %></td>
+                <td class="text-center"><%= transaction.property_tenant.property.identifier %></td>
+                <td> <p class="w-max text-right"><%= format_currency(transaction.amount) %></p></td>
+                <td class="text-center"><%= transaction.status %></td>
+                <td><%= format_date(transaction.updated_at) %></td>
+                <td>
+                  <%= link_to "Show ", transaction, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+                </td>
                   <% if transaction.status == "Waiting for Payment"%>
                     <td>
                       <%= link_to 'Edit', edit_transaction_path(transaction), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
                     </td> 
+                  <% else %>
+                    <td></td>
                   <% end %>
-                <%end%>
               </tr>
             <% end %>
           </tbody>

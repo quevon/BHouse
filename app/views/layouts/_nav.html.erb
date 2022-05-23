@@ -1,9 +1,16 @@
 <% if !tenant_signed_in? && !owner_signed_in? %>
     <div class=dropdwn>
-        <nav>
-            <%# <h1 class="logo">BHOUSE<h1> %>
+        <nav class="flex flex-row justify-around">
+            <div class= "flex w-2/3 justify-start items-center ml-8">
+                    <%=link_to root_path do %>
+                        <span class="title app-title-name text-white">Bhouse App</span>
+                    <% end %>
+                    <div>
+                        <img src="https://res.cloudinary.com/dbegssigw/image/upload/v1653213243/bhouse_app/bhousewhite_cs4e60.png" alt="bhouse logo" class="title-logo">
+                    </div>                    
+            </div>
             <ul>
-                <li><%= link_to 'Home', root_path %></li>
+                
                 <li><a href="#">Login <ion-icon name="caret-down-outline"></ion-icon></a>
                     <ul class="drop-login">
                         <li><%= link_to "Owner", new_owner_session_path%></li>
@@ -29,7 +36,10 @@
                 <li>
                     <a href="#" >
                         <span class="icon"></span>
-                        <span class="title">Bhouse App</span>
+                        <span class="title app-title-name">Bhouse App</span>
+                        <div class="items-middle flex">
+                            <img src="https://res.cloudinary.com/dbegssigw/image/upload/v1653213243/bhouse_app/bhousewhite_cs4e60.png" alt="bhouse logo" class="title-logo">
+                        </div>
                     </a>
                 </li>
                  <li>
@@ -45,7 +55,11 @@
                     </a>
                 </li>
                  <li>
-                        <%= link_to '<span class="icon"><ion-icon name="chatbubble-outline"></span>'.html_safe + '<span class="title">Message</span>'.html_safe, conversations_path %>
+                    <%= link_to conversations_path do %>
+                        <span class="icon"><ion-icon name="chatbubble-outline"></span>
+                        <span class="title">Message</span>
+                        <span class="title"><%=current_owner.notifs if current_owner.notifs > 0%></span>
+                    <% end %>
                 </li>
                  <li>
                     <a href="#">
@@ -76,12 +90,15 @@
                 <div class="toggle" >
                     <ion-icon name="menu-outline" class="menu-bar"></ion-icon>
                 </div>
-                <div class="search">
-                    <label>
-                        <input type="text" placeholder="Search here">
-                        <ion-icon name="search-outline"></ion-icon>
-                    </label>
+                <div class= "flex w-full justify-start ml-8">
+                    <%=link_to root_path do %>
+                        <span class="title app-title-name text-tomato-400">Bhouse App</span>
+                    <% end %>
+                    <div>
+                        <img src="https://res.cloudinary.com/dbegssigw/image/upload/v1652413523/bhouse_app/da6f0d7f370d2d1aa42bb27eac76a288.png" alt="bhouse logo" class="title-logo">
+                    </div>                    
                 </div>
+                
                 <%= link_to edit_owner_registration_path(current_owner) do %>
                     <div class="user">
                         <div class="username">
@@ -99,9 +116,12 @@
         <div class="navigation">
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="#" >
                         <span class="icon"></span>
-                        <span class="title">Bhouse App</span>
+                        <span class="title app-title-name">Bhouse App</span>
+                        <div class="items-middle flex">
+                            <img src="https://res.cloudinary.com/dbegssigw/image/upload/v1653213243/bhouse_app/bhousewhite_cs4e60.png" alt="bhouse logo" class="title-logo">
+                        </div>
                     </a>
                 </li>
                 <li>
@@ -111,7 +131,11 @@
                     <%= link_to '<span class="icon"><ion-icon name="bed-outline"></ion-icon></span>'.html_safe + '<span class="title">Properties</span>'.html_safe, properties_path  %>
                 </li>
                 <li>
-                        <%= link_to '<span class="icon"><ion-icon name="chatbubble-outline"></span>'.html_safe + '<span class="title">Message</span>'.html_safe, conversations_path %>
+                    <%= link_to conversations_path do %>
+                        <span class="icon"><ion-icon name="chatbubble-outline"></span>
+                        <span class="title">Message</span>
+                        <span class="title"><%=current_tenant.notifs if current_tenant.notifs > 0%></span>
+                    <% end %>
                 </li>
                 <li>
                     <a href="#">
@@ -141,11 +165,18 @@
                 <div class="toggle">
                     <ion-icon name="menu-outline" class="menu-bar"></ion-icon>
                 </div>
+                <div class= "flex w-full justify-start ml-8">
+                    <%=link_to root_path do %>
+                        <span class="title app-title-name text-tomato-400">Bhouse App</span>
+                    <% end %>
+                    <div>
+                        <img src="https://res.cloudinary.com/dbegssigw/image/upload/v1652413523/bhouse_app/da6f0d7f370d2d1aa42bb27eac76a288.png" alt="bhouse logo" class="title-logo">
+                    </div>                    
+                </div>
                 <%= link_to edit_tenant_registration_path(current_tenant) do %>
                     <div class="user">
-                        <div class="username">
-                            <span><%= current_tenant.firstname%></span>
-                            <span><%= current_tenant.lastname%></span>
+                        <div class="username text-gray-500">
+                            <span><%= current_tenant.name%></span>
                         </div>
                         <div class="userprofile">
                             <%= image_tag current_tenant.image_url if current_tenant.image %>

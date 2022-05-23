@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/properties/liked', to: 'properties#liked', as: 'liked_properties'
   resources :properties do
     resources :property_tenants
   end
@@ -27,6 +28,7 @@ Rails.application.routes.draw do
   post '/properties/:property_id/property_tenants', to: 'property_tenants#create', as: 'create_property_tenant'
   patch '/properties/:property_id/property_tenants', to: 'property_tenants#update', as: 'update_property_tenant'
   # likes
+  
   patch '/properties/:id/like', to: 'properties#add_like', as: 'add_like'
   delete '/properties/:id/like', to: 'properties#remove_like', as: 'remove_like'
 

@@ -1,27 +1,37 @@
-<p id="notice"><%= notice %></p>
-
 <% if current_owner or current_tenant%>
   <section class="main">
 <% else %>
   <section>
 <%end%>
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
   <div class="container px-6 py-10 mx-auto">
     <% if current_owner %>
       <h1 class="heading-page-title">
         <span class="underline font-heading decoration-tomato-400">Properties</span>
       </h1>
-      <%= link_to 'Create New Property Listing', new_property_path %>
+      <%= link_to new_property_path do %>
+        <button class="btn-primary w-72 my-3">Create New Property Listing</button>
+      <% end %>
     <%else%>
     <h1 class="heading-page-title">
-      explore <br> 
-      awesome <span class="underline font-heading decoration-tomato-400">Properties</span>
+      <span class="underline font-heading decoration-tomato-400">Properties</span>
     </h1>
     <%end%>
+    <% if @properties.count == 0 %>
+      <div class="w-full grid place-items-center">
+          <img class="object-center object-contain h-80 w-90" src="https://res.cloudinary.com/dbegssigw/image/upload/v1653235552/bhouse_app/undraw_right_direction_tge8_snsxuk.png" alt="">
+          <p class="description-text"><%=link_to "No properties match your query. Try again?", properties_path %></p>
+      </div>
+    <% else %>
     <div class="grid grid-cols-3">
       <% if !current_owner %>
-        <div class="col-span-1">
-          <%= render 'sidebar', properties: @properties %>
-        </div>
+        <% if params[:action] != "liked"%>
+          <div class="col-span-1">
+            <%= render 'sidebar', properties: @properties %>
+          </div>
+        <% end %>
         <div class="col-span-2 grid grid-cols-2 gap-8 mt-8 xl:mt-12 xl:gap-12">
       <%else%>
         <div class="col-span-3 grid grid-cols-3 gap-8 mt-8 xl:mt-12 xl:gap-12">
@@ -37,7 +47,7 @@
                   <%end%>
                 </div>
                 <div class="flex items-center px-6 py-3 bg-tomato-400">
-                  <h1 class="mx-3 text-lg font-semibold text-white"><%= "#{property.listing_type} in #{property.location_city}"%></h1>
+                  <h1 class="mx-3 text-lg font-semibold text-white"><%= property.identifier %></h1>
                 </div>
                 <div class="px-6 py-4">
                   <div class="flex justify-between">
@@ -164,6 +174,7 @@
       data-multiplemap-locations-value="<%=locations_array%>" class="p-5">
       <div data-multiplemap-target="map" class="map">
     </div>
+    <% end %>
   
 </section>
 
@@ -174,6 +185,6 @@
 
 
 
-<br>
+
 
 
