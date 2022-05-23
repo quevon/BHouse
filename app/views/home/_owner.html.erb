@@ -1,13 +1,13 @@
     <%# <%= link_to "Edit Profile" , edit_owner_registration_path(current_owner)%> 
 
-    
-
     <div class="main" id=main>
-            <div class="cardBox">
+            <div class="cardBox items-center">
                 <div class="card">
                     <div>
-                        <div class="numbers">20</div>
-                        <div class="cardName">Tenants</div>
+                        <div class="numbers"><%= current_owner.total_present_tenants %></div>
+                        <div class="cardName">Current Tenants</div>
+                        <div class="numbers text-xl"><%= format_currency(current_owner.present_monthly_income) %></div>
+                        <div class="cardName m-0">Current Monthly Income</div>
                     </div>
                     <div class="iconBox">
                         <ion-icon name="people-outline"></ion-icon>
@@ -15,35 +15,41 @@
                 </div>
                 <div class="card">
                     <div>
-                        <%total_pending_tenants = 0%>
-                        <%current_owner.properties.each do |property|%>
-                            <%total_pending_tenants = total_pending_tenants + property.property_tenants.count%>
-                        <% end %>
-                        <div class="numbers"><%= total_pending_tenants %></div>
+                        <div class="numbers"><%= current_owner.total_pending_tenants %></div>
                         <div class="cardName">Pending Tenants</div>
+                        <div class="numbers"><%= current_owner.total_slots_available %></div>
+                        <div class="cardName">Slots Available</div>
                     </div>
                     <div class="iconBox">
                         <ion-icon name="people-circle-outline"></ion-icon>
                     </div>
                 </div>
-                <div class="card">
-                    <div>
-                        <div class="numbers"><%=current_owner.properties.count%></div>
-                        <div class="cardName">Properties</div>
+                <%= link_to properties_path do%>
+                    <div class="card">
+                        <div>
+                            <div class="numbers"><%=current_owner.properties.count%></div>
+                            <div class="cardName">Properties</div>
+                            <div class="numbers text-xl"><%= format_currency(current_owner.projected_monthly_income) %></div>
+                            <div class="cardName m-0">Projected Monthly Income</div>
+                        </div>
+                        <div class="iconBox">
+                            <ion-icon name="images-outline"></ion-icon>
+                        </div>
                     </div>
-                    <div class="iconBox">
-                        <ion-icon name="images-outline"></ion-icon>
+                <% end %>
+                <%= link_to transactions_path do%>
+                    <div class="card">
+                        <div>
+                            <div class="numbers"><%=format_currency(current_owner.balance)%></div>
+                            <div class="cardName">Balance</div>
+                            <div class="numbers text-xl"><%= format_currency(current_owner.my_pending_transactions) %></div>
+                            <div class="cardName">Pending Transactions</div>
+                        </div>
+                        <div class="iconBox">
+                            <ion-icon name="cash-outline"></ion-icon>
+                        </div>
                     </div>
-                </div>
-                  <div class="card">
-                    <div>
-                        <div class="numbers"><%=format_currency(current_owner.balance)%></div>
-                        <div class="cardName">Balance</div>
-                    </div>
-                    <div class="iconBox">
-                        <ion-icon name="cash-outline"></ion-icon>
-                    </div>
-                </div>
+                <% end %>
             </div>
 
             <div class="details">
@@ -54,12 +60,11 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Tenant Firstname</th>
-                                    <th>Tenant Lastname</th>
-                                    <th>Type</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th colspan="2">Actions</th>
+                                <th>Tenant Name</th>
+                                <th>Property</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th colspan="2">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,14 +72,29 @@
                                     <% if property.property_tenants.count > 0%>
                                         <%property.property_tenants.each do |request|%>
                                             <tr>
-                                                <td><%=request.tenant.firstname%></td>
-                                                <td><%=request.tenant.lastname%></td>
-                                                <td><%=request.property.listing_type%></td>
-                                                <td><%=request.updated_at%></td>
-                                                <td><%=request.status%></td>
-                                                <td><%= link_to "Request Payment", request_payment_path(:property_tenant_id => request.id)%></td> 
-                                                <td><%= link_to "Accept", update_property_tenant_path(request.property,:property_tenant => {:id => request.id, :status => "approved"}), :method => "patch" %></td>
-                                                <td><%= link_to "Reject", update_property_tenant_path(request.property,:property_tenant => {:id => request.id, :status => "reject"}), :method => "patch" %></td>
+                                                <td><%=request.tenant.name%></td>
+                                                <td>
+                                                    <%= link_to property_path(request.property) do%>
+                                                        <div class="flex">
+                                                            <p class="description-text px-3">id#<%=request.property.id%></p>
+                                                            <p><%=request.property.property_type.titleize%></p>
+                                                        </div>
+                                                    <% end %>
+                                                </td>
+                                                <td class="text-center"><p class="text-center"><%=format_date(request.updated_at)%></p></td>
+                                                <td class="text-center"><p class="text-center"><%=request.status%></p></td>
+                                                <% if request.status == "pending"%>
+                                                    <td><%= link_to "Accept", update_property_tenant_path(request.property,:property_tenant => {:id => request.id, :status => "approved"}), :method => "patch" %></td>
+                                                    <td><%= link_to "Reject", update_property_tenant_path(request.property,:property_tenant => {:id => request.id, :status => "reject"}), :method => "patch" %></td>
+                                                <% elsif request.status == "approved" %>
+                                                    <td colspan="2">
+                                                        <%= link_to request_payment_path(:property_tenant_id => request.id) do%>
+                                                            <button class="btn-gray mx-auto">Request Payment</button>
+                                                        <% end %>
+                                                    </td> 
+                                                <% else %>
+                                                    <td colspan="2" class="description-text">no actions available</td>
+                                                <% end %>
                                             </tr>
                                         <%end%>
                                     <%end%>
@@ -86,14 +106,28 @@
                 <div class="recentTenants">
                     <div class="cardHeader">
                         <h2>List of Properties</h2>
+                        <%= link_to new_property_path do %>
+                            <button class="btn-primary">New Listing</button>
+                        <% end %>
+
                     </div>
                     <table>
-                        <%current_owner.properties.each do |property|%>
-                            <tr>
-                                <td width="60px"><div class="imgBx"><%= image_tag property.image_url if property.image  %></div></td>
-                                <td><h4><%=property.listing_type%><br><span><%=format_currency(property.monthly_price)%></span></h4></td>
-                            </tr>                     
-                        <%end%>      
+                        <tbody>
+                            <%current_owner.properties.each do |property|%>
+                                <tr>
+                                    <td width="60px"><div class="imgBx"><%= image_tag property.image_url if property.image  %></div></td>
+                                    <td>
+                                        <%= link_to property_path(property) do%>
+                                            <div class="flex flex-col">
+                                                <h4 class="text-sm text-gray-500">id#<%=property.id%></h4>
+                                                <h4><%=property.listing_type%></h4>
+                                                <span><%=format_currency(property.monthly_price)%></span>
+                                            </div>
+                                        <%end%> 
+                                    </td>
+                                </tr>
+                            <%end%>      
+                        </tbody>
                     </table> 
                 </div>
             </div>     

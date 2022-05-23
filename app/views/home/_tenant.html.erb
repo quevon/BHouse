@@ -16,81 +16,218 @@
             <%= submit_tag "search", class: "flex items-middle justify-start mx-3 btn-primary w-fit cursor-pointer" %>
         <%end%>
     </div>
-    <div class="cardBox">
-        <div class="card">
-            <div>
-                <div class="numbers"><%= current_tenant.property_tenants.count %></div>
-                <div class="cardName">Applications</div>
-            </div>
-            <div class="iconBox">
-                <ion-icon name="map-outline"></ion-icon>
-            </div>
-        </div>
-        <div class="card">
-            <div>
-                <div class="numbers">11</div>
-                <div class="cardName">Pending Tenants</div>
-            </div>
-            <div class="iconBox">
-                <ion-icon name="people-circle-outline"></ion-icon>
-            </div>
-        </div>
-        <div class="card">
-            <div>
-                <div class="numbers">23</div>
-                <div class="cardName">Posts</div>
-            </div>
-            <div class="iconBox">
-                <ion-icon name="images-outline"></ion-icon>
-            </div>
-        </div>
+    <div class="cardBox items-center">
+        <%= link_to applied_properties_path do %>
             <div class="card">
-            <div>
-                <div class="numbers"><%=format_currency(current_tenant.balance)%></div>
-                <div class="cardName">Balance</div>
-            <div class="iconBox">
-                <ion-icon name="cash-outline"></ion-icon>
-
-            </div>
-        </div>
-    </div>
-    <div class>
-        <%if current_tenant.property_tenants && !current_tenant.my_property.nil? %>
-            <div class="w-full text-gray-500 flex flex-col">
-                <%=current_tenant.my_property.id%>
-                <%=current_tenant.my_property.property_type%>
-                <%=current_tenant.my_property.listing_type%>
-                <%= current_tenant.my_pending_transactions[0].amount%>
-                <%= link_to "Fulfill Payment", approve_payment_path(:id => current_tenant.my_pending_transactions[0].id), :method => "patch", :data => {:confirm => "Pay #{format_currency(current_tenant.my_pending_transactions[0].amount)}?"}%>
+                <div>
+                    <div class="numbers"><%= current_tenant.property_tenants.count %></div>
+                    <div class="cardName">Applications</div>
+                </div>
+                <div class="iconBox">
+                    <ion-icon name="map-outline"></ion-icon>
+                </div>
             </div>
         <% end %>
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-5">
-            <table class="w-full text-sm text-left text-gray-500">
-                <thead>
-                    <tr>
-                        <th class="px-6 py-3">Property Type</th>
-                        <th class="px-6 py-3">Listing Type</th>
-                        <th class="px-6 py-3">Location</th>
-                        <th class="px-6 py-3">Monthly Rate</th>
-                        <th class="px-6 py-3">Status</th>
-                        <th class="px-6 py-3">Date Updated</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <% applications = current_tenant.property_tenants %>
-                <% applications.each do |application| %>
-                    <tr>
-                        <td class="px-6 py-4"><%=application.property.property_type%></td>
-                        <td class="px-6 py-4"><%=application.property.listing_type%></td>
-                        <td class="px-6 py-4"><%=application.property.location_city%></td>
-                        <td class="px-6 py-4"><%=application.property.monthly_price%></td>
-                        <td class="px-6 py-4"><%=application.status%></td>
-                        <td class="px-6 py-4"><%=application.updated_at%></td>
-                    </tr>
-                <%end%>
-                </tbody>
-            </table>
+        
+        <%= link_to liked_properties_path do %>
+            <div class="card">
+                <div>
+                    <div class="numbers"><%=current_tenant.likes ? current_tenant.likes.count : 0%></div>
+                    <div class="cardName">Liked Posts</div>
+                </div>
+                <div class="iconBox">
+                    <ion-icon name="images-outline"></ion-icon>
+                </div>
+            </div>
+        <% end %>
+        <%= link_to transactions_path do%>
+            <div class="card">
+                <div>
+                    <div class="numbers text-xl"><%= format_currency(current_tenant.my_pending_transactions) %></div>
+                    <div class="cardName">Pending Transactions</div>
+                </div>
+                <div class="iconBox">
+                    <ion-icon name="people-circle-outline"></ion-icon>
+                </div>
+            </div>
+        <% end %>
+        
+        <div class="card">
+            <div>
+                <div class="numbers text-xl"><%=format_currency(current_tenant.balance)%></div>
+                <div class="cardName">Balance</div>
+                <%=link_to add_balance_path, :method =>  "patch", :data => {:confirm => "Add #{format_currency(20000)} to your account?"} do%>
+                    <button class="btn-gray">Add Balance</button>
+                <% end %>
+                
+            </div>
+            <div class="iconBox">
+                <ion-icon name="cash-outline"></ion-icon>
+            </div>
         </div>
+        
     </div>
+    <% applications = current_tenant.property_tenants %>
+    <% if applications.count > 0 %>
+        <div class="w-full">
+            <div class="m-5">
+                <% if current_tenant.my_property %>
+                    <% property = current_tenant.my_property%>
+                    <h1 class="heading-page-title text-2xl">Current Property</h1>
+                    <%=link_to property do %>
+                        <div>
+                            <div class="w-full grid grid-cols-3 gap-x-10 mx-auto bg-white rounded-lg shadow-lg dark:bg-gray-800 m-3">
+                                <div class="flex items-center justify-between px-6 py-3 bg-tomato-400 col-span-4 rounded-t-lg">
+                                    <h1 class="mx-3 text-lg font-semibold text-white"><%= property.identifier %></h1>
+                                    <h1 class="text-xl font-semibold text-white"><%= format_currency(property.monthly_price)%>/month</h1>
+                                </div>
+
+                                <div class="grid place-items-center col-span-1 rounded-xl">
+                                    <%if property.image%>
+                                        <%= image_tag(property.image_url, class: "object-cover object-center h-56 w-96" ) %>
+                                    <%else%>
+                                        <%= image_tag("https://res.cloudinary.com/dbegssigw/image/upload/v1652432165/bhouse_app/bhouselogo_xiistv.png", class: "object-cover object-center w-full h-56" ) %>
+                                    <%end%>
+                                </div>
+
+                                <div class="col-span-1 p-5">
+                                    <div class="flex flex-col mt-4 text-gray-700">
+                                        <div class="flex justify-between">
+                                            <div class="flex">
+                                                <h3 class="card-header"><ion-icon name="home-outline"></ion-icon></h3>
+                                                <h3 class="card-subtitle ml-2"> Property Type</h3>
+                                            </div>
+                                            <p class="description-text pl-10">
+                                                <%= property.property_type %>
+                                            </p>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <div class="flex">
+                                                <h3 class="card-header"><ion-icon name="bed-outline"></ion-icon></h3>
+                                                <h3 class="card-subtitle ml-2"> Listing Type</h3>
+                                            </div>
+                                            <p class="description-text pl-10">
+                                                <%= property.listing_type %>
+                                            </p>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <div class="flex">
+                                                <h3 class="card-header"><ion-icon name="people-outline"></ion-icon></h3>
+                                                <h3 class="card-subtitle ml-2"> Slots Available</h3>
+                                            </div>
+                                            <p class="description-text pl-10">
+                                                <%=property.availability ? "#{property.slots}" : "full"%>
+                                            </p>
+                                        </div>
+                                        <div class="col-span-2">
+                                            <div class="flex">
+                                                <h3 class="card-header"><ion-icon name="male-female-outline"></ion-icon></h3>
+                                                <h3 class="card-subtitle ml-2"> Accomodation Type</h3>
+                                            </div>
+                                            <p class="description-text -mt-3">
+                                                This property accepts:
+                                            </p>
+                                            <div class="grid grid-cols-3 grid-rows-2">
+                                                <% get_array(property.accomodation_type).each do |type|  %>
+                                                    <div class="flex">
+                                                        <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
+                                                        <p class="description-text"><%= type %></p>
+                                                    </div>
+                                                <% end %> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-span-1 p-5">
+                                    <div class="col-span-2">
+                                    <div class="flex">
+                                        <h3 class="card-header"><ion-icon name="wifi-outline"></ion-icon></h3>
+                                        <h3 class="card-subtitle ml-2"> Amenities</h3>
+                                    </div>
+                                    <p class="description-text -mt-3">
+                                        This property has the following amenities:
+                                    </p>
+                                        <div class="grid grid-cols-3 grid-rows-2">
+                                        <% if property.amenities %>
+                                            <% get_array(property.amenities).each do |amenity|  %>
+                                            <div class="flex">
+                                                <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
+                                                <p class="description-text"><%= amenity %></p>
+                                            </div>
+                                            <% end %> 
+                                        <%else%>
+                                            <p class="description-text"> N/A </p>
+                                        <% end %>
+                                        </div>
+                                    </div>
+                                    <div class="col-span-2">
+                                    <div class="flex">
+                                        <h3 class="card-header"><ion-icon name="warning-outline"></ion-icon></h3>
+                                        <h3 class="card-subtitle ml-2"> House Rules</h3>
+                                    </div>
+                                        <% if property.house_rules %>
+                                        <p class="description-text">
+                                            This property allows the following:
+                                        </p>
+                                        <div class="grid grid-cols-3 grid-rows-2">
+                                            <% get_array(property.house_rules).each do |rule|  %>
+                                            <div class="flex">
+                                                <span class="description-text"><ion-icon name="checkbox-outline"></ion-icon></span>
+                                                <p class="description-text"><%= rule %></p>
+                                            </div>
+                                            <% end %> 
+                                        </div>
+                                        <%else%>
+                                            <p class="description-text">This property does not allow kids, visitors, pets, and smoking.</p>
+                                        <%end%>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% end %>
+                <% end %>
+            </div>
+        </div>
+        <div class="w-full">
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-5">
+                <h1 class="heading-page-title text-2xl">Applications</h1>
+                    
+                    <table class=" text-sm text-gray-500 w-full text-center">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-3">Property Type</th>
+                                <th class="px-6 py-3">Listing Type</th>
+                                <th class="px-6 py-3">Location</th>
+                                <th class="px-6 py-3">Monthly Rate</th>
+                                <th class="px-6 py-3">Status</th>
+                                <th class="px-6 py-3">Date Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% applications.each do |application| %>
+                                <tr>
+                                    <td class="px-6 py-4"><%=application.property.property_type.titleize%></td>
+                                    <td class="px-6 py-4"><%=application.property.listing_type.titleize%></td>
+                                    <td class="px-6 py-4"><%=application.property.location_city.titleize%></td>
+                                    <td class="px-6 py-4"><%=format_currency(application.property.monthly_price)%></td>
+                                    <td class="px-6 py-4"><%=application.status%></td>
+                                    <td class="px-6 py-4"><%=format_date(application.updated_at)%></td>
+                                    <td><%=link_to 'View Property', property_path(application.property)%></td>
+                                </tr>
+                            <%end%>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    <% else %>
+        <div class="w-full grid place-items-center">
+            <img class="object-center object-contain h-80 w-90" src="https://res.cloudinary.com/dbegssigw/image/upload/v1653235552/bhouse_app/undraw_right_direction_tge8_snsxuk.png" alt="">
+            <p class="description-text"><%=link_to "Start searching for properties", properties_path %></p>
+        </div>
+    <% end %>
+</div>
         
 

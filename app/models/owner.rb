@@ -2,6 +2,7 @@ class Owner < ApplicationRecord
   include ImageUploader::Attachment(:image)
   has_many :properties
   has_many :transactions
+  has_many :conversations
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -21,6 +22,64 @@ class Owner < ApplicationRecord
   def mailboxer_email(object)
     nil 
   end
+
+  def notifs
+    if self.mailbox 
+      if self.mailbox.receipts 
+        self.mailbox.receipts.where(:is_read => false).count 
+      end
+    end
+  end
+
+  # property methods
+  def total_pending_tenants
+    total = 0
+    self.properties.each do |property|
+      total += property.pending_tenants.count
+    end
+    return total
+  end
+
+  def total_present_tenants
+    total = 0
+    self.properties.each do |property|
+      total += property.present_tenants.count
+    end
+    return total
+  end
+
+  def present_monthly_income
+    total = 0 
+    self.properties.each do |property|
+      revenue = property.present_tenants.count * property.monthly_price
+      total += revenue
+    end
+    return total
+  end
+
+  def projected_monthly_income
+    total = 0 
+    self.properties.each do |property|
+      revenue = property.slots * property.monthly_price
+      total += revenue
+    end
+    return total
+  end
+
+  def total_slots_available
+    self.properties.sum(:slots)
+  end
+
+  # transaction methods
+  def waiting_for_payment
+    total = 0
+    self.transactions.where(:status => "Waiting for Payment").each do |transaction|
+      total += transaction.amount
+    end
+    return total
+  end
+
+
 
   validates_presence_of :email, :firstname, :middlename, :lastname
   after_create :send_admin_mail

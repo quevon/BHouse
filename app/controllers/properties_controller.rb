@@ -34,6 +34,33 @@ class PropertiesController < ApplicationController
   # GET /properties/1/edit
   def edit; end
 
+  # GET /properties/liked
+  def liked
+    if current_tenant.likes.count > 0
+      @q = current_tenant.liked_properties
+      @properties = @q
+      render 'properties/index'
+    else
+      respond_to do |format|
+        format.html { redirect_to properties_path, notice: 'Select one of these properties to add to your liked collection.' }
+        format.json { render :show, status: :created, location: @property }
+      end
+    end
+  end
+
+  def applied
+    if current_tenant.property_tenants.count > 0
+      @q = current_tenant.applied_properties
+      @properties = @q
+      render 'properties/index'
+    else
+      respond_to do |format|
+        format.html { redirect_to properties_path, notice: 'Choose any property and start your application.' }
+        format.json { render :show, status: :created, location: @property }
+      end
+    end
+  end
+
   # POST /properties or /properties.json
   def create
     @property = Property.new(property_params)

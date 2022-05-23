@@ -1,34 +1,41 @@
+<div class="p-5">
+  <div id="<%= dom_id transaction %>" class="p-5 border border-gray-500 rounded shadow-md w-1/2 mx-auto">
+
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Transaction ID:</strong>
+      <%= "#{transaction.id} " %>
+    </p>
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Tenant:</strong>
+      <%= "#{transaction.tenant.name} " %>
+    </p>
+
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Amount:</strong>
+      <%= format_currency(transaction.amount) %>
+    </p>
+
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Transaction Date:</strong>
+      <%= format_date(transaction.created_at) %>
+    </p>
+
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Status:</strong>
+      <%= transaction.status %>
+    </p>
+
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Status Latest Update:</strong>
+      <%= format_date(transaction.updated_at) %>
+    </p>
+
+    <% if action_name != "show" %>
+      <%= link_to "Show this transaction", transaction, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+      <%= link_to 'Edit this transaction', edit_transaction_path(transaction), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+      <hr class="mt-6">
+    <% end %>
+  </div>
 
 
-<div id="<%= dom_id transaction %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Tenant:</strong>
-    <%= "#{transaction.tenant.name} " %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Amount:</strong>
-    <%= transaction.amount %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Transaction Date:</strong>
-    <%= format_date(transaction.created_at) %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Status:</strong>
-    <%= transaction.status %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Status Latest Update:</strong>
-    <%= format_date(transaction.updated_at) %>
-  </p>
-
-  <% if action_name != "show" %>
-    <%= link_to "Show this transaction", transaction, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to 'Edit this transaction', edit_transaction_path(transaction), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-    <hr class="mt-6">
-  <% end %>
 </div>
