@@ -42,10 +42,11 @@ Rails.application.routes.draw do
   # add balance
   patch '/add_balance', to: 'tenants#add_balance', as:'add_balance'
 
-  
-
-
 
   root to: "home#index"
+
+  get '/404', to: 'errors#not_found'
+  get '/500', to: 'errors#internal_server'
+  get '/422', to: 'errors#unprocessable'
 end
   
