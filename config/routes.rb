@@ -14,21 +14,19 @@ Rails.application.routes.draw do
   end
 
   get '/properties/liked', to: 'properties#liked', as: 'liked_properties'
+  get '/properties/applied', to: 'properties#applied', as: 'applied_properties'
   resources :properties do
     resources :property_tenants
   end
   # reset origin point foor searching properties
   get '/clear-origin_point', to: 'properties#clear_origin_point', via: [:destroy], as: 'clear_origin_point'
-  # apply as tenant methods
+  # request and payment methods
   get '/payment', to: 'transactions#payment', as:'payment_transaction'
   patch '/paid', to: 'transactions#updatebalance', as: 'update_balance'
-
-
-
+  # apply as tenant methods
   post '/properties/:property_id/property_tenants', to: 'property_tenants#create', as: 'create_property_tenant'
   patch '/properties/:property_id/property_tenants', to: 'property_tenants#update', as: 'update_property_tenant'
   # likes
-  
   patch '/properties/:id/like', to: 'properties#add_like', as: 'add_like'
   delete '/properties/:id/like', to: 'properties#remove_like', as: 'remove_like'
 
@@ -41,6 +39,8 @@ Rails.application.routes.draw do
   resources :transactions
   get '/:property_tenant_id/transactions/new', to: 'transactions#new', as:'request_payment'
   patch '/transactions/:id/payment', to: 'transactions#payment', as:'approve_payment'
+  # add balance
+  patch '/add_balance', to: 'tenants#add_balance', as:'add_balance'
 
   
 

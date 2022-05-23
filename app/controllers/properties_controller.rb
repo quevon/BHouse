@@ -48,6 +48,19 @@ class PropertiesController < ApplicationController
     end
   end
 
+  def applied
+    if current_tenant.property_tenants.count > 0
+      @q = current_tenant.applied_properties
+      @properties = @q
+      render 'properties/index'
+    else
+      respond_to do |format|
+        format.html { redirect_to properties_path, notice: 'Choose any property and start your application.' }
+        format.json { render :show, status: :created, location: @property }
+      end
+    end
+  end
+
   # POST /properties or /properties.json
   def create
     @property = Property.new(property_params)

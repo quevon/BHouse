@@ -34,7 +34,7 @@ class TransactionsController < InheritedResources::Base
 
   def payment
     @transaction = Transaction.find(params[:id])
-    approve_payment
+    @transaction.current_tenant = current_tenant
     respond_to do |format|
       if @transaction.save
         format.html { redirect_to @transaction, notice: 'Transaction was successfully paid.' }

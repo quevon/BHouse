@@ -3,6 +3,7 @@ class Tenant < ApplicationRecord
   has_many :property_tenants
   has_many :likes
   has_many :liked_properties, through: :likes, source: :property
+  has_many :applied_properties, through: :property_tenants, source: :property
   has_many :transactions
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -31,12 +32,15 @@ class Tenant < ApplicationRecord
   end
   
   def my_property
-    return unless !self.property_tenants
     self.property_tenants.where(:status => "approved")[0].property
   end
 
   def my_pending_transactions
-    self.transactions.where(:status => "Waiting for Payment")
+    total = 0
+    self.transactions.where(:status => "Waiting for Payment").each do |transaction|
+      total += transaction.amount
+    end
+    return total
   end
 
   # has_one_attached :profile_picture

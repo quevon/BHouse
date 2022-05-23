@@ -9,24 +9,20 @@ class Transaction < ApplicationRecord
   validates :property_tenant_id, presence: true
   validates :status, presence: true, inclusion: { in: ['Waiting for Payment', 'Paid'], message: "not valid"} 
 
-  # validate :check_tenant_balance
-  # before_save :update_balance
-  # after_save :update_status
+  attr_accessor :current_tenant
+
+  validate :check_tenant_balance, :if => :current_tenant
+  before_save :update_balance, :if => :current_tenant
+  after_save :update_status, :if => :current_tenant
 
 
 def name
     "#{firstname} #{lastname}"
 end
 
-def approve_payment
-  check_tenant_balance
-  update_balance
-  update_status
-end
-
 def check_tenant_balance
   if self.tenant.balance < self.amount
-    errors.add(:amount, "Insufficient balance for this amount")
+    errors.add(:amount, " required is greater than your available balance.")
   end
 end
 
@@ -41,7 +37,5 @@ end
 def update_status
   self.update(:status => "Paid")
 end
-
-
 
 end

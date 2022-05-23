@@ -8,14 +8,13 @@
         <div id="error_explanation" >
           <ul>
             <% @transaction.errors.each do |error| %>
-              <li><%= error.full_message %></li>
+              <li class="py-2 px-3 bg-red-200 mb-5 text-red-900 font-medium rounded-lg inline-block"><%= error.full_message %></li>
             <% end %>
           </ul>
         </div>
       <% end %>
 
       <%= render @transaction %>
-
     </div>
   </div>
 </section>

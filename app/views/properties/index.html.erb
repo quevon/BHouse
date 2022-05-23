@@ -27,7 +27,7 @@
     <% else %>
     <div class="grid grid-cols-3">
       <% if !current_owner %>
-        <% if params[:action] != "liked"%>
+        <% if params[:action] != "liked" && params[:action] != "applied"%>
           <div class="col-span-1">
             <%= render 'sidebar', properties: @properties %>
           </div>
