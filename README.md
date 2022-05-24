@@ -80,7 +80,6 @@ BHouse provides a platform for _renters_ looking for an easier way of finding a 
   - Able to approve new Owners.
   - Able to create a new Tenant or Owner account.
   - Able to update Owner/Tenant profile information except for their password.
-  - Able to approve pending properties.
   - Able to view all properties.
 
 - Owner
