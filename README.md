@@ -74,6 +74,39 @@ BHouse provides a platform for _renters_ looking for an easier way of finding a 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+### User Stories
+
+- Admin
+  - Able to approve new Owners.
+  - Able to create a new Tenant or Owner account.
+  - Able to update Owner/Tenant profile information except for their password.
+  - Able to approve pending properties.
+  - Able to view all properties.
+
+- Owner
+  - Able to create an account to post properties for rent.
+  - Able to create own profile.
+  - Able to upload own picture.
+  - Able to post properties for rent.
+  - Able to message tenants.
+  - Able to comment to posts.
+  - Able to view own properties.
+  - Able to view tenant’s profile.
+  - Able to approve or reject tenants.
+  - Able to view my own tenants.
+
+- Tenant
+  - Able to create an account.
+  - Able to create own profile.
+  - Able to upload own picture.
+  - Able to filter properties according to needs.
+  - Able to message Owners.
+  - Able to comment to posts.
+  - Able to like posts.
+  - Able to view Owner’s profile.
+  - Able to view properties listed by an Owner.
+  - Able to apply as tenants to properties.
+
 <!-- GETTING STARTED -->
 
 ## Getting Started
@@ -129,6 +162,19 @@ To get a local copy up and running, do the following:
 2. ` Properties`
 
 3. ` Messages`
+<p>Users can send messages to another user</p>
+
+```rb
+receipt = current_user.send_message(recipient, params[:body], recipient.name)
+```
+
+<p>And the user can also reply to any messages received</p>
+
+```rb
+@conversation = current_user.mailbox.conversations.find(params[:id])
+
+receipt = current_user.reply_to_conversation(@conversation, params[:body])
+```
 
 4. ` Transactions`
 
