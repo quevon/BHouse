@@ -88,9 +88,7 @@ BHouse provides a platform for _renters_ looking for an easier way of finding a 
   - Able to upload own picture.
   - Able to post properties for rent.
   - Able to message tenants.
-  - Able to comment to posts.
   - Able to view own properties.
-  - Able to view tenant’s profile.
   - Able to approve or reject tenants.
   - Able to view my own tenants.
 
