@@ -43,7 +43,11 @@ class ConversationsController < ApplicationController
         else
             recipient = Owner.find(params[:owner_id])
         end 
+
         receipt = current_user.send_message(recipient, params[:body], recipient.name)
-        redirect_to conversation_path(receipt.conversation)
+
+        if params[:body].blank? == false
+            redirect_to conversation_path(receipt.conversation)   
+        end
     end
 end
