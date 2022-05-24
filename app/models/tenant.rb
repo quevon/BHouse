@@ -32,7 +32,7 @@ class Tenant < ApplicationRecord
   end
   
   def my_property
-    return unless self.property_tenants
+    return unless self.property_tenants.where(:status => "approved")[0]
     self.property_tenants.where(:status => "approved")[0].property
   end
 

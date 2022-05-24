@@ -4,7 +4,7 @@
             <div class="cardBox items-center">
                 <div class="card">
                     <div>
-                        <div class="numbers"><%= current_owner.total_present_tenants %></div>
+                        <div class="numbers"><%= current_owner.total_present_tenants  %></div>
                         <div class="cardName">Current Tenants</div>
                         <div class="numbers text-xl"><%= format_currency(current_owner.present_monthly_income) %></div>
                         <div class="cardName m-0">Current Monthly Income</div>
@@ -42,7 +42,7 @@
                         <div>
                             <div class="numbers"><%=format_currency(current_owner.balance)%></div>
                             <div class="cardName">Balance</div>
-                            <div class="numbers text-xl"><%= format_currency(current_owner.my_pending_transactions) %></div>
+                            <div class="numbers text-xl"><%= format_currency(current_owner.waiting_for_payment) %></div>
                             <div class="cardName">Pending Transactions</div>
                         </div>
                         <div class="iconBox">
